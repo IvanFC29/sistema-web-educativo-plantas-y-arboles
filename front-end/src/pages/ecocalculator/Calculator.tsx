@@ -1,5 +1,9 @@
+import { BarraNavegacion } from "../../components/BarraNavegacion"
 export function EcoCalculator(){
     return (
-        <div>Calculadora ecologica</div>
+        <div>
+            <BarraNavegacion />
+            Calculadora ecologica
+        </div>
     )
 }

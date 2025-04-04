@@ -5,6 +5,7 @@ import { EcoCalculator } from "./pages/ecocalculator/Calculator";
 import { Recognizer } from "./pages/recognizer/Recognizer";
 import {Home} from "./pages/home/Inicio";
 import { LandingPage } from "./pages/home/landingPage";
+import { MisPlantas } from "./pages/jardin/MisPlantas";
 
 function App(){
   return(
@@ -15,8 +16,9 @@ function App(){
         <Route path="/index" element={<LandingPage />} />
         <Route path="/inicio" element={<Home />} />
         <Route path="/almanaque" element={<Almanaque />} />
-        <Route path="/calculadoras-ecologicas" element={<EcoCalculator />} />
+        <Route path="/calculadora-ecologica" element={<EcoCalculator />} />
         <Route path="/identificador" element={<Recognizer />}/>
+        <Route path="/mis-plantas" element={<MisPlantas />}/>
       </Routes>
     </BrowserRouter>
   )
