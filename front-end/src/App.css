@@ -1,0 +1,22 @@
+@import "tailwindcss";
+header{
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    background-color: #b6d7a8;
+    padding: 7px;
+}
+
+.title{
+    color: #2d572c;
+    font-size: 18px;
+    font-weight: bold;
+    align-items: center;
+}
+
+.logo{
+    width: 70px;
+    height: 70px;
+    margin-right: 20px;
+}
