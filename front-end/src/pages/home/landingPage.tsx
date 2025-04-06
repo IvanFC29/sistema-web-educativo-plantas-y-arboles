@@ -1,4 +1,3 @@
-import { Button } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 
 export function LandingPage() {
@@ -12,7 +11,7 @@ export function LandingPage() {
     return (
         <section className="self-center p-20">
             Bienvenido a arboledu 🚀
-            <Button className="bg-green-500 hover:bg-green-600 p-2" onClick={ingresar}>Entrar</Button>
+            <button className="bg-green-500 hover:bg-green-600 p-2" onClick={ingresar}>Entrar</button>
         </section>
     )
 }

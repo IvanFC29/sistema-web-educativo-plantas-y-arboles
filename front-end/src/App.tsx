@@ -6,6 +6,8 @@ import { Recognizer } from "./pages/recognizer/Recognizer";
 import {Home} from "./pages/home/Inicio";
 import { LandingPage } from "./pages/home/landingPage";
 import { MisPlantas } from "./pages/jardin/MisPlantas";
+import { Formulario } from "./pages/jardin/Formulario";
+import { Toaster } from "react-hot-toast";
 
 function App(){
   return(
@@ -19,7 +21,9 @@ function App(){
         <Route path="/calculadora-ecologica" element={<EcoCalculator />} />
         <Route path="/identificador" element={<Recognizer />}/>
         <Route path="/mis-plantas" element={<MisPlantas />}/>
+        <Route path="/formulario-mis-plantas" element={<Formulario />}/>
       </Routes>
+      <Toaster />
     </BrowserRouter>
   )
 }
