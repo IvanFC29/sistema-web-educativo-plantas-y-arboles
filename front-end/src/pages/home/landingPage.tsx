@@ -1,17 +1,15 @@
-import { useNavigate } from "react-router-dom";
-
+import LoginUsr from "../usuario/LoginUsr";
+import { Carrusel } from "./Carrusel";
 export function LandingPage() {
-    const navegador = useNavigate();
-
-    const ingresar = () => {
-        console.log('Se presiono el boton');
-        navegador('/inicio');
-    };
-
     return (
-        <section className="self-center p-20">
-            Bienvenido a arboledu 🚀
-            <button className="bg-green-500 hover:bg-green-600 p-2" onClick={ingresar}>Entrar</button>
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-4 m-4">
+            <div className="m-6 md:m-12">
+                Bienvenido a arboledu 🚀
+                <Carrusel />
+            </div>
+            <div className="m-6 md:m-12">
+                <LoginUsr />
+            </div>
         </section>
     )
 }

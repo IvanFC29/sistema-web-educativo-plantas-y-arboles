@@ -7,7 +7,7 @@ export function MisPlantas(){
             <BarraNavegacion />      
             <div className="max-w-md mx-auto mt-10">
                 <button className="bg-green-500 hover:bg-green-600 p-2 rounded-lg text-white">
-                    <Link to={'/formulario-mis-plantas'}>
+                    <Link to={'/agregar-plantas'}>
                         <h4>+ Agregar Planta</h4>
                     </Link>
                 </button>

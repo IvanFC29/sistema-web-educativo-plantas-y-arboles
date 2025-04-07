@@ -1,7 +1,8 @@
 import { BarraNavegacion } from "../../components/BarraNavegacion"
 import { useForm } from "react-hook-form"
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { Atras } from "../../components/Atras";
 
 export function Formulario() {
     const {register, handleSubmit, formState: {errors}} = useForm();
@@ -15,12 +16,8 @@ export function Formulario() {
 
     return (
         <section>
-            <BarraNavegacion />    
-            <button className="bg-gray-100 hover:bg-gray-200 p-2 rounded-lg text-black m-3">
-                <Link to={'/mis-plantas'}>
-                    <h4>Volver</h4>
-                </Link>
-            </button> 
+            <BarraNavegacion />   
+            <Atras />
             <form onSubmit={registrarPlantas} className="max-w-md mx-auto mt-10">
                 <div className="relative z-0 w-full mb-5 group">
                     <input type="text" id="nombrePlanta"

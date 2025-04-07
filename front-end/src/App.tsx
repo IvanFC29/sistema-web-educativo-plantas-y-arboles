@@ -21,7 +21,7 @@ function App(){
         <Route path="/calculadora-ecologica" element={<EcoCalculator />} />
         <Route path="/identificador" element={<Recognizer />}/>
         <Route path="/mis-plantas" element={<MisPlantas />}/>
-        <Route path="/formulario-mis-plantas" element={<Formulario />}/>
+        <Route path="/agregar-plantas" element={<Formulario />}/>
       </Routes>
       <Toaster />
     </BrowserRouter>
