@@ -2,11 +2,10 @@ import { Encabezado } from "./components/Encabezado";
 import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
 import {Almanaque} from './pages/almanaque/Almanaque';
 import { EcoCalculator } from "./pages/ecocalculator/Calculator";
-import { Recognizer } from "./pages/recognizer/Recognizer";
+import { Recognizer } from "./pages/recursos/Recognizer";
 import {Home} from "./pages/home/Inicio";
 import { LandingPage } from "./pages/home/landingPage";
 import { MisPlantas } from "./pages/jardin/MisPlantas";
-import { Formulario } from "./pages/jardin/Formulario";
 import { Toaster } from "react-hot-toast";
 
 function App(){
@@ -21,7 +20,6 @@ function App(){
         <Route path="/calculadora-ecologica" element={<EcoCalculator />} />
         <Route path="/identificador" element={<Recognizer />}/>
         <Route path="/mis-plantas" element={<MisPlantas />}/>
-        <Route path="/agregar-plantas" element={<Formulario />}/>
       </Routes>
       <Toaster />
     </BrowserRouter>

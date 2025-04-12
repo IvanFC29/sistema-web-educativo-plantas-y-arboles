@@ -3,7 +3,7 @@ header{
     flex-direction: row;
     display: flex;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 5px;
     background-color: #b6d7a8;
     padding: 7px;
 }

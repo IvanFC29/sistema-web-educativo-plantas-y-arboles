@@ -1,18 +1,13 @@
 import { BarraNavegacion } from "../../components/BarraNavegacion"
-import { Link } from "react-router-dom"
 
 export function MisPlantas(){
     return (
         <section>
             <BarraNavegacion />      
-            <div className="max-w-md mx-auto mt-10">
-                <button className="bg-green-500 hover:bg-green-600 p-2 rounded-lg text-white">
-                    <Link to={'/agregar-plantas'}>
-                        <h4>+ Agregar Planta</h4>
-                    </Link>
-                </button>
-                <p className="text-xl">🌱</p>
-                <p>Sin plantas en tu jardin </p>
+            <div className="max-w-md mx-auto mt-10 text-center">
+                <p className="text-6xl m-2">🌱</p>
+                <p className="dark:text-teal-900">Sin plantas en tu jardin </p>
+                <p className="dark:text-gray-500">Ve a la actividad "Calculadora Ecologica" para agregar plantas</p>
             </div>
         </section>
     )
