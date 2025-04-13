@@ -1,34 +1,37 @@
 import { useForm } from "react-hook-form"
 
 type Acciones = {
-    atras: () => void,
-    siguiente: () => void,
-    datos: (data: any) => void
+    atras: () => void;
+    siguiente: () => void;
+    datos: (data: any) => void;
+    datoActual : any;
 };
 
-export function Step2Especie({atras, siguiente, datos}: Acciones){
+export function Step2Especie({atras, siguiente, datos, datoActual}: Acciones){
 
     const {register, handleSubmit, formState: {errors}} = useForm();
 
     const registrarPlantas = handleSubmit(data => {
-        console.log(data);
-        datos({ especiePlanta: data});
+        datos({ especiePlanta: data.nombrePlanta});
         siguiente();
     })
+
+    const nombreEspecie = datoActual?.especiePlanta; 
 
     return(
         <div>
             <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black text-center">¿Cual es el nombre de la planta?</h2>
             <form onSubmit={registrarPlantas} className="max-w-md mx-auto mt-10">
                 <div className="relative z-0 w-full mb-5 group">
+                    <label htmlFor="nombrePlanta" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Nombre de planta / arbol</label>
                     <input type="text" id="nombrePlanta"
                         {...register("nombrePlanta", {required: true})}
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-green-500 focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder=" "/>     
-                        {errors.nombrePlanta && <span className="text-orange">No ingresaste un nombre</span>}
-                    <label htmlFor="nombrePlanta" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-green-800 peer-focus:dark:text-green-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nombre de planta / arbol</label>
+                        defaultValue={nombreEspecie}
+                        className="bg-white border border-green-300 text-black text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:border-green-500 dark:text-black" />     
+                        {errors.nombrePlanta && <span className="text-orange-600">No ingresaste un nombre</span>}
                 </div>
-                <button onClick={atras}>⬅ Volver</button>
-                <button  type="submit">Avanzar ➡</button>
+                <button className="cursor-pointer  ml-2 mr-2 rounded-lg mt-10 bg-amber-200 p-2 hover:bg-amber-300" type="button" onClick={atras}>⮜ Volver</button>
+                <button className="cursor-pointer rounded-lg mt-10 bg-sky-200 p-2 hover:bg-sky-300" type="submit">Avanzar ⮞</button>
             </form>
         </div>
     )

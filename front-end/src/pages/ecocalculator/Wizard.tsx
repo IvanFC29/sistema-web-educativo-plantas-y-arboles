@@ -17,12 +17,12 @@ export function Wizard() {
   };
 
   return (
-    <div className="p-4 max-w-xl mx-auto">
-      {step === 1 && <Step1TipoPlanta siguiente={nextStep} datos={updateFormData} />}
-      {step === 2 && <Step2Especie siguiente={nextStep} atras={prevStep} datos={updateFormData} />}
-      {step === 3 && <Step3Cantidad siguiente={nextStep} atras={prevStep} datos={updateFormData} />}
-      {step === 4 && <Step4EdadAltura siguiente={nextStep} atras={prevStep} datos={updateFormData} />}
-      {step === 5 && <Step5Resultado atras={prevStep} datos={updateFormData}/>}
+    <div className="p-4 max-w-4xl w-full mx-auto">
+      {step === 1 && <Step1TipoPlanta siguiente={nextStep} datos={updateFormData} datoActual={formData}/>}
+      {step === 2 && <Step2Especie siguiente={nextStep} atras={prevStep} datos={updateFormData} datoActual={formData} />}
+      {step === 3 && <Step3Cantidad siguiente={nextStep} atras={prevStep} datos={updateFormData} datoActual={formData} />}
+      {step === 4 && <Step4EdadAltura siguiente={nextStep} atras={prevStep} datos={updateFormData} datoActual={formData}/>}
+      {step === 5 && <Step5Resultado datos={formData}/>}
     </div>
   );
 }
