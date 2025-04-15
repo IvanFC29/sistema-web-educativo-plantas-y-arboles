@@ -9,7 +9,7 @@ type Acciones = {
 export function Step5Resultado({datos}: Acciones){
     const navegacion = useNavigate();
     const finalizar = () => {
-        datos({});
+        console.log(datos);
         navegacion('/mis-plantas');
         toast.success('Planta agregada a tu Jardin');
     }
@@ -33,7 +33,7 @@ export function Step5Resultado({datos}: Acciones){
 
     return(
         <div>
-            <h2 className="text-2xl dark:text-teal-900 text-center">Resultados de la planta</h2>
+            <p className="text-2xl font-bold dark:text-teal-900 text-center">Resultados de la planta</p>
             <div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
                     <div className="bg-green-100 p-4 rounded-xl shadow">
@@ -61,7 +61,7 @@ export function Step5Resultado({datos}: Acciones){
                   </ResponsiveContainer>
                 </div>
             </div>
-            <p className="mt-10"> Guardar planta en Mi jardin ?</p>
+            <p className="mt-10"> ¿Deseas guardar la planta en "Tu jardin" ?</p>
             <button onClick={finalizar} className="text-white font-bold cursor-pointer rounded-lg mt-2 bg-green-500 hover:bg-green-600 text-sm sm:w-auto px-5 py-2.5 text-center focus:ring-green-300">Si! ⮞</button>
         </div>
     )

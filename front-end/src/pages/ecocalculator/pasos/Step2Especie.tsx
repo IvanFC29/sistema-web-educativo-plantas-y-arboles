@@ -20,7 +20,7 @@ export function Step2Especie({atras, siguiente, datos, datoActual}: Acciones){
 
     return(
         <div>
-            <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black text-center">¿Cual es el nombre de la planta?</h2>
+            <p className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black text-center">¿Cual es el nombre de la planta?</p>
             <form onSubmit={registrarPlantas} className="max-w-md mx-auto mt-10">
                 <div className="relative z-0 w-full mb-5 group">
                     <label htmlFor="nombrePlanta" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Nombre de planta / arbol</label>

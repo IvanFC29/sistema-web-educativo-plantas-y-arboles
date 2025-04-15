@@ -36,7 +36,7 @@ export function Step4EdadAltura({atras, siguiente, datos, datoActual}: Acciones)
 
     return (
         <div>
-            <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black text-center">Proporciona la edad, altura y espesura de cada planta.</h2>
+            <p className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black text-center">Proporciona la edad, altura y espesura de cada planta.</p>
             <p className="dark:text-gray-500 text-center"> No te preocupes si no sabes las medidas exactas, puedes dar valores aproximados.</p>
             <form onSubmit={finalizar}>
                 <div className="mt-10 space-y-6">

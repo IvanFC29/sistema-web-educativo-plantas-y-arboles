@@ -20,7 +20,7 @@ export function Step1TipoPlanta({siguiente, datos, datoActual}: Acciones){
 
   return(
     <div> 
-      <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black text-center">¿Qué tipo de planta tienes?</h2>
+      <p className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black text-center">¿Qué tipo de planta tienes?</p>
       <div className="grid grid-cols-1 md:grid-cols-3">
         <div onClick={() => seleccionar("Arbol")} 
             className={cardClass('Arbol')}>
@@ -28,11 +28,11 @@ export function Step1TipoPlanta({siguiente, datos, datoActual}: Acciones){
         </div>     
         <div onClick={() => seleccionar("Arbusto")} 
             className={cardClass('Arbusto')}>
-            <p className="text-4xl text-center">🌿 Arbusto</p>
+            <p className="text-4xl text-center">🌾 Arbusto</p>
         </div>    
-        <div onClick={() => seleccionar("Maceta")} 
-            className={cardClass('Maceta')}>
-            <p className="text-4xl text-center">🌼 Maceta</p>
+        <div onClick={() => seleccionar("Flor")} 
+            className={cardClass('Flor')}>
+            <p className="text-4xl text-center">🌼 Flor</p>
         </div>
       </div>    
     </div>

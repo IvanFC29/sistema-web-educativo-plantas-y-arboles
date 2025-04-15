@@ -34,7 +34,7 @@ export function Step3Cantidad({atras, siguiente, datos, datoActual}: Acciones){
 
     return (
         <div>
-            <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black text-center">¿Cuantas plantas de {datoActual.especiePlanta} tienes?</h2>
+            <p className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black text-center">¿Cuantas plantas de {datoActual.especiePlanta} tienes?</p>
             <div className="grid grid-cols-1 md:grid-cols-4">
                 <div onClick={() => seleccionar(1)} className={cardClass(1)}>
                     <p className="text-4xl text-center">1</p>
