@@ -2,7 +2,7 @@ import { BarraNavegacion } from "../../components/BarraNavegacion"
 import { Link } from "react-router-dom"
 export function Home(){
     return (
-        <section>
+        <section className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-lime-300">
             <BarraNavegacion />
             <div className="grid grid-cols-1 md:grid-cols-3">
                 <div className="m-10">

@@ -3,41 +3,26 @@ import { Carousel } from "flowbite-react";
 export function Carrusel(){
     const slides = [
         {
-          src: '/img-calculador-ecologico.png',
-          alt: "Calculado ",
-          texto: "Este es el primer slide del carrusel"
+          src: '/img-slide1.png',
+          alt: "Calculadora ",
+          texto: "Registra tus plantas y conoceras su contribucion de oxigeno al ambiente"
         },
         {
-          src: '/img-reconocedor-plantas.png',
+          src: '/img-slide2.png',
           alt: "Segunda imagen",
-          texto: "Este es el segundo slide del carrusel"
-        },
-        {
-          src: "https://flowbite.com/docs/images/carousel/carousel-3.svg",
-          alt: "Tercera imagen",
-          texto: "Este es el tercer slide del carrusel"
-        },
-        {
-          src: "https://flowbite.com/docs/images/carousel/carousel-4.svg",
-          alt: "Cuarta imagen",
-          texto: "Este es el cuarto slide del carrusel"
-        },
-        {
-          src: "https://flowbite.com/docs/images/carousel/carousel-5.svg",
-          alt: "Quinta imagen",
-          texto: "Este es el quinto slide del carrusel"
+          texto: "Recibe recomendaciones para un mejor cuidado de tus plantas"
         }
       ];
     return (
-        <div className="w-full max-w-2x1 mx-auto h-64 sm:h-64 xl:h-90 2xl:h-99">
-        <Carousel>
-            {slides.map((slide, index) => (
-                <div key={index} className='flex flex-col items-center jutify-center text-center p-4'>
-                    <img src={slide.src} alt={slide.alt} className='w-3/4 h-auto max-h-60 object-contain' />
-                    <p className="mt-5 text-sm sm:text-base text-gray-700">{slide.texto}</p>
-                </div>
-            ))}
-        </Carousel>
-      </div>
+        <div className="w-full max-w-2x1 mx-auto h-80 sm:h-72 md:h-64 lg-h-64 xl:h-[22rem] 2xl:h-[24rem]">
+          <Carousel className="h-full">
+              {slides.map((slide, index) => (
+                  <div key={index} className='flex flex-col items-center jutify-center text-center p-4 h-full'>
+                      <img src={slide.src} alt={slide.alt} className='w-2/3 sm:w-3/4 h-auto max-h-40 sm:max-h-48 md:max-h-52 lg:max-h-56 object-contain' />
+                      <p className="mt-5 text-sm sm:text-base text-gray-700">{slide.texto}</p>
+                  </div>
+              ))}
+          </Carousel>
+        </div>
     )
 }

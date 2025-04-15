@@ -1,11 +1,12 @@
 import { BarraNavegacion } from "../../components/BarraNavegacion"
-import { Atras } from "../../components/Atras"
+import { Salir } from "../../components/Salir"
 import { Wizard } from "./Wizard"
+
 export function EcoCalculator(){
     return (
-        <div>
+        <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-lime-300">
             <BarraNavegacion />
-            <Atras />
+            <Salir/>
             <Wizard/>
         </div>
     )
