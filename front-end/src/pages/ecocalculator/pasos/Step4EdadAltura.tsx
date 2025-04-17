@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import { calcularImpacto } from "../../../assets/utils/Calculos";
 
 type Acciones = {
     atras: () => void;
@@ -29,8 +30,8 @@ export function Step4EdadAltura({atras, siguiente, datos, datoActual}: Acciones)
           plantas: plantas
         };
       
-        console.log(datosFinales); 
-        datos(datosFinales); 
+        var respuesta = calcularImpacto(datosFinales);
+        datos(respuesta); 
         siguiente(); 
       }); 
 
