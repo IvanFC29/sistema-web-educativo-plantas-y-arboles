@@ -7,6 +7,7 @@ export function Indicador(){
         '/inicio': 'Hola !! 👏',
         '/calculadora-ecologica': 'Calculadora Ecológica',
         '/mis-plantas': 'Hola !! 👏',
+        '/consejos': 'Consejos de un  Árbol'
     };
 
     const nombreSeccion = rutas[locacion.pathname];

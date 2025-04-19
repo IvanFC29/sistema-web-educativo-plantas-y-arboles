@@ -4,6 +4,7 @@ import { EcoCalculator } from "./pages/ecocalculator/Calculator";
 import {Home} from "./pages/home/Inicio";
 import { LandingPage } from "./pages/home/landingPage";
 import { MisPlantas } from "./pages/jardin/MisPlantas";
+import { Vista } from "./pages/consejosGame/Vista";
 import { Toaster } from "react-hot-toast";
 
 function App(){
@@ -16,6 +17,7 @@ function App(){
         <Route path="/inicio" element={<Home />} />
         <Route path="/calculadora-ecologica" element={<EcoCalculator />} />
         <Route path="/mis-plantas" element={<MisPlantas />}/>
+        <Route path="/consejos" element={<Vista />}/>
       </Routes>
       <Toaster />
     </BrowserRouter>
