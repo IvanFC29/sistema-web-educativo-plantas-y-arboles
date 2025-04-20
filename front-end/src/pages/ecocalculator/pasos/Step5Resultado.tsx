@@ -40,12 +40,12 @@ export function Step5Resultado({datos}: Acciones){
                     <div className="bg-green-100 p-4 rounded-xl shadow">
                         <h3 className="text-lg font-bold">Oxígeno producido</h3>
                         <p className="text-2xl text-green-700">{oxigenoTotal} kg / año</p>
-                        <p className="text-sm text-gray-600">Promedio por planta: {promedioO2} kg</p>
+                        <p className="text-sm text-gray-600">Promedio por planta: {promedioO2.toFixed(2)} kg</p>
                     </div>
                     <div className="bg-blue-100 p-4 rounded-xl shadow">
                         <h3 className="text-lg font-bold">CO₂ almacenado</h3>
                         <p className="text-2xl text-blue-700">{co2Almacenado} kg</p>
-                        <p className="text-sm text-gray-600">Promedio por planta: {promedioCO2} kg</p>
+                        <p className="text-sm text-gray-600">Promedio por planta: {promedioCO2.toFixed(2)} kg</p>
                     </div>
                 </div>
                 <div className="w-full h-[400px] p-4">
