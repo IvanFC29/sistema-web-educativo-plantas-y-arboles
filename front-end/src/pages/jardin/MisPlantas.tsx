@@ -1,5 +1,6 @@
 import { BarraNavegacion } from "../../components/BarraNavegacion"
 import { Sprout } from 'lucide-react';
+import { Tarjetas } from "./Tarjetas";
 
 export function MisPlantas(){
     return (
@@ -10,6 +11,7 @@ export function MisPlantas(){
                 <p className="dark:text-teal-900 font-semibold">Sin plantas en tu jardin  !!</p>
                 <p className="dark:text-gray-500">Ve a la actividad "Calculadora Ecologica" para agregar plantas</p>
             </div>
+            <Tarjetas/>
         </section>
     )
 } 
