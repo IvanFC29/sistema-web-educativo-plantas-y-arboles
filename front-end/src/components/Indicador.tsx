@@ -5,9 +5,9 @@ export function Indicador(){
 
     const rutas: {[key:string]:string}={
         '/inicio': 'Hola !! 👏',
-        '/calculadora-ecologica': 'Calculadora Ecológica',
+        '/huella-ecologica': 'Huella Ecológica',
         '/mis-plantas': 'Hola !! 👏',
-        '/consejos': 'Consejos de un  Árbol'
+        '/puzzle-plantar': 'Consejos de un  Árbol'
     };
 
     const nombreSeccion = rutas[locacion.pathname];

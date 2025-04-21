@@ -15,9 +15,9 @@ function App(){
         <Route path="/" element={<Navigate to="/index"/>}/>
         <Route path="/index" element={<LandingPage />} />
         <Route path="/inicio" element={<Home />} />
-        <Route path="/calculadora-ecologica" element={<EcoCalculator />} />
+        <Route path="/huella-ecologica" element={<EcoCalculator />} />
         <Route path="/mis-plantas" element={<MisPlantas />}/>
-        <Route path="/consejos" element={<Vista />}/>
+        <Route path="/puzzle-plantar" element={<Vista />}/>
       </Routes>
       <Toaster />
     </BrowserRouter>
