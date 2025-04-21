@@ -1,13 +1,13 @@
-import { BarraNavegacion } from "../../components/BarraNavegacion"
+import { BarraNavegacion } from "../../components/BarraNavegacion";
 import { Salir } from "../../components/Salir"
-import { Wizard } from "./Wizard"
+import { PanelGame } from "./PanelGame";
 
-export function EcoCalculator(){
+export function VistaGame(){
     return (
         <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-lime-300">
             <BarraNavegacion />
             <Salir/>
-            <Wizard/>
+            <PanelGame/>          
         </div>
     )
 }

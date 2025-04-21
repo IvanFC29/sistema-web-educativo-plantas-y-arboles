@@ -32,7 +32,7 @@ export function MisPlantas(){
                     <div className="max-w-md mx-auto mt-10 text-center">
                         <Sprout size={120} className="mx-auto text-emerald-900 opacity-60" />
                         <p className="dark:text-teal-900 font-semibold">Sin plantas en tu jardin  !!</p>
-                        <p className="dark:text-gray-500">Ve a la actividad "Calculadora Ecologica" para agregar plantas</p>
+                        <p className="dark:text-gray-500">Ve a la actividad "Huella Ecológica" para agregar plantas</p>
                     </div>
                 ): (
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-6">

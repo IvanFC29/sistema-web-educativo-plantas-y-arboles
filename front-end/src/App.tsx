@@ -1,10 +1,10 @@
 import { Encabezado } from "./components/Encabezado";
 import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
-import { EcoCalculator } from "./pages/ecocalculator/Calculator";
+import { VistaHE } from "./pages/huellaEcologica/VistaHE";
 import {Home} from "./pages/home/Inicio";
 import { LandingPage } from "./pages/home/landingPage";
 import { MisPlantas } from "./pages/jardin/MisPlantas";
-import { Vista } from "./pages/consejosGame/Vista";
+import { VistaGame } from "./pages/miniJuego/VistaGame";
 import { Toaster } from "react-hot-toast";
 
 function App(){
@@ -15,9 +15,9 @@ function App(){
         <Route path="/" element={<Navigate to="/index"/>}/>
         <Route path="/index" element={<LandingPage />} />
         <Route path="/inicio" element={<Home />} />
-        <Route path="/huella-ecologica" element={<EcoCalculator />} />
+        <Route path="/huella-ecologica" element={<VistaHE />} />
         <Route path="/mis-plantas" element={<MisPlantas />}/>
-        <Route path="/puzzle-plantar" element={<Vista />}/>
+        <Route path="/puzzle-plantar" element={<VistaGame />}/>
       </Routes>
       <Toaster />
     </BrowserRouter>

@@ -8,7 +8,7 @@ type Acciones = {
     datoActual: any;
 };
 
-export function Step4EdadAltura({atras, siguiente, datos, datoActual}: Acciones){
+export function Step4EspesuraAltura({atras, siguiente, datos, datoActual}: Acciones){
     
     const {register, handleSubmit} = useForm();
 
@@ -18,7 +18,6 @@ export function Step4EdadAltura({atras, siguiente, datos, datoActual}: Acciones)
       
         for (let i = 0; i < cantidad; i++) {
           plantas.push({
-            edad: Number(data[`edad_${i}`]),
             altura: Number(data[`altura_${i}`]),
             espesura: Number(data[`grosor_${i}`]) 
           });
@@ -49,19 +48,7 @@ export function Step4EdadAltura({atras, siguiente, datos, datoActual}: Acciones)
 
                         <div className="relative z-0 w-full group">
                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
-                                Edad aproximada (en años)
-                            </label>
-                            <input
-                                type="number"
-                                {...register(`edad_${index}`, {required: true})}
-                                placeholder="3"
-                                className="bg-white border border-green-300 text-black text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5"
-                            />
-                        </div>
-
-                        <div className="relative z-0 w-full group">
-                            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
-                                Altura aproximada (en cm.)
+                                Altura aproximada (en m.)
                             </label>
                             <input
                                 type="number"
