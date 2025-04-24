@@ -6,6 +6,7 @@ export function Indicador(){
     const rutas: {[key:string]:string}={
         '/inicio': 'Hola !! 👏',
         '/huella-ecologica': 'Huella Ecológica',
+        '/recomendaciones': 'Recomendaciones',
         '/mis-plantas': 'Hola !! 👏',
         '/puzzle-plantar': 'Consejos de un  Árbol'
     };

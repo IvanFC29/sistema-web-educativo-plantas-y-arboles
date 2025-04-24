@@ -16,7 +16,9 @@ class Planta(models.Model):
     tipo = models.CharField(max_length=100)
     cantidad = models.PositiveIntegerField()
     oxigenoTotal = models.DecimalField(max_digits=10, decimal_places=2)
+    carbonoTotal = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
     co2Total = models.DecimalField(max_digits=10, decimal_places=2)
+    fechaRegistro = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.especie

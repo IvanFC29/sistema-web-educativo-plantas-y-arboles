@@ -6,6 +6,8 @@ interface Planta {
     cantidad: number;
     oxigenoTotal: number;
     co2Total: number;
+    carbonoTotal: number;
+    fechaRegistro: string;
 }
 
 interface PlantaTarjeta{
@@ -36,16 +38,16 @@ export function Tarjetas({planta}: PlantaTarjeta){
               <p>{planta.cantidad}</p>
             </div>
             <div>
-              <p className="font-semibold">Oxígeno Total</p>
+              <p className="font-semibold">Oxígeno producido</p>
               <p>{planta.oxigenoTotal} kg/año</p>
             </div>
             <div>
-              <p className="font-semibold">CO₂ Capturado</p>
+              <p className="font-semibold">Carbono almacenado</p>
               <p>{planta.co2Total} kg/año</p>
             </div>
             <div>
               <p className="font-semibold">Registrado el</p>
-              <p>12-10-2023</p>
+              <p>{planta.fechaRegistro}</p>
             </div>
           </div>
         </div>

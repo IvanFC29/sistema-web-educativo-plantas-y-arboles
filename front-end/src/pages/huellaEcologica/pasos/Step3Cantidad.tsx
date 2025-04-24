@@ -52,7 +52,7 @@ export function Step3Cantidad({atras, siguiente, datos, datoActual}: Acciones){
                         className="w-full text-4xl text-center bg-transparent border-none outline-none" placeholder='+' />
                     </div>
                     <button type="submit" className="cursor-pointer text-sm text-blue-600 hover:underline mt-2 block mx-auto">
-                        Confirmar
+                        Listo !!
                     </button>
                 </form>                
             </div>  

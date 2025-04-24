@@ -6,6 +6,7 @@ import { LandingPage } from "./pages/home/landingPage";
 import { MisPlantas } from "./pages/jardin/MisPlantas";
 import { VistaGame } from "./pages/miniJuego/VistaGame";
 import { Toaster } from "react-hot-toast";
+import { VistaR } from "./pages/recomendaciones/VistaR";
 
 function App(){
   return(
@@ -18,6 +19,7 @@ function App(){
         <Route path="/huella-ecologica" element={<VistaHE />} />
         <Route path="/mis-plantas" element={<MisPlantas />}/>
         <Route path="/puzzle-plantar" element={<VistaGame />}/>
+        <Route path="/recomendaciones" element={<VistaR />}/>
       </Routes>
       <Toaster />
     </BrowserRouter>

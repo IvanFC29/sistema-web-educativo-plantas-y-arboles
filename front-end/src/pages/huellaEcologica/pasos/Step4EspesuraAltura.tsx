@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { calcularImpacto } from "../../../assets/utils/Calculos";
+import { useEffect,  useState} from "react";
 
 type Acciones = {
     atras: () => void;
@@ -9,8 +10,30 @@ type Acciones = {
 };
 
 export function Step4EspesuraAltura({atras, siguiente, datos, datoActual}: Acciones){
-    
-    const {register, handleSubmit} = useForm();
+    const [usarMismosValores, setUsarMismosValores] = useState(false);
+    const [valoresComunes, setValoresComunes] = useState({
+        altura: 0,
+        follaje: 0
+      });
+    const {register, handleSubmit, setValue} = useForm();
+
+    const asignar = handleSubmit(data => {
+        const nuevosValores = {
+            altura: data.alturaComun,
+            follaje: data.grosorComun
+          };
+          setValoresComunes(nuevosValores);
+    });
+
+    useEffect(() => {
+        if (usarMismosValores) {
+          const cantidad = datoActual.cantidadPlantas || 1;
+          for (let i = 0; i < cantidad; i++) {
+            setValue(`altura_${i}`, valoresComunes.altura);
+            setValue(`grosor_${i}`, valoresComunes.follaje);
+          }
+        }
+      }, [valoresComunes, usarMismosValores]);
 
     const finalizar = handleSubmit(data => {
         const cantidad = datoActual.cantidadPlantas || 1;
@@ -32,21 +55,54 @@ export function Step4EspesuraAltura({atras, siguiente, datos, datoActual}: Accio
         var respuesta = calcularImpacto(datosFinales);
         datos(respuesta); 
         siguiente(); 
-      }); 
+    }); 
 
     return (
         <div>
-            <p className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black text-center">Proporciona la edad, altura y espesura de cada planta.</p>
-            <p className="dark:text-gray-500 text-center"> No te preocupes si no sabes las medidas exactas, puedes dar valores aproximados.</p>
+            <p className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black text-center">Proporciona la altura y espesura de cada planta.</p>
+            <p className="dark:text-gray-500 text-center"> 💡 "Puedes aplicar los mismos datos a todas tus plantas si son similares. Si hay alguna que varía tambien la puedes editar, activa la opción usar valores comunes."</p>
+            <label className="mt-4">
+                <input
+                type="checkbox"
+                checked={usarMismosValores}
+                onChange={() => setUsarMismosValores(!usarMismosValores)}
+                />
+                Usar valores comunes o similares
+            </label>
+            {usarMismosValores && (
+                <form onSubmit={asignar}>
+                    <div className="bg-lime-100 mb-4 p-2 grid grid-cols-1 md:grid-cols-3 border rounded">
+                        <div className="relative z-0 group">
+                            <p className="dark:text-gray-500 text-2xl">Valores comunes</p> </div>
+                        <div className="relative z-0 group">
+                            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
+                                Altura (en m.)
+                            </label>
+                            <input  type="number"
+                                {...register('alturaComun', {required: true})}
+                                className="bg-white border border-green-300 text-black text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5"/> </div>
+                        <div className="relative z-0 group">
+                            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
+                                Grosor (diametro tronco/follaje cm.)
+                            </label>
+                            <input  type="number" 
+                                {...register('grosorComun', {required: true})}
+                                className="bg-white border border-green-300 text-black text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5"/> </div>
+                    </div>
+                    <button type="submit" 
+                        className="text-black font-semibold cursor-pointer rounded-lg bg-teal-300 hover:bg-teal-400 text-sm sm:w-auto px-5 py-2.5 text-center focus:ring-teal-300"
+                    > Listo !!</button>
+                </form>
+            )}
             <form onSubmit={finalizar}>
                 <div className="mt-10 space-y-6">
                     {[...Array(datoActual.cantidadPlantas || 1)].map((_, index) => (
-                    <div key={index} className="grid grid-cols-1 md:grid-cols-4 gap-4 border p-4 rounded-lg shadow-md">
-                        <div className="col-span-full">
+                    <div key={index} className="grid grid-cols-1 md:grid-cols-3 gap-3 border p-3 rounded-lg shadow-md">
+                        <div className="relative z-0 group">
                             <p className="dark:text-gray-500 text-2xl"> {datoActual.especiePlanta} {index + 1}</p>
                         </div>
 
-                        <div className="relative z-0 w-full group">
+                        <div className="relative z-0 group">
                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
                                 Altura aproximada (en m.)
                             </label>
@@ -58,7 +114,7 @@ export function Step4EspesuraAltura({atras, siguiente, datos, datoActual}: Accio
                             />
                         </div>
 
-                        <div className="relative z-0 w-full group">
+                        <div className="relative z-0 group">
                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
                                 Grosor aproximado (diametro tronco/follaje cm.)
                             </label>

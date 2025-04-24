@@ -4,6 +4,8 @@ interface Planta {
     cantidad: number;
     oxigenoTotal: number;
     co2Total: number;
+    carbonoTotal: number;
+    fechaRegistro: string;
 }
 
 import { BarraNavegacion } from "../../components/BarraNavegacion"
@@ -25,6 +27,7 @@ export function MisPlantas(){
     }, []);
 
     return (
+        // <section className="bg-[url('/fondo.jpg')] bg-cover bg-no-repeat bg-center h-screen w-screen bg-fixed">
         <section>
             <BarraNavegacion />      
             <div>
@@ -35,7 +38,7 @@ export function MisPlantas(){
                         <p className="dark:text-gray-500">Ve a la actividad "Huella Ecológica" para agregar plantas</p>
                     </div>
                 ): (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-6">
+                    <div className="bg-transparent grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
                         {lista.map((planta, index) => (
                             <Tarjetas key={index} planta={planta} />
                         ))}
