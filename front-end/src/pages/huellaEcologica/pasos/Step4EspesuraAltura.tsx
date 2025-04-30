@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { calcularImpacto } from "../../../assets/utils/Calculos";
+import { calcularImpacto } from "../../../assets/utils/CalculosHE";
 import { useEffect,  useState} from "react";
 
 type Acciones = {
@@ -97,7 +97,7 @@ export function Step4EspesuraAltura({atras, siguiente, datos, datoActual}: Accio
             <form onSubmit={finalizar}>
                 <div className="mt-10 space-y-6">
                     {[...Array(datoActual.cantidadPlantas || 1)].map((_, index) => (
-                    <div key={index} className="grid grid-cols-1 md:grid-cols-3 gap-3 border p-3 rounded-lg shadow-md">
+                    <div key={index} className="grid grid-cols-1 md:grid-cols-3 gap-3 border border-gray-400 p-3 rounded-lg shadow-md">
                         <div className="relative z-0 group">
                             <p className="dark:text-gray-500 text-2xl"> {datoActual.especiePlanta} {index + 1}</p>
                         </div>

@@ -34,7 +34,7 @@ export function BarraNavegacion() {
           </Link>
           <Dropdown
             label={
-              <span className="pl-1 pr-1 flex items-center gap-2 font-semibold text-gray-900 rounded-sm md:bg-transparent dark:text-black hover:bg-lime-100 md:hover:text-lime-700 md:dark:hover:text-lime-500 dark:hover:bg-lime-200 dark:hover:text-black md:dark:hover:bg-transparent">
+              <span className="cursor-pointer pl-1 pr-1 flex items-center gap-2 font-semibold text-gray-900 rounded-sm md:bg-transparent dark:text-black hover:bg-lime-100 md:hover:text-lime-700 md:dark:hover:text-lime-500 dark:hover:bg-lime-200 dark:hover:text-black md:dark:hover:bg-transparent">
                   <User size={18} /> Usuario </span>
             } inline
           >

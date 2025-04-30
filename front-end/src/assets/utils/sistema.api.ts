@@ -1,9 +1,10 @@
 import axios from "axios";
 
-export const getPlantas = () => {
-    return axios.get('http://127.0.0.1:8000/sistemaWeb/api/v1/planta/');
-}
+const apiPlanta = axios.create({
+    baseURL: 'http://127.0.0.1:8000/sistemaWeb/api/v1/planta/'
+});
 
-export const getUsuarios = () => {
-    return axios.get('http://127.0.0.1:8000/sistemaWeb/api/v1/usuario/');
-}
+export const getPlantas = () =>  apiPlanta.get('/');
+
+export const createPlanta = (planta: {especie: string, tipo: string, cantidad: number, oxigenoTotal: number, carbonoTotal: number, co2Total: number}) => apiPlanta.post('/', planta);
+

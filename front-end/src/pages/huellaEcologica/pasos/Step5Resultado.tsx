@@ -2,6 +2,9 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import "../../../assets/css/step5.css";
+import { useForm } from "react-hook-form";
+import { createPlanta } from "../../../assets/utils/sistema.api";
 
 type Acciones = {
   datos: {
@@ -14,16 +17,39 @@ type Acciones = {
     tipoPlanta: string;
   };
 };
-  
+type PlantaData = {
+  especie: string;
+  tipo: string;
+  cantidad: number;
+  oxigenoTotal: number;
+  carbonoTotal: number;
+  co2Total: number;
+  usuario: number; 
+};
+
 export function Step5Resultado({datos}: Acciones){
-   const [curiosidad, setCuriosidad] = useState('');
+    const [curiosidad, setCuriosidad] = useState('');
     const navegacion = useNavigate();
-    const guardarPlanta = () => {
-        navegacion('/mis-plantas');
-        toast.success('Planta agregada a tu Jardin');
-    }
+    const {register, handleSubmit} = useForm<PlantaData>();
+   
+    const guardarPlanta = handleSubmit(async (data: PlantaData) => {
+      const idUser: number = 1;
+      const planta = {
+        ...data,
+        usuario: idUser,
+      };
+      try {
+        const res = await createPlanta(planta);
+        console.log(res);
+      } catch (error: any) {
+        console.error("Error del servidor:", error.response?.data); 
+      }
+      
+      navegacion('/mis-plantas');
+      toast.success('Planta agregada a tu Jardin');
+    });
+
     console.log(datos);
-    console.log(datos.resultados);
     const d = datos.resultados.map((item: any, index: number) => ({
       nombre: `Planta ${index + 1}`,
       carbono: item.carbono.toFixed(2),
@@ -91,7 +117,15 @@ export function Step5Resultado({datos}: Acciones){
                 <p className="text-cyan-700 text-sm font-medium"> ✅ Tipo de planta: {datos.tipoPlanta}</p>
                 <p className="text-cyan-700 text-sm font-medium"> ✅ Huella ecológica : {datos.CO2Total.toFixed(2)} Kg.</p>
                 <p className="mt-5"> ¿Deseas guardar la planta en "Tu jardin" ?</p>
-                <button onClick={guardarPlanta} className="text-white font-bold cursor-pointer rounded-lg mt-2 bg-green-500 hover:bg-green-600 text-sm sm:w-auto px-5 py-2.5 text-center focus:ring-green-300">Si! ⮞</button>
+                <form onSubmit={guardarPlanta}>
+                  <input type="text" className="formulario" {...register('especie')} defaultValue={datos.especiePlanta}/>
+                  <input type="text" className="formulario" {...register('tipo')} defaultValue={datos.tipoPlanta}/>
+                  <input type="number" className="formulario" {...register('cantidad')} defaultValue={datos.cantidadPlantas}/>
+                  <input type="number" className="formulario" {...register('oxigenoTotal')} defaultValue={datos.oxigenoTotal.toFixed(2)}/>
+                  <input type="number" className="formulario" {...register('carbonoTotal')} defaultValue={datos.carbonoTotal.toFixed(2)}/>
+                  <input type="number" className="formulario" {...register('co2Total')} defaultValue={datos.CO2Total.toFixed(2)}/>
+                  <button onClick={guardarPlanta} className="text-white font-bold cursor-pointer rounded-lg mt-2 bg-green-500 hover:bg-green-600 text-sm sm:w-auto px-5 py-2.5 text-center focus:ring-green-300">Si! ⮞</button>
+                </form>
               </div>
             </div>         
         </div>

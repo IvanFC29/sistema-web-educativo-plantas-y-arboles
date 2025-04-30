@@ -18,7 +18,7 @@ interface ResultadoArbol {
     co2: number;
 }
 
-function calcularOxigenoPorPlanta(planta: {edad: number, altura: number, espesura: number}): number[]{
+function calcularOxigenoPorPlanta(planta: {altura: number, espesura: number}): number[]{
     /** Primero calculamos el volumen del arbol */ 
     const numero_PI: number = Math.PI;
     var DAP: number = planta.espesura/numero_PI;

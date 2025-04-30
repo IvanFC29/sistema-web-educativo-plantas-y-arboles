@@ -28,9 +28,9 @@ export function MisPlantas(){
 
     return (
         // <section className="bg-[url('/fondo.jpg')] bg-cover bg-no-repeat bg-center h-screen w-screen bg-fixed">
-        <section>
+        <section className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-lime-300">
             <BarraNavegacion />      
-            <div>
+            <div className="p-3 max-w-4xl w-full mx-auto">
                 {lista.length === 0 ?(
                     <div className="max-w-md mx-auto mt-10 text-center">
                         <Sprout size={120} className="mx-auto text-emerald-900 opacity-60" />
