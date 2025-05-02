@@ -5,10 +5,10 @@ export function Indicador(){
 
     const rutas: {[key:string]:string}={
         '/inicio': 'Hola !! 👏',
-        '/huella-ecologica': 'Huella Ecológica',
+        '/conociendo-tu-planta': 'Conociendo tu Planta',
         '/recomendaciones': 'Recomendaciones',
         '/mis-plantas': 'Hola !! 👏',
-        '/puzzle-plantar': 'Consejos de un  Árbol'
+        '/puzzle-plantar': 'Consejos de un Árbol'
     };
 
     const nombreSeccion = rutas[locacion.pathname];

@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { toPng } from 'html-to-image';
-import { Leaf, Trees, Download, Calendar } from "lucide-react"; 
+import { Leaf, Trees, Download, Calendar, Droplet } from "lucide-react"; 
 
 type Respuesta = {
     especie: string;
@@ -9,9 +9,10 @@ type Respuesta = {
     aguaRiego: number;
     tierra: string;
     clima: string;
+    hojas:string;
 }
 
-export function Resultado({especie, tipo, dias, aguaRiego, tierra, clima}: Respuesta){
+export function RecomendacionTipo2({especie, tipo, dias, aguaRiego, tierra, clima, hojas}: Respuesta){
     const divRef = useRef(null);
 
     const descargarRecomendacion = async () =>{
@@ -37,6 +38,7 @@ export function Resultado({especie, tipo, dias, aguaRiego, tierra, clima}: Respu
                     <p className='font-sans'><span className='font-semibold'>Especie: </span>{especie}</p>
                     <p className='font-sans'><span className='font-semibold'>Tipo:</span> {tipo}</p>
                     <p className='font-sans'><span className='font-semibold'>Tierra:</span> {tierra}</p>
+                    <p className='font-sans'><span className='font-semibold'>Hojas:</span> {hojas}</p>
                 </div>
                 <hr />
                 <div className='p-3'>
@@ -44,7 +46,7 @@ export function Resultado({especie, tipo, dias, aguaRiego, tierra, clima}: Respu
                 </div>
                 <div className='p-2'>
                     <ul className='flex flex-row'> <Calendar/> <span> Regar cada {dias} dias</span></ul>
-                    <ul> Con una cantidad de aproximadamente {aguaRiego} litros de agua</ul>
+                    <ul className='flex flex-row'> <Droplet/>  <span>Con una cantidad de aproximadamente {aguaRiego} litros de agua</span></ul>
                 </div>
             </div>
             <button onClick={descargarRecomendacion} className="mt-4 cursor-pointer bg-lime-500 hover:bg-lime-600 text-white px-4 py-2 rounded" title='Descargar recomendacion en .jpg'>

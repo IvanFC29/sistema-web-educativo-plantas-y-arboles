@@ -51,7 +51,7 @@ export function Tarjetas({planta}: PlantaTarjeta){
             </div>
           </div>
           <div className="mt-2 bg-teal-600 p-1 rounded-2xl">
-            <p className="text-white text-sm">Huella Ecologica: {planta.co2Total} Kg.</p>
+            <p className="text-white text-sm">Aporte Ambiental: {planta.co2Total} Kg.</p>
           </div>
         </div>
       </div>

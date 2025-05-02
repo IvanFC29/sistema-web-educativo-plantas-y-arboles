@@ -16,7 +16,7 @@ function App(){
         <Route path="/" element={<Navigate to="/index"/>}/>
         <Route path="/index" element={<LandingPage />} />
         <Route path="/inicio" element={<Home />} />
-        <Route path="/huella-ecologica" element={<VistaHE />} />
+        <Route path="/conociendo-tu-planta" element={<VistaHE />} />
         <Route path="/mis-plantas" element={<MisPlantas />}/>
         <Route path="/puzzle-plantar" element={<VistaGame />}/>
         <Route path="/recomendaciones" element={<VistaR />}/>
