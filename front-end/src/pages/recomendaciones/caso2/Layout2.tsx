@@ -1,4 +1,4 @@
-import { Cloudy, Sun, CloudRain } from "lucide-react";
+import { Cloudy, Sun, CloudRain,Sprout } from "lucide-react";
 import { getPlantas } from "../../../assets/utils/sistema.api";
 import { useEffect, useState } from "react";
 import { RecomendacionTipo2 } from "./Recomendacion2";
@@ -64,9 +64,12 @@ export function Layout2() {
     return (
         <div className="m-1">
             <section className="m-2 p-4 max-w-4xl w-full mx-auto border-2 border-gray-400 rounded-lg">
-                <p className="text-xl dark:text-teal-900 font-semibold mb-2">Elije tu planta</p>
+                <p className="text-xl text-center dark:text-teal-900 font-semibold mb-2">Elije tu planta</p>
                 {lista.length === 0 ? (
-                    <p className="dark:text-teal-900 font-semibold text-center">Sin plantas en tu jardin  !!</p>
+                    <div>
+                         <Sprout size={32} className="mx-auto text-emerald-900 opacity-60" />
+                         <p className="dark:text-teal-900 font-semibold text-center">Sin plantas en tu jardin  !!</p>
+                    </div>
                 ) : (
                     <select className="bg-white border border-green-300 text-black text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-10/12 p-2.5 dark:border-green-500 dark:text-black" onChange={e => setEspeciePlanta(e.target.value)}>
                         {lista.map((planta, index) => (

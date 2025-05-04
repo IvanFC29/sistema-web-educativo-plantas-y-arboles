@@ -2,7 +2,6 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import "../../../assets/css/step5.css";
 import { useForm } from "react-hook-form";
 import { createPlanta } from "../../../assets/utils/sistema.api";
 
