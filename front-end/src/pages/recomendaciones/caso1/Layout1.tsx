@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { RecomendacionTipo1 } from "./Recomendacion1";
+import { findDescripcion } from "../../../assets/utils/sistema.api";
 
 type Resultado = {
     especie: string;
@@ -13,7 +14,10 @@ export function Layout1(){
     const [tipoPlanta, setTipoPlanta] = useState('');
     const [tipoArbol, setTipoArbol] = useState('');
     const [estacion, setEstacion] =  useState('');
+    const [descripcion, setDescripcion] = useState('');
+    const [mostrarDescripcion, setMostrarDescripcion] = useState(false);
     const [divResultado, setDivResultado] = useState<Resultado | null>(null);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         const nuevaRecomendacion: Resultado = {
@@ -24,15 +28,47 @@ export function Layout1(){
         };
 
         setDivResultado(nuevaRecomendacion);
-    },[especie,tipoPlanta,tipoArbol,estacion]);
+
+        if (mostrarDescripcion && especie.trim() !== "") {
+            async function busquedaDescripcion(especie: string) {
+                try {
+                    const respuesta = await findDescripcion(especie);
+                    console.log("Respuesta API:", respuesta);
+                    setDescripcion(respuesta.data.descripcion);  
+                    setError(null);
+                } catch (err: any) {
+                    console.error("Error:", err);
+                    setDescripcion("");
+                    setError("No se pudo obtener la descripción");
+                }
+            }
+            busquedaDescripcion(especie);
+          } else {
+            setDescripcion('');
+            setError(null);
+          }
+    },[especie,tipoPlanta,tipoArbol,estacion, mostrarDescripcion]);
 
     return(
         <div className="flex m-1">
             <div className="flex-1 p-4">
                 <section className="m-2 p-4 max-w-4xl w-full mx-auto border-2 border-gray-400 rounded-lg">
-                    <p className="text-sm font-medium">Escribe la especie de tu planta</p>
-                    <input type="text" onChange={(e)=> setEspecie(e.target.value)}
-                    className="bg-white border border-green-300 text-black text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:border-green-500 dark:text-black"  name="" id="" />
+                    <div>
+                        <label className="text-sm font-medium">Escribe la especie de tu planta</label>
+                        <input type="text" onChange={(e)=> setEspecie(e.target.value)}
+                        className="bg-white border border-green-300 text-black text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:border-green-500 dark:text-black" />
+                    </div>
+                    <label >
+                        <input type="checkbox"  checked={mostrarDescripcion} 
+                        onChange={() => setMostrarDescripcion(!mostrarDescripcion)}/> 
+                        Buscar una descripcion de la planta
+                    </label>
+                    {mostrarDescripcion && (
+                        <div className="m-1.5">
+                            {descripcion && <p className="text-sm text-teal-800"><strong>Descripción:</strong> {descripcion}</p>}
+                            {error && <p className="text-red-500">{error}</p>}
+                        </div>
+                    )}
                 </section> 
                 {especie.length > 3&&(
                     <div>
@@ -156,7 +192,7 @@ export function Layout1(){
                     </div>      
                 )}
             </div>
-            <div className="w-1/3  p-4">
+            <div className="w-1/3 p-4">
                 <p className="text-xl dark:text-teal-900 font-semibold mb-2">Recomendaciones para plantar</p>
                 {divResultado && (
                     <RecomendacionTipo1 

@@ -62,134 +62,135 @@ export function Layout2() {
     });
 
     return (
-        <div className="m-1">
-            <section className="m-2 p-4 max-w-4xl w-full mx-auto border-2 border-gray-400 rounded-lg">
-                <p className="text-xl text-center dark:text-teal-900 font-semibold mb-2">Elije tu planta</p>
-                {lista.length === 0 ? (
-                    <div>
-                         <Sprout size={32} className="mx-auto text-emerald-900 opacity-60" />
-                         <p className="dark:text-teal-900 font-semibold text-center">Sin plantas en tu jardin  !!</p>
-                    </div>
-                ) : (
-                    <select className="bg-white border border-green-300 text-black text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-10/12 p-2.5 dark:border-green-500 dark:text-black" onChange={e => setEspeciePlanta(e.target.value)}>
-                        {lista.map((planta, index) => (
-                            <option key={index} value={planta.especie}>{planta.especie}</option>
-                        ))}
-                    </select>
-                )}
-            </section>
-            {lista.length > 0 && (
-                <div>
-                    <section className="m-2 p-4 max-w-4xl w-full mx-auto border-2 border-gray-400 rounded-lg">
-                        <p className="text-xl dark:text-teal-900 font-semibold mb-2">Tipo de tierra en el que estan tus plantas</p>
-                        <div className="grid grid-cols-2 p-3 ml-8 mr-8">
-                            <div className="p-2 mx-auto">
-                                <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
-                                            ${tipoTierra.includes('arenoso') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
-                                    <input className="hidden" type="radio" value="arenoso"
-                                        onChange={e => setTipoTierra(e.target.value)}
-                                        checked={tipoTierra.includes('arenoso')}
-                                        name="tipoTierra" id="arenoso" />
-                                    <span className="text-sm font-medium">Tierra Arenosa </span>
-                                </label>
-                            </div>
-                            <div className="p-2 mx-auto">
-                                <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
-                                            ${tipoTierra.includes('pedregoso') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
-                                    <input className="hidden" type="radio" value="pedregoso"
-                                        onChange={e => setTipoTierra(e.target.value)}
-                                        checked={tipoTierra.includes('pedregoso')}
-                                        name="tipoTierra" id="pedregoso" />
-                                    <span className="text-sm font-medium">Tierra Pedregosa</span>
-                                </label>
-                            </div>
-                            <label className="mt-3">
-                                <input type="checkbox" checked={maceta} onChange={() => setMaceta(!maceta)} />
-                                <span className="text-sm font-medium">Mi planta esta en maceta</span>
-                            </label>
+        <div className="flex m-1">
+            <div className="flex-1 p-4">
+                <section className="m-2 p-4 max-w-4xl w-full mx-auto border-2 border-gray-400 rounded-lg">
+                    <label className="text-sm font-medium">Elige tu planta</label>
+                    {lista.length === 0 ? (
+                        <div>
+                            <Sprout size={32} className="mx-auto text-emerald-900 opacity-60" />
+                            <p className="dark:text-teal-900 font-semibold text-center">Sin plantas en tu jardin  !!</p>
                         </div>
-                    </section>
-                    <section className="m-2 p-4 max-w-4xl w-full mx-auto border-2 border-gray-400 rounded-lg">
-                        <p className="text-xl dark:text-teal-900 font-semibold mb-2">El clima actual de la ciudad</p>
-                        <div className="grid grid-cols-3 p-3">
-                            <div className="p-2 mx-auto flex justify-center">
-                                <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
-                                            ${clima.includes('caluroso') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
-                                    <input className="hidden" type="radio" value="caluroso"
-                                        onChange={e => setClima(e.target.value)}
-                                        checked={clima.includes('caluroso')}
-                                        name="ciima" />
-                                    <span className="flex justify-center"><Sun /></span>
-                                    <span className="text-sm font-medium">Soleado / Caluroso </span>
-                                </label>
-                            </div>
-                            <div className="p-2 mx-auto flex justify-center">
-                                <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
-                                            ${clima.includes('lluvioso') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
-                                    <input className="hidden" type="radio" value="lluvioso"
-                                        onChange={e => setClima(e.target.value)}
-                                        checked={clima.includes('lluvioso')}
-                                        name="clima" />
-                                    <span className="flex justify-center"><CloudRain /></span>
-                                    <span className="text-sm font-medium"> LLuvioso </span>
-                                </label>
-                            </div>
-                            <div className="p-2 mx-auto flex justify-center">
-                                <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
-                                            ${clima.includes('nublado') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
-                                    <input className="hidden" type="radio" value="nublado"
-                                        onChange={e => setClima(e.target.value)}
-                                        checked={clima.includes('nublado')}
-                                        name="clima" />
-                                    <span className="flex justify-center"> <Cloudy /> </span>
-                                    <span className="text-sm font-medium">Templado / nublado </span>
-                                </label>
-                            </div>
-                        </div>
-                    </section>
-                    <section className="m-2 p-4 max-w-4xl w-full mx-auto border-2 border-gray-400 rounded-lg">
-                        <p className="text-xl dark:text-teal-900 font-semibold mb-2">Las hojas de tu planta</p>
-                        <p>Algunas de las hojas de tu planta lucen o tienen algun aspecto similar:</p>
-                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                            {hojas.map((hoja) => (
-                                <label
-                                    key={hoja.nombre}
-                                    className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
-                                            ${tipoHojas.includes(hoja.nombre) ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}
-                                >
-                                    <input
-                                        type="radio"
-                                        onChange={() => setTipoHojas(hoja.nombre)}
-                                        checked={tipoHojas.includes(hoja.nombre)}
-                                        className="hidden"
-                                    />
-                                    <img
-                                        src={hoja.imagen}
-                                        alt={hoja.nombre}
-                                        className="w-16 h-16 mx-auto mb-2 object-contain"
-                                    />
-                                </label>
+                    ) : (
+                        <select className="bg-white border border-green-300 text-black text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:border-green-500 dark:text-black" onChange={e => setEspeciePlanta(e.target.value)}>
+                            <option value="">Tu planta es</option>
+                            {lista.map((planta, index) => (
+                                <option key={index} value={planta.especie}>{planta.especie}</option>
                             ))}
-                        </div>
-                    </section>
-                    <section className="m-2 p-4 max-w-4xl w-full mx-auto border-2 border-gray-400 rounded-lg">
-                        <div className="">
-                            <p className="text-xl dark:text-teal-900 font-semibold mb-2">Recomendaciones de cuidado</p>
-                            {divResultado && (
-                                <RecomendacionTipo2
-                                    especie={divResultado.especie}
-                                    tipo={divResultado.tipo}
-                                    dias={divResultado.dias}
-                                    aguaRiego={divResultado.aguaRiego}
-                                    tierra={divResultado.tierra}
-                                    clima={divResultado.clima}
-                                    hojas={divResultado.hojas}
-                                />
-                            )}
-                        </div>
-                    </section>
-                </div>
-            )}
+                        </select>
+                    )}
+                </section>
+                {lista.length > 0 && (
+                    <div>
+                        <section className="m-2 p-4 max-w-4xl w-full mx-auto border-2 border-gray-400 rounded-lg">
+                            <p className="text-xl dark:text-teal-900 font-semibold mb-2">Tipo de tierra en el que estan tus plantas</p>
+                            <div className="grid grid-cols-2 p-3 ml-8 mr-8">
+                                <div className="p-2 mx-auto">
+                                    <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
+                                                ${tipoTierra.includes('arenoso') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
+                                        <input className="hidden" type="radio" value="arenoso"
+                                            onChange={e => setTipoTierra(e.target.value)}
+                                            checked={tipoTierra.includes('arenoso')}
+                                            name="tipoTierra" id="arenoso" />
+                                        <span className="text-sm font-medium">Tierra Arenosa </span>
+                                    </label>
+                                </div>
+                                <div className="p-2 mx-auto">
+                                    <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
+                                                ${tipoTierra.includes('pedregoso') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
+                                        <input className="hidden" type="radio" value="pedregoso"
+                                            onChange={e => setTipoTierra(e.target.value)}
+                                            checked={tipoTierra.includes('pedregoso')}
+                                            name="tipoTierra" id="pedregoso" />
+                                        <span className="text-sm font-medium">Tierra Pedregosa</span>
+                                    </label>
+                                </div>
+                                <label className="mt-3">
+                                    <input type="checkbox" checked={maceta} onChange={() => setMaceta(!maceta)} />
+                                    <span className="text-sm font-medium">Mi planta esta en maceta</span>
+                                </label>
+                            </div>
+                        </section>
+                        <section className="m-2 p-4 max-w-4xl w-full mx-auto border-2 border-gray-400 rounded-lg">
+                            <p className="text-xl dark:text-teal-900 font-semibold mb-2">El clima actual de la ciudad</p>
+                            <div className="grid grid-cols-3 p-3">
+                                <div className="p-2 mx-auto flex justify-center">
+                                    <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
+                                                ${clima.includes('caluroso') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
+                                        <input className="hidden" type="radio" value="caluroso"
+                                            onChange={e => setClima(e.target.value)}
+                                            checked={clima.includes('caluroso')}
+                                            name="ciima" />
+                                        <span className="flex justify-center"><Sun /></span>
+                                        <span className="text-sm font-medium">Soleado / Caluroso </span>
+                                    </label>
+                                </div>
+                                <div className="p-2 mx-auto flex justify-center">
+                                    <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
+                                                ${clima.includes('lluvioso') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
+                                        <input className="hidden" type="radio" value="lluvioso"
+                                            onChange={e => setClima(e.target.value)}
+                                            checked={clima.includes('lluvioso')}
+                                            name="clima" />
+                                        <span className="flex justify-center"><CloudRain /></span>
+                                        <span className="text-sm font-medium"> LLuvioso </span>
+                                    </label>
+                                </div>
+                                <div className="p-2 mx-auto flex justify-center">
+                                    <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
+                                                ${clima.includes('nublado') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
+                                        <input className="hidden" type="radio" value="nublado"
+                                            onChange={e => setClima(e.target.value)}
+                                            checked={clima.includes('nublado')}
+                                            name="clima" />
+                                        <span className="flex justify-center"> <Cloudy /> </span>
+                                        <span className="text-sm font-medium">Templado / nublado </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                        <section className="m-2 p-4 max-w-4xl w-full mx-auto border-2 border-gray-400 rounded-lg">
+                            <p className="text-xl dark:text-teal-900 font-semibold mb-2">Las hojas de tu planta</p>
+                            <p>Algunas de las hojas de tu planta lucen o tienen algun aspecto similar:</p>
+                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                                {hojas.map((hoja) => (
+                                    <label
+                                        key={hoja.nombre}
+                                        className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
+                                                ${tipoHojas.includes(hoja.nombre) ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}
+                                    >
+                                        <input
+                                            type="radio"
+                                            onChange={() => setTipoHojas(hoja.nombre)}
+                                            checked={tipoHojas.includes(hoja.nombre)}
+                                            className="hidden"
+                                        />
+                                        <img
+                                            src={hoja.imagen}
+                                            alt={hoja.nombre}
+                                            className="w-16 h-16 mx-auto mb-2 object-contain"
+                                        />
+                                    </label>
+                                ))}
+                            </div>
+                        </section>
+                    </div>
+                )}
+            </div>
+            <div className="w-1/3 p-4">
+                <p className="text-xl dark:text-teal-900 font-semibold mb-2">Recomendaciones de cuidado</p>
+                {divResultado && (
+                    <RecomendacionTipo2
+                        especie={divResultado.especie}
+                        tipo={divResultado.tipo}
+                        dias={divResultado.dias}
+                        aguaRiego={divResultado.aguaRiego}
+                        tierra={divResultado.tierra}
+                        clima={divResultado.clima}
+                        hojas={divResultado.hojas}
+                    />
+                )}
+            </div>
         </div>
     )
 }
