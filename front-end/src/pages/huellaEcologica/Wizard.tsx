@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Step1TipoPlanta } from "./pasos/Step1TipoPlanta";
 import { Step2Especie } from "./pasos/Step2Especie";
 import { Step3Cantidad } from "./pasos/Step3Cantidad";
 import { Step4EspesuraAltura } from "./pasos/Step4EspesuraAltura";
@@ -18,11 +17,10 @@ export function Wizard() {
 
   return (
     <div className="p-4 max-w-4xl w-full mx-auto">
-      {step === 1 && <Step1TipoPlanta siguiente={nextStep} datos={updateFormData} datoActual={formData}/>}
-      {step === 2 && <Step2Especie siguiente={nextStep} atras={prevStep} datos={updateFormData} datoActual={formData} />}
-      {step === 3 && <Step3Cantidad siguiente={nextStep} atras={prevStep} datos={updateFormData} datoActual={formData} />}
-      {step === 4 && <Step4EspesuraAltura siguiente={nextStep} atras={prevStep} datos={updateFormData} datoActual={formData}/>}
-      {step === 5 && <Step5Resultado datos={formData}/>}
+      {step === 1 && <Step2Especie siguiente={nextStep} datos={updateFormData} datoActual={formData} />}
+      {step === 2 && <Step3Cantidad siguiente={nextStep} atras={prevStep} datos={updateFormData} datoActual={formData} />}
+      {step === 3 && <Step4EspesuraAltura siguiente={nextStep} atras={prevStep} datos={updateFormData} datoActual={formData}/>}
+      {step === 4 && <Step5Resultado datos={formData}/>}
     </div>
   );
 }

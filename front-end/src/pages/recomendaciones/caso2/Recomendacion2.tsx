@@ -25,6 +25,12 @@ export function RecomendacionTipo2({especie, tipo, dias, aguaRiego, tierra, clim
         link.click();
     }
 
+    var recomendacionSegunTierra = '';
+    if(tierra === 'arcilloso'){
+        recomendacionSegunTierra = "La frecuencia de riego debe ser mayor porque el suelo retiene menos agua"
+    }else{
+        recomendacionSegunTierra = "La frecuencia de riego debe ser menor porque el suelo retiene mas agua"
+    }
     return (
         <div>
             {especie !== '' &&(
@@ -38,17 +44,34 @@ export function RecomendacionTipo2({especie, tipo, dias, aguaRiego, tierra, clim
                     <hr />
                     <div className='grid grid-cols-2 p-3'>
                         <p className='font-sans'><span className='font-semibold'>Especie: </span>{especie}</p>
-                        <p className='font-sans'><span className='font-semibold'>Tipo:</span> {tipo}</p>
                         <p className='font-sans'><span className='font-semibold'>Tierra:</span> {tierra}</p>
-                        <p className='font-sans'><span className='font-semibold'>Hojas:</span> {hojas}</p>
                     </div>
                     <hr />
                     <div className='p-3'>
-                        <p>En un clima {clima} se estima que lo recomedable para tu planta es:</p>
+                        {clima !== "" &&(
+                            <p>En un clima {clima} se estima que lo recomedable para tu planta es:</p>
+                        )}
+                    </div>
+                    {/* <div className='p-2'>
+                        {dias !== null  && aguaRiego !== null &&(
+                            <div>
+                                  <ul className='flex flex-row'> <Calendar/> <span> Regar cada {dias} dias</span></ul>
+                                  <ul className='flex flex-row'> <Droplet/>  <span>Con una cantidad de aproximadamente {aguaRiego} litros de agua</span></ul>
+                            </div>
+                        )}
+                    </div> */}
+                    <div className='p-2'>
+                        {tierra !== "" &&(
+                            <div>
+                                <ul className='flex flex-row'> <span> De acuerdo al tipo de tierra {tierra} </span></ul>
+                                <ul className='flex flex-row'> <Droplet/>  <span>{recomendacionSegunTierra} </span></ul>
+                            </div>
+                        )}
                     </div>
                     <div className='p-2'>
-                        <ul className='flex flex-row'> <Calendar/> <span> Regar cada {dias} dias</span></ul>
-                        <ul className='flex flex-row'> <Droplet/>  <span>Con una cantidad de aproximadamente {aguaRiego} litros de agua</span></ul>
+                        {hojas !== "" &&(
+                            <ul className='flex flex-row'> <span> Las hojas de tu planta parecen decir que  {hojas} </span></ul>
+                        )}
                     </div>
                 </div>
                 <button onClick={descargarRecomendacion} className="mt-4 cursor-pointer bg-lime-500 hover:bg-lime-600 text-white px-4 py-2 rounded" title='Descargar recomendacion en .jpg'>

@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import { RecomendacionTipo1 } from "./Recomendacion1";
 import { findDescripcion } from "../../../assets/utils/sistema.api";
+import { useForm } from "react-hook-form";
+import { createPlanta } from "../../../assets/utils/sistema.api";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 type Resultado = {
     especie: string;
@@ -8,6 +12,15 @@ type Resultado = {
     tipoArbol: string; 
     estacion: string;
 }
+type PlantaData = {
+    especie: string;
+    tipo: string;
+    cantidad: number;
+    oxigenoTotal: number;
+    carbonoTotal: number;
+    co2Total: number;
+    usuario: number; 
+  };
 
 export function Layout1(){
     const [especie, setEspecie] = useState('');
@@ -18,6 +31,9 @@ export function Layout1(){
     const [mostrarDescripcion, setMostrarDescripcion] = useState(false);
     const [divResultado, setDivResultado] = useState<Resultado | null>(null);
     const [error, setError] = useState<string | null>(null);
+    
+    const {register, handleSubmit, setValue} = useForm<PlantaData>();
+    const navegacion = useNavigate();
 
     useEffect(() => {
         const nuevaRecomendacion: Resultado = {
@@ -49,15 +65,44 @@ export function Layout1(){
           }
     },[especie,tipoPlanta,tipoArbol,estacion, mostrarDescripcion]);
 
+    const guardarPlanta = handleSubmit(async (data: PlantaData) => {
+        const idUser: number = 1;
+        const planta = {
+            ...data,
+            usuario: idUser,
+        };
+        try {
+          const res = await createPlanta(planta);
+          console.log(res);
+        } catch (error: any) {
+          console.error("Error del servidor:", error.response?.data); 
+        }
+        
+        navegacion('/mis-plantas');
+        toast.success('Planta agregada a tu Jardin');
+      });
+
     return(
         <div className="flex m-1">
             <div className="flex-1 p-4">
                 <section className="m-2 p-4 max-w-4xl w-full mx-auto border-2 border-gray-400 rounded-lg">
-                    <div>
+                    <form onSubmit={guardarPlanta}>
                         <label className="text-sm font-medium">Escribe la especie de tu planta</label>
-                        <input type="text" onChange={(e)=> setEspecie(e.target.value)}
+                        <input type="text" onChange={(e) => {
+                            const valor = e.target.value;
+                            setEspecie(valor);
+                            setValue('especie', valor); // <- actualiza el valor interno en el formulario
+                        }}
                         className="bg-white border border-green-300 text-black text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:border-green-500 dark:text-black" />
-                    </div>
+                        <p className="mt-5"> ¿Deseas guardar la planta en "Tu jardin" ?</p>
+        
+                            <input type="text" className="hidden" {...register('tipo')} defaultValue={'__'}/>
+                            <input type="number" className="hidden" {...register('cantidad')} defaultValue={0}/>
+                            <input type="number" className="hidden" {...register('oxigenoTotal')} defaultValue={0.0}/>
+                            <input type="number" className="hidden" {...register('carbonoTotal')} defaultValue={0.0}/>
+                            <input type="number" className="hidden" {...register('co2Total')} defaultValue={0.0}/>
+                            <button onClick={guardarPlanta} className="text-white font-bold cursor-pointer rounded-lg mt-2 bg-green-500 hover:bg-green-600 text-sm sm:w-auto px-5 py-2.5 text-center focus:ring-green-300">Si! ⮞</button>    
+                    </form>
                     <label >
                         <input type="checkbox"  checked={mostrarDescripcion} 
                         onChange={() => setMostrarDescripcion(!mostrarDescripcion)}/> 
