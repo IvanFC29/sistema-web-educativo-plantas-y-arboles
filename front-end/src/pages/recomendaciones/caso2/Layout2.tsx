@@ -1,16 +1,12 @@
-import { Cloudy, Sun, CloudRain,Sprout } from "lucide-react";
+import { Cloudy, Sun, CloudRain } from "lucide-react";
 import { getPlantas } from "../../../assets/utils/sistema.api";
 import { useEffect, useState } from "react";
 import { RecomendacionTipo2 } from "./Recomendacion2";
+import { SinPlantas } from "../../../components/SinPlantas";
 
 interface Planta {
     especie: string;
     tipo: string;
-    cantidad: number;
-    oxigenoTotal: number;
-    co2Total: number;
-    carbonoTotal: number;
-    fechaRegistro: string;
 }
 type Resultado = {
     especie: string;
@@ -57,9 +53,8 @@ export function Layout2() {
             hojas: tipoHojas
         };
 
-        console.log("La recomendacion", nuevaRecomendacion);
         setDivResultado(nuevaRecomendacion);
-    });
+    },[especiePlanta,tipoTierra,maceta,clima,tipoHojas]);
 
     return (
         <div className="flex m-1">
@@ -67,10 +62,7 @@ export function Layout2() {
                 <section className="m-2 p-4 max-w-4xl w-full mx-auto border-2 border-gray-400 rounded-lg">
                     <label className="text-sm font-medium">Elige tu planta</label>
                     {lista.length === 0 ? (
-                        <div>
-                            <Sprout size={32} className="mx-auto text-emerald-900 opacity-60" />
-                            <p className="dark:text-teal-900 font-semibold text-center">Sin plantas en tu jardin  !!</p>
-                        </div>
+                        <SinPlantas/>
                     ) : (
                         <select className="bg-white border border-green-300 text-black text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:border-green-500 dark:text-black" onChange={e => setEspeciePlanta(e.target.value)}>
                             <option value="">Tu planta es</option>

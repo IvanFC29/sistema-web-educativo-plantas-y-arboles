@@ -5,8 +5,8 @@ export function Indicador(){
 
     const rutas: {[key:string]:string}={
         '/inicio': 'Hola !! 👏',
-        '/conociendo-tu-planta': 'Aporte Ambiental',
-        '/recomendaciones': 'Conociendo tus Plantas',
+        '/aporte-ambiental': 'Aporte Ambiental',
+        '/conociendo-tu-planta': 'Conociendo tus Plantas',
         '/mis-plantas': 'Hola !! 👏',
         '/puzzle-plantar': 'Consejos de un Árbol'
     };

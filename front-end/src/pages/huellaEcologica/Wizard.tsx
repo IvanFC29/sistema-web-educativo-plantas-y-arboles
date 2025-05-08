@@ -17,7 +17,7 @@ export function Wizard() {
 
   return (
     <div className="p-4 max-w-4xl w-full mx-auto">
-      {step === 1 && <Step2Especie siguiente={nextStep} datos={updateFormData} datoActual={formData} />}
+      {step === 1 && <Step2Especie siguiente={nextStep} datos={updateFormData}/>}
       {step === 2 && <Step3Cantidad siguiente={nextStep} atras={prevStep} datos={updateFormData} datoActual={formData} />}
       {step === 3 && <Step4EspesuraAltura siguiente={nextStep} atras={prevStep} datos={updateFormData} datoActual={formData}/>}
       {step === 4 && <Step5Resultado datos={formData}/>}
