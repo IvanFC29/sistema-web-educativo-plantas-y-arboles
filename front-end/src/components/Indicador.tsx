@@ -7,8 +7,9 @@ export function Indicador(){
         '/inicio': 'Hola !! 👏',
         '/aporte-ambiental': 'Aporte Ambiental',
         '/conociendo-tu-planta': 'Conociendo tus Plantas',
-        '/mis-plantas': 'Hola !! 👏',
-        '/puzzle-plantar': 'Consejos de un Árbol'
+        '/mis-plantas': 'Mis Plantas',
+        '/puzzle-plantar': 'Juego el jardin ',
+        '/aportes-plantas': 'Historial de aportes Ambientales'
     };
 
     const nombreSeccion = rutas[locacion.pathname];

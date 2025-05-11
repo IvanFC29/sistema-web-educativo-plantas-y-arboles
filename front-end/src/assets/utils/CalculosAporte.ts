@@ -1,5 +1,4 @@
 type Planta = {
-    edad: number;
     altura: number;
     espesura: number;
 }

@@ -14,7 +14,7 @@ export function ModalConfirmacion({
     mensaje,
     onConfirm,
     onCancel,
-    textoConfirm = 'Reemplazar',
+    textoConfirm = 'Aceptar',
     textoCancel = 'Cancelar',
 }: ModalConfirmacionProps) {
 

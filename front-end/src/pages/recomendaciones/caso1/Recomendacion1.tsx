@@ -1,7 +1,6 @@
 import { useRef } from 'react';
 import { toPng } from 'html-to-image';
-import { Download } from "lucide-react"; 
-import { Sprout } from "lucide-react";
+import { Leaf, Trees,  Download, Sprout  } from "lucide-react"; 
 
 type Respuesta = {
     especie: string;
@@ -45,6 +44,15 @@ export function RecomendacionTipo1({especie,tipoPlanta,tipoArbol,estacion}: Resp
                         <hr />
                         {tipoPlanta !== '' &&(
                             <div>
+                                <div className="flex flex-col items-center">
+                                    <div className="bg-lime-200 rounded-full p-3">
+                                        {tipoPlanta === "Arbol" ? (
+                                        <Trees className="w-10 h-10 text-lime-700" />
+                                        ) : (
+                                        <Leaf className="w-10 h-10 text-lime-700" />
+                                        )}
+                                    </div>
+                                </div>
                                 <div className='m-1.5'>
                                     <p className='font-serif'>📍 Ubicacion de tu planta:</p>
                                     <p className='font-sans text-sm ml-1.5'>Al ser una planta que pertence al grupo de "{tipoPlanta}" se recomienda</p>

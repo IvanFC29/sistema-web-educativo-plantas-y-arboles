@@ -17,7 +17,7 @@ type PlantaData = {
     descripcion: string;
     tipo: string;
     usuario: number; 
-  };
+};
 
 export function Layout1(){
     const [especie, setEspecie] = useState('');
@@ -30,7 +30,7 @@ export function Layout1(){
     const [divResultado, setDivResultado] = useState<Resultado | null>(null);
     const [error, setError] = useState<string | null>(null);
     
-    const {register, handleSubmit, setValue} = useForm<PlantaData>();
+    const {register, handleSubmit, setValue, formState: {errors}} = useForm<PlantaData>();
     const navegacion = useNavigate();
 
     useEffect(() => {
@@ -49,6 +49,7 @@ export function Layout1(){
                     const respuesta = await findDescripcion(especie);
                     console.log("Respuesta API:", respuesta);
                     setDescripcion(respuesta.data.descripcion);  
+                    setValue("descripcion", respuesta.data.descripcion);
                     setError(null);
                 } catch (err: any) {
                     console.error("Error:", err);
@@ -61,7 +62,7 @@ export function Layout1(){
             setDescripcion('');
             setError(null);
           }
-    },[especie,tipoPlanta,tipoArbol,estacion, mostrarDescripcion]);
+    },[especie,descripcion,tipoPlanta,tipoArbol,estacion, mostrarDescripcion]);
 
     const guardarPlanta = handleSubmit(async (data: PlantaData) => {
         const idUser: number = 1;
@@ -81,7 +82,7 @@ export function Layout1(){
       });
 
     return(
-        <div className="flex m-1">
+        <div className="grid grid-cols-1 md:flex m-1">
             <div className="flex-1 p-4">
                 <section className="m-2 p-4 max-w-4xl w-full mx-auto border-2 border-gray-400 rounded-lg">
                     <div onSubmit={guardarPlanta}>
@@ -92,12 +93,15 @@ export function Layout1(){
                                 setValue('especie', valor); 
                             }}
                             className="bg-white border border-green-300 text-black text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:border-green-500 dark:text-black" />
+                            {errors.especie && <span className="text-orange-600">No ingresaste un nombre de planta</span> }
                     </div>
                     <label >
                         <input type="checkbox"  checked={mostrarDescripcion} 
                         onChange={() => setMostrarDescripcion(!mostrarDescripcion)}/> 
                         Buscar una descripcion de la planta
                     </label>
+                    <br />
+                    {/* {errors.descripcion && <span className="text-orange-600">No buscaste una descripcion de tu planta</span>} */}
                     {mostrarDescripcion && (
                         <div className="m-1.5">
                             {descripcion && <p className="text-sm text-teal-800"><strong>Descripción:</strong> {descripcion}</p>}
@@ -105,13 +109,17 @@ export function Layout1(){
                         </div>
                     )}
                     <div className="m-2 p-4 max-w-4xl w-full mx-auto border-2 border-gray-400 rounded-lg">
-                        <p className="text-sm font-medium">Tu planta puede pertenecer a uno de estos tipos</p>
-                        <div className="grid grid-cols-4 p-3 ml-8 mr-8">
+                        <p className="text-sm font-medium mb-3">Tu planta puede pertenecer a uno de estos tipos</p>
+                        <div className="grid grid-cols-2 md:grid-cols-4">
                             <div className="p-2 mx-auto">
                                 <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
                                     ${tipoPlanta.includes('arboles') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
                                     <input className="hidden" type="radio" value="arboles"
-                                        onChange={e => setTipoPlanta(e.target.value)}
+                                        onChange={(e) => {
+                                            const valor = e.target.value;
+                                            setTipoPlanta(valor);
+                                            setValue('tipo', valor);
+                                        }}
                                         checked={tipoPlanta.includes('arboles')}
                                         name="tipoPlanta" />
                                         <span className="text-sm font-medium">Arboles</span>
@@ -121,7 +129,11 @@ export function Layout1(){
                                 <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
                                     ${tipoPlanta.includes('arbustos') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
                                     <input className="hidden" type="radio" value="arbustos"
-                                        onChange={e => setTipoPlanta(e.target.value)}
+                                         onChange={(e) => {
+                                            const valor = e.target.value;
+                                            setTipoPlanta(valor);
+                                            setValue('tipo', valor);
+                                        }}
                                         checked={tipoPlanta.includes('arbustos')}
                                         name="tipoPlanta" />
                                         <span className="text-sm font-medium">Arbustos</span>
@@ -131,7 +143,11 @@ export function Layout1(){
                                 <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
                                     ${tipoPlanta.includes('flores') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
                                     <input className="hidden" type="radio" value="flores"
-                                        onChange={e => setTipoPlanta(e.target.value)}
+                                        onChange={(e) => {
+                                            const valor = e.target.value;
+                                            setTipoPlanta(valor);
+                                            setValue('tipo', valor);
+                                        }}
                                         checked={tipoPlanta.includes('flores')}
                                         name="tipoPlanta" />
                                         <span className="text-sm font-medium">Flores</span>
@@ -141,12 +157,17 @@ export function Layout1(){
                                 <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
                                     ${tipoPlanta.includes('suculentas') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
                                     <input className="hidden" type="radio" value="suculentas"
-                                        onChange={e => setTipoPlanta(e.target.value)}
+                                         onChange={(e) => {
+                                            const valor = e.target.value;
+                                            setTipoPlanta(valor);
+                                            setValue('tipo', valor);
+                                        }}
                                         checked={tipoPlanta.includes('suculentas')}
                                         name="tipoPlanta" />
                                         <span className="text-sm font-medium">Suculentas</span>
                                 </label>
                             </div>
+                            {errors.tipo && <span className="text-orange-600">No seleccionaste el tipo de planta</span>}
                         </div>  
                             {tipoPlanta === 'arboles' &&(
                                 <div className="m-3">
@@ -178,10 +199,10 @@ export function Layout1(){
                     </div>
                     <p className="mt-5"> ¿Deseas guardar la planta en "Tu jardin" ?</p>
                     <form onSubmit={guardarPlanta}>
-                        <input type="text" className="hidden" {...register('especie')} value={especie}/>
-                        <input type="text" className="hidden" {...register('tipo')} value={tipoPlanta}/>
+                        <input type="text" className="hidden" {...register('especie', {required:true})} value={especie}/>
+                        <input type="text" className="hidden" {...register('tipo', {required:true})} value={tipoPlanta}/>
                         <input type="text" className="hidden" {...register('descripcion')} value={descripcion}/>
-                        <button className="text-white font-bold cursor-pointer rounded-lg mt-2 bg-green-500 hover:bg-green-600 text-sm sm:w-auto px-5 py-2.5 text-center focus:ring-green-300">Si! ⮞</button>    
+                        <button onClick={guardarPlanta} className="text-white font-bold cursor-pointer rounded-lg mt-2 bg-green-500 hover:bg-green-600 text-sm sm:w-auto px-5 py-2.5 text-center focus:ring-green-300">Si! ⮞</button>    
                     </form>
                 </section> 
                 {especie.length > 3&&(

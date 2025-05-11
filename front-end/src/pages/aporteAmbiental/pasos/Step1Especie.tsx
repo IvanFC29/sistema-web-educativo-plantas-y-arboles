@@ -12,7 +12,7 @@ interface Planta {
     tipo: string;
     descripcion: string;
 }
-export function Step2Especie({siguiente, datos}: Acciones){
+export function Step1Especie({siguiente, datos}: Acciones){
     const [lista, setLista] = useState<Planta[]>([]);
     const {register, handleSubmit, formState: {errors}} = useForm();
 
@@ -44,7 +44,8 @@ export function Step2Especie({siguiente, datos}: Acciones){
                                     <option key={index} value={planta.especie}>{planta.especie}</option>
                                 ))}
                         </select>
-                         {errors.nombrePlanta && <span className="text-orange-600">No ingresaste un nombre</span>}
+                        <br />
+                        {errors.nombrePlanta && <span className="text-orange-600">No elegiste una planta</span>}
                         <button className="cursor-pointer rounded-lg mt-10 bg-sky-200 p-2 hover:bg-sky-300" type="submit">Avanzar ⮞</button>
                     </div>
                 )}

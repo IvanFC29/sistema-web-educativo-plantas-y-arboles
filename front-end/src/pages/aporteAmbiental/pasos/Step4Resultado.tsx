@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { createPlanta } from "../../../assets/utils/sistema.api";
+import { createAporte } from "../../../assets/utils/sistema.api";
 
 type Acciones = {
   datos: {
@@ -13,39 +13,36 @@ type Acciones = {
     CO2Total: number;
     especiePlanta: string;
     cantidadPlantas: number;
-    tipoPlanta: string;
   };
 };
 type PlantaData = {
-  especie: string;
-  tipo: string;
   cantidad: number;
   oxigenoTotal: number;
   carbonoTotal: number;
   co2Total: number;
-  usuario: number; 
+  planta: number; 
 };
 
-export function Step5Resultado({datos}: Acciones){
+export function Step4Resultado({datos}: Acciones){
     const [curiosidad, setCuriosidad] = useState('');
     const navegacion = useNavigate();
     const {register, handleSubmit} = useForm<PlantaData>();
    
     const guardarPlanta = handleSubmit(async (data: PlantaData) => {
-      const idUser: number = 1;
-      const planta = {
+      const idPlant: number = 1;
+      const aporte = {
         ...data,
-        usuario: idUser,
+        planta: idPlant,
       };
       try {
-        const res = await createPlanta(planta);
+        const res = await createAporte(aporte);
         console.log(res);
       } catch (error: any) {
         console.error("Error del servidor:", error.response?.data); 
       }
       
-      navegacion('/mis-plantas');
-      toast.success('Planta agregada a tu Jardin');
+      navegacion('/aportes-plantas');
+      toast.success('Aporte Ambiental registrado en el historial !!');
     });
 
     console.log(datos);
@@ -113,12 +110,9 @@ export function Step5Resultado({datos}: Acciones){
                 <p className="text-2xl font-bold dark:text-teal-900 text-center mb-2"> 📝 Resumen de datos</p>
                 <p className="text-cyan-700 text-sm font-medium"> ✅ Planta: {datos.especiePlanta} </p>
                 <p className="text-cyan-700 text-sm font-medium"> ✅ Cantidad: {datos.cantidadPlantas}</p>
-                <p className="text-cyan-700 text-sm font-medium"> ✅ Tipo de planta: {datos.tipoPlanta}</p>
                 <p className="text-cyan-700 text-sm font-medium"> ✅ Aporte Ambiental: {datos.CO2Total.toFixed(2)} Kg.</p>
-                <p className="mt-5"> ¿Deseas guardar la planta en "Tu jardin" ?</p>
+                <p className="mt-5"> ¿Deseas guardar el aporte de tu planta en el historial ?</p>
                 <form onSubmit={guardarPlanta}>
-                  <input type="text" className="hidden" {...register('especie')} defaultValue={datos.especiePlanta}/>
-                  <input type="text" className="hidden" {...register('tipo')} defaultValue={datos.tipoPlanta}/>
                   <input type="number" className="hidden" {...register('cantidad')} defaultValue={datos.cantidadPlantas}/>
                   <input type="number" className="hidden" {...register('oxigenoTotal')} defaultValue={datos.oxigenoTotal.toFixed(2)}/>
                   <input type="number" className="hidden" {...register('carbonoTotal')} defaultValue={datos.carbonoTotal.toFixed(2)}/>

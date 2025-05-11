@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { calcularImpacto } from "../../../assets/utils/CalculosHE";
+import { calcularImpacto } from "../../../assets/utils/CalculosAporte";
 import { useEffect,  useState} from "react";
 
 type Acciones = {
@@ -9,7 +9,7 @@ type Acciones = {
     datoActual: any;
 };
 
-export function Step4EspesuraAltura({atras, siguiente, datos, datoActual}: Acciones){
+export function Step3EspesuraAltura({atras, siguiente, datos, datoActual}: Acciones){
     const [usarMismosValores, setUsarMismosValores] = useState(false);
     const [valoresComunes, setValoresComunes] = useState({
         altura: 0,

@@ -7,7 +7,7 @@ type Acciones = {
     datoActual: any
 };
 
-export function Step3Cantidad({atras, siguiente, datos, datoActual}: Acciones){
+export function Step2Cantidad({atras, siguiente, datos, datoActual}: Acciones){
     const seleccionar = (cantidad: Number)=>{
         datos({cantidadPlantas: cantidad});
         siguiente();

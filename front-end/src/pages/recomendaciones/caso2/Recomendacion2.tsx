@@ -36,11 +36,15 @@ export function RecomendacionTipo2({especie, tipo, dias, aguaRiego, tierra, clim
             {especie !== '' &&(
             <div>
                 <div ref={divRef} className='p-5 bg-green-200 rounded-lg max-w-lg ml-5 mr-5'>
-                    {tipo === 'Arbol'?(
-                        <Trees className="w-10 h-10 text-green-700"/>
-                    ):(
-                        <Leaf className="w-10 h-10 text-green-700"/>
-                    )}
+                    <div className="flex flex-col items-center">
+                        <div className="bg-lime-200 rounded-full p-3">
+                            {tipo === "Arbol" ? (
+                                <Trees className="w-10 h-10 text-lime-700" />
+                            ) : (
+                                <Leaf className="w-10 h-10 text-lime-700" />
+                            )}
+                        </div>
+                    </div>
                     <hr />
                     <div className='grid grid-cols-2 p-3'>
                         <p className='font-sans'><span className='font-semibold'>Especie: </span>{especie}</p>

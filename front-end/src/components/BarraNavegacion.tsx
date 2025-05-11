@@ -25,12 +25,12 @@ export function BarraNavegacion() {
           <Link
             to="/mis-plantas"
             className={`font-semibold block py-2 px-3 text-gray-900 rounded-sm md:bg-transparent md:p-0 dark:text-black ${
-              location.pathname === '/mis-plantas' 
+              location.pathname === '/mis-plantas' || location.pathname === '/aportes-plantas'
                 ? 'bg-lime-300 md:text-lime-700 md:dark:text-lime-500'
                 : 'hover:bg-lime-100 md:hover:text-lime-700 md:dark:hover:text-lime-500 dark:hover:bg-lime-200 dark:hover:text-black md:dark:hover:bg-transparent'
             }`}
           >
-            Mis Plantas
+            Mi Jardin
           </Link>
           <Dropdown
             label={

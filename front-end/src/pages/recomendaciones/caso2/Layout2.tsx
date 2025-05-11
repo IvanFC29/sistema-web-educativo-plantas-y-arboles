@@ -57,7 +57,7 @@ export function Layout2() {
     },[especiePlanta,tipoTierra,maceta,clima,tipoHojas]);
 
     return (
-        <div className="flex m-1">
+        <div className="grid grid-cols-1 md:flex m-1">
             <div className="flex-1 p-4">
                 <section className="m-2 p-4 max-w-4xl w-full mx-auto border-2 border-gray-400 rounded-lg">
                     <label className="text-sm font-medium">Elige tu planta</label>
@@ -76,7 +76,7 @@ export function Layout2() {
                     <div>
                         <section className="m-2 p-4 max-w-4xl w-full mx-auto border-2 border-gray-400 rounded-lg">
                             <p className="text-xl dark:text-teal-900 font-semibold mb-2">Tipo de tierra en el que estan tus plantas</p>
-                            <div className="grid grid-cols-2 p-3 ml-8 mr-8">
+                            <div className="grid grid-cols-2">
                                 <div className="p-2 mx-auto">
                                     <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
                                                 ${tipoTierra.includes('arenoso') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>

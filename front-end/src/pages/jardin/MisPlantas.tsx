@@ -1,17 +1,13 @@
 interface Planta {
     especie: string;
     tipo: string;
-    cantidad: number;
-    oxigenoTotal: number;
-    co2Total: number;
-    carbonoTotal: number;
-    fechaRegistro: string;
+    descripcion: string;
 }
 
 import { BarraNavegacion } from "../../components/BarraNavegacion"
 import { useEffect, useState } from "react";
 import { getPlantas } from "../../assets/utils/sistema.api";
-import { Tarjetas } from "./Tarjetas";
+import { Tarjeta } from "./TarjetaPlanta";
 import { SinPlantas } from "../../components/SinPlantas";
 
 export function MisPlantas(){
@@ -29,15 +25,16 @@ export function MisPlantas(){
     return (
         <section className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-lime-300">
             <BarraNavegacion />      
+            <a href="/aportes-plantas" className="text-green-700 text-sm font-medium m-5">Historial de Aportes Ambientales </a>
             <div className="p-3 max-w-4xl w-full mx-auto">
                 {lista.length === 0 ?(
                     <div className="max-w-md mx-auto mt-10 text-center">
                         <SinPlantas/>
                     </div>
                 ): (
-                    <div className="bg-transparent grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
+                    <div className="bg-transparent grid grid-cols-1 md:grid-cols-2 gap-2">
                         {lista.map((planta, index) => (
-                            <Tarjetas key={index} planta={planta} />
+                            <Tarjeta key={index} plantaGuardada={planta} />
                         ))}
                     </div>  
                 )}
