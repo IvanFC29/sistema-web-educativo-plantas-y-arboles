@@ -19,7 +19,7 @@ function App(){
         <Route path="/inicio" element={<Home />} />
         <Route path="/aporte-ambiental" element={<VistaHE />} />
         <Route path="/mis-plantas" element={<MisPlantas />}/>
-        <Route path="/aportes-plantas" element={<MisAfiches />}/>
+        <Route path="/aportes-plantas/:id" element={<MisAfiches />}/>
         <Route path="/puzzle-plantar" element={<VistaGame />}/>
         <Route path="/conociendo-tu-planta" element={<VistaR />}/>
       </Routes>

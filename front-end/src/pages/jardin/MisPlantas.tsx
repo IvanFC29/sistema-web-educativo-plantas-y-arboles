@@ -1,4 +1,5 @@
 interface Planta {
+    id: number;
     especie: string;
     tipo: string;
     descripcion: string;
@@ -25,7 +26,6 @@ export function MisPlantas(){
     return (
         <section className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-lime-300">
             <BarraNavegacion />      
-            <a href="/aportes-plantas" className="text-green-700 text-sm font-medium m-5">Historial de Aportes Ambientales </a>
             <div className="p-3 max-w-4xl w-full mx-auto">
                 {lista.length === 0 ?(
                     <div className="max-w-md mx-auto mt-10 text-center">

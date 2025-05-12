@@ -13,6 +13,7 @@ type Acciones = {
     CO2Total: number;
     especiePlanta: string;
     cantidadPlantas: number;
+    idPlanta: number;
   };
 };
 type PlantaData = {
@@ -29,7 +30,7 @@ export function Step4Resultado({datos}: Acciones){
     const {register, handleSubmit} = useForm<PlantaData>();
    
     const guardarPlanta = handleSubmit(async (data: PlantaData) => {
-      const idPlant: number = 1;
+      const idPlant: number = datos.idPlanta;
       const aporte = {
         ...data,
         planta: idPlant,
@@ -41,7 +42,7 @@ export function Step4Resultado({datos}: Acciones){
         console.error("Error del servidor:", error.response?.data); 
       }
       
-      navegacion('/aportes-plantas');
+      navegacion('/aportes-plantas/'+idPlant);
       toast.success('Aporte Ambiental registrado en el historial !!');
     });
 

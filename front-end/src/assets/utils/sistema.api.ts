@@ -1,5 +1,6 @@
 import axios from "axios";
 
+/** API REST DE PLANTA */
 const apiPlanta = axios.create({
     baseURL: 'http://127.0.0.1:8000/sistemaWeb/api/v1/planta/'
 });
@@ -13,6 +14,9 @@ export const createPlanta = (
 
 export const getPlantas = () =>  apiPlanta.get('/');
 
+export const getPlantaById = (id:string) => apiPlanta.get(`/${id}`);
+
+/** API REST DE APORTES AMBIENTALES */
 const apiAporte = axios.create({
     baseURL: 'http://127.0.0.1:8000/sistemaWeb/api/v1/aporte/'
 })
@@ -25,8 +29,9 @@ export const createAporte = (
         co2Total: number
     }) => apiAporte.post('/', aporte);
 
-export const getAportes = () => apiAporte.get('/');
+export const getAportesByPlanta = (id:string) => apiAporte.get(`/?planta=${id}`);
 
+/** API REST DE FUNCION BUSQUEDA */
 export const findDescripcion = (palabra: string) =>
     axios.get(`http://127.0.0.1:8000/sistemaWeb/api/v1/buscar_descripcion/`, {
       params: { palabra }

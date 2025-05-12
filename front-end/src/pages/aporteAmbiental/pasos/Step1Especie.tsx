@@ -8,6 +8,7 @@ type Acciones = {
     datos: (data: any) => void;
 };
 interface Planta {
+    id: string;
     especie: string;
     tipo: string;
     descripcion: string;
@@ -16,21 +17,24 @@ export function Step1Especie({siguiente, datos}: Acciones){
     const [lista, setLista] = useState<Planta[]>([]);
     const {register, handleSubmit, formState: {errors}} = useForm();
 
-    const registrarPlantas = handleSubmit(data => {
-        datos({ especiePlanta: data.nombrePlanta});
+    const seleccionarPlanta = handleSubmit(data => {
+        var idPlanta = Number(data.nombrePlanta.charAt(0));
+        var nombrePlanta = data.nombrePlanta.slice(1);
+        datos({ idPlanta: idPlanta, especiePlanta: nombrePlanta});
         siguiente();
     })
 
     useEffect(() => {
         async function cargarPlantas() {
             const res = await getPlantas();
+            console.log(res);
             setLista(res.data);
         }
         cargarPlantas();
-    });
+    },[]);
 
     return(
-        <form onSubmit={registrarPlantas} className="max-w-md mx-auto mt-10">
+        <form onSubmit={seleccionarPlanta} className="max-w-md mx-auto mt-10">
             <div className="relative z-0 w-full mb-5 group">
                 {lista.length === 0 ? (
                     <SinPlantas/>
@@ -41,7 +45,7 @@ export function Step1Especie({siguiente, datos}: Acciones){
                             {...register("nombrePlanta", {required: true})}>
                             <option value="">Tu planta es</option>
                                 {lista.map((planta, index) => (
-                                    <option key={index} value={planta.especie}>{planta.especie}</option>
+                                    <option key={index} value={planta.id+planta.especie}>{planta.especie}</option>
                                 ))}
                         </select>
                         <br />

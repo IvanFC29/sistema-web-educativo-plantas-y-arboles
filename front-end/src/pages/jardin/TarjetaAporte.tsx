@@ -1,7 +1,6 @@
 import { Wind } from "lucide-react"; 
 
 interface Aporte {
-    especie: string;
     cantidad: number;
     oxigenoTotal: number;
     co2Total: number;
@@ -17,10 +16,6 @@ export function Tarjetas({aporte}: AporteTarjeta){
     return (
       <div className="m-7 bg-green-50 rounded-2xl shadow-md p-4">
         <div className="flex flex-col items-center space-y-4">
-          <div className="text-center">
-            <h2 className="text-xl font-bold text-green-800">{aporte.especie}</h2>
-          </div>
-  
           {/* Icono decorativo */}
           <div className="bg-green-200 rounded-full p-3">
             <Wind className="w-10 h-10 text-green-700"/>

@@ -9,11 +9,15 @@ export function Indicador(){
         '/conociendo-tu-planta': 'Conociendo tus Plantas',
         '/mis-plantas': 'Mis Plantas',
         '/puzzle-plantar': 'Juego el jardin ',
-        '/aportes-plantas': 'Historial de aportes Ambientales'
     };
 
-    const nombreSeccion = rutas[locacion.pathname];
+    let nombreSeccion = '';
 
+    if (locacion.pathname.startsWith('/aportes-plantas')) {
+        nombreSeccion = 'Historial de aportes Ambientales';
+    }else{
+        nombreSeccion = rutas[locacion.pathname];
+    }
     return(
         <h4 className="text-sm sm:text-base rounded-lg">{nombreSeccion}</h4>
     )
