@@ -5,12 +5,17 @@ export function Carrusel(){
         {
           src: '/img-slide1.png',
           alt: "Calculadora ",
-          texto: "Registra tus plantas y conoceras su contribucion de oxigeno al ambiente"
+          texto: "Registra tus plantas y conoceras consejos para plantarlas"
         },
         {
           src: '/img-slide2.png',
           alt: "Segunda imagen",
           texto: "Recibe recomendaciones para un mejor cuidado de tus plantas"
+        },
+        {
+          src: '/img-slide3.png',
+          alt: "Tercera imagen",
+          texto: "Aprende temas acerca de las plantas y arboles por medio de un juego educativo"
         }
       ];
     return (

@@ -11,8 +11,6 @@ interface Planta {
 type Resultado = {
     especie: string;
     tipo: string;
-    dias: number;
-    aguaRiego: number;
     tierra: string;
     clima: string;
     hojas: string;
@@ -21,6 +19,7 @@ type Resultado = {
 export function Layout2() {
     const [lista, setLista] = useState<Planta[]>([]);
     const [especiePlanta, setEspeciePlanta] = useState('');
+    const [tipoPlanta, setTipoPlanta] = useState('');
     const [tipoTierra, setTipoTierra] = useState('');
     const [maceta, setMaceta] = useState(false);
     const [clima, setClima] = useState('');
@@ -28,12 +27,12 @@ export function Layout2() {
     const [divResultado, setDivResultado] = useState<Resultado | null>(null);
 
     const hojas = [
-        { nombre: 'Necesita mas agua', imagen: '/img_hojas/Mas_agua.JPG' },
-        { nombre: 'Necesita mas sol', imagen: '/img_hojas/Mas_sol.JPG' },
-        { nombre: 'Necesita mas sombra', imagen: '/img_hojas/Mas_sombra.JPG' },
-        { nombre: 'Necesita menos agua', imagen: '/img_hojas/Menos_agua.JPG' },
-        { nombre: 'Lo comen los bichos', imagen: '/img_hojas/Presa_bichos.JPG' },
-        { nombre: 'Tiene hongos', imagen: '/img_hojas/Tiene_hongos.JPG' }
+        { nombre: 'tipoA', imagen: '/img_hojas/Mas_agua.JPG' },
+        { nombre: 'tipoB', imagen: '/img_hojas/Mas_sol.JPG' },
+        { nombre: 'tipoC', imagen: '/img_hojas/Mas_sombra.JPG' },
+        { nombre: 'tipoD', imagen: '/img_hojas/Menos_agua.JPG' },
+        { nombre: 'tipoE', imagen: '/img_hojas/Presa_bichos.JPG' },
+        { nombre: 'tipoF', imagen: '/img_hojas/Tiene_hongos.JPG' }
     ];
 
     useEffect(() => {
@@ -45,9 +44,7 @@ export function Layout2() {
 
         const nuevaRecomendacion: Resultado = {
             especie: especiePlanta,
-            tipo: '',
-            dias: 12,
-            aguaRiego: 2,
+            tipo: tipoPlanta,
             tierra: tipoTierra,
             clima: clima,
             hojas: tipoHojas
@@ -58,16 +55,21 @@ export function Layout2() {
 
     return (
         <div className="grid grid-cols-1 md:flex m-1">
-            <div className="flex-1 p-4">
+            <div className="w-full md:flex-1 p-4">
                 <section className="m-2 p-4 max-w-4xl w-full mx-auto border-2 border-gray-400 rounded-lg">
                     <label className="text-sm font-medium">Elige tu planta</label>
                     {lista.length === 0 ? (
                         <SinPlantas/>
                     ) : (
-                        <select className="bg-white border border-green-300 text-black text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:border-green-500 dark:text-black" onChange={e => setEspeciePlanta(e.target.value)}>
+                        <select className="bg-white border border-green-300 text-black text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:border-green-500 dark:text-black" 
+                            onChange={e => {
+                                const [especie, tipo] = e.target.value.split('/');
+                                setEspeciePlanta(especie);
+                                setTipoPlanta(tipo);
+                            }}>
                             <option value="">Tu planta es</option>
                             {lista.map((planta, index) => (
-                                <option key={index} value={planta.especie}>{planta.especie}</option>
+                                <option key={index} value={planta.especie+'/'+planta.tipo} >{planta.especie}</option>
                             ))}
                         </select>
                     )}
@@ -77,7 +79,7 @@ export function Layout2() {
                         <section className="m-2 p-4 max-w-4xl w-full mx-auto border-2 border-gray-400 rounded-lg">
                             <p className="text-xl dark:text-teal-900 font-semibold mb-2">Tipo de tierra en el que estan tus plantas</p>
                             <div className="grid grid-cols-2">
-                                <div className="p-2 mx-auto">
+                                <div className="p-2 mx-auto flex justify-center">
                                     <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
                                                 ${tipoTierra.includes('arenoso') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
                                         <input className="hidden" type="radio" value="arenoso"
@@ -87,7 +89,7 @@ export function Layout2() {
                                         <span className="text-sm font-medium">Tierra Arenosa </span>
                                     </label>
                                 </div>
-                                <div className="p-2 mx-auto">
+                                <div className="p-2 mx-auto flex justify-center">
                                     <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
                                                 ${tipoTierra.includes('pedregoso') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
                                         <input className="hidden" type="radio" value="pedregoso"
@@ -169,14 +171,12 @@ export function Layout2() {
                     </div>
                 )}
             </div>
-            <div className="w-1/3 p-4">
+            <div className="w-full md:w-1/3 p-4">
                 <p className="text-xl dark:text-teal-900 font-semibold mb-2">Recomendaciones de cuidado</p>
                 {divResultado && (
                     <RecomendacionTipo2
                         especie={divResultado.especie}
                         tipo={divResultado.tipo}
-                        dias={divResultado.dias}
-                        aguaRiego={divResultado.aguaRiego}
                         tierra={divResultado.tierra}
                         clima={divResultado.clima}
                         hojas={divResultado.hojas}
