@@ -5,9 +5,11 @@ import {Home} from "./pages/home/Inicio";
 import { LandingPage } from "./pages/home/landingPage";
 import { MisPlantas } from "./pages/jardin/MisPlantas";
 import { MisAfiches } from "./pages/jardin/MisAfiches";
-import { VistaGame } from "./pages/miniJuego/VistaGame";
+import { VistaGame } from "./pages/juego/VistaGame";
 import { Toaster } from "react-hot-toast";
 import { VistaR } from "./pages/recomendaciones/VistaR";
+import { VistaReflexiones } from "./pages/juego/VistaReflexiones";
+import { VistaAprendizaje } from "./pages/juego/VistaAprendizaje";
 
 function App(){
   return(
@@ -22,6 +24,8 @@ function App(){
         <Route path="/aportes-plantas/:id" element={<MisAfiches />}/>
         <Route path="/puzzle-plantar" element={<VistaGame />}/>
         <Route path="/conociendo-tu-planta" element={<VistaR />}/>
+        <Route path="/mis-reflexiones" element={<VistaReflexiones /> }/>
+        <Route path="/mis-aprendizajes" element={<VistaAprendizaje /> }/>
       </Routes>
       <Toaster />
     </BrowserRouter>

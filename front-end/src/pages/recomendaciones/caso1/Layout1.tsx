@@ -4,6 +4,7 @@ import { findDescripcion, createPlanta, getPlantas } from "../../../assets/utils
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { Search } from "lucide-react";
 
 type Resultado = {
     especie: string;
@@ -49,25 +50,6 @@ export function Layout1(){
 
         setDivResultado(nuevaRecomendacion);
 
-        if (mostrarDescripcion && especie.trim() !== "") {
-            async function busquedaDescripcion(especie: string) {
-                try {
-                    const respuesta = await findDescripcion(especie);
-                    console.log("Respuesta API:", respuesta);
-                    setDescripcion(respuesta.data.descripcion);  
-                    setValue("descripcion", respuesta.data.descripcion);
-                    setError(null);
-                } catch (err: any) {
-                    console.error("Error:", err);
-                    setDescripcion("");
-                    setError("No se pudo obtener la descripción");
-                }
-            }
-            busquedaDescripcion(especie);
-          } else {
-            setDescripcion('');
-            setError(null);
-          }
     },[especie,descripcion,tipoPlanta,estacion, mostrarDescripcion, lista]);
 
     const guardarPlanta = async (data: PlantaData) => {
@@ -101,6 +83,31 @@ export function Layout1(){
 
     const onCancel = () => setMostrar(false);
 
+    const buscarDescripcion = () => {
+        if (especie.trim() !== "") {
+            async function busquedaDescripcion(especie: string) {
+                try {
+                    const respuesta = await findDescripcion(especie);
+                    console.log("Respuesta API:", respuesta);
+                    setDescripcion(respuesta.data.descripcion);  
+                    setValue("descripcion", respuesta.data.descripcion);
+                    setError(null);
+                    setMostrarDescripcion(true); 
+                } catch (err: any) {
+                    console.error("Error:", err);
+                    setDescripcion("");
+                    setError("No se pudo obtener la descripción");
+                    setMostrarDescripcion(false); 
+                }
+            }
+            busquedaDescripcion(especie);
+          } else {
+            setDescripcion('');
+            setError(null);
+            setMostrarDescripcion(false);
+          }
+    }
+
     return(
         <div className="grid grid-cols-1 md:flex m-1">
             <div className="w-full md:flex-1 p-4">
@@ -116,14 +123,13 @@ export function Layout1(){
                             {errors.especie && <span className="text-orange-600">No ingresaste un nombre de planta</span> }
                     </div>
                     <br />
-                    <label >
-                        <input type="checkbox"  checked={mostrarDescripcion} 
-                        onChange={() => setMostrarDescripcion(!mostrarDescripcion)}/> 
-                        Buscar una descripcion de la planta
+                    <label className="flex flex-row" >
+                        <button onClick={buscarDescripcion} className="bg-sky-400 rounded-full p-1 hover:bg-blue-500 cursor-pointer" ><Search /> </button>
+                        <p>Buscar una descripcion de la planta</p>
                     </label>
                     <br />
                     {errors.descripcion && <span className="text-orange-600">No buscaste una descripcion de tu planta</span>}
-                    {mostrarDescripcion && (
+                    {mostrarDescripcion && descripcion &&(
                         <div className="m-1.5">
                             {descripcion && <p className="text-sm text-teal-800"><strong>Descripción:</strong> {descripcion}</p>}
                             {error && <p className="text-red-500">{error}</p>}

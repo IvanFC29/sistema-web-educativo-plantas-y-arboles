@@ -52,7 +52,7 @@ export function Tarjeta( {plantaGuardada}: filaPlanta){
                         <div className='m-auto'><img src={imagenDefault} alt="Imagen de planta" /></div>
                         <p className="text-gray-700">{descripcionActual}</p>
                         <button onClick={cerrarModal}
-                            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer">Cerrar
+                            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded mr-2 cursor-pointer">Cerrar
                         </button>
                     </div>
                 </div>
