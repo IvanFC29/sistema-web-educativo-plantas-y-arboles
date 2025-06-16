@@ -27,7 +27,7 @@ export function VistaGame(){
             <Salir/>
             <div className="p-2 m-0 flex flex-row justify-center bg-amber-100">
                 <button onClick={mostrarInstruccion} className="bg-amber-700 text-white text-center p-2 m-2 border-2 border-yellow-400 cursor-pointer rounded-2xl hover:bg-amber-900">¿Como Jugar?</button>
-                <button onClick={mostrarReflexiones} className="bg-amber-700 text-white text-center p-2 m-2 border-2 border-yellow-400 cursor-pointer rounded-2xl hover:bg-amber-900">Reflexiones</button>
+                <button onClick={mostrarReflexiones} className="bg-amber-700 text-white text-center p-2 m-2 border-2 border-yellow-400 cursor-pointer rounded-2xl hover:bg-amber-900">Para tomar en cuenta</button>
                 <button onClick={mostrarAprendizajes} className="bg-amber-700 text-white text-center p-2 m-2 border-2 border-yellow-400 cursor-pointer rounded-2xl hover:bg-amber-900">Aprendizaje</button>
             </div>
             <div className="bg-[url('/fondo.JPG')] bg-cover bg-no-repeat bg-center h-full w-full bg-fixed bg-transparent">

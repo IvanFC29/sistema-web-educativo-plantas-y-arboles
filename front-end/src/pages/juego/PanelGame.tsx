@@ -1,5 +1,5 @@
 import { Celda } from "./Celda";
-import { mapas, cantidadObjetos, cantidadNiveles } from "../../assets/utils/NivelesGame";
+import { mapas, cantidadNiveles } from "../../assets/utils/NivelesGame";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import corazon from '/img_juego/vida.png';
@@ -22,7 +22,14 @@ export function PanelGame() {
     const [listaNueces, setListaNueces] = useState<string[]>([]);
     const [mostrarMensaje, setMostrarMensaje] = useState(false);
     const [gano, setGano] = useState(false);
-
+    const [visibilidad, setVisibilidad] = useState(mapa ? mapa.map(fila => fila.map(() => false)) : []);
+      
+    useEffect(() => {
+        if (mapa) {
+          setVisibilidad(mapa.map(fila => fila.map(() => false)));
+        }
+    }, [mapa]);
+      
     useEffect(() => {
         for (let i = 0; i < mapa.length; i++) {
             for (let j = 0; j < mapa[i].length; j++) {
@@ -107,15 +114,14 @@ export function PanelGame() {
     useEffect(() => {
         var totalPorNivel = manzanasPendientes + nuecesPendientes;
 
-        if (totalPorNivel === cantidadObjetos(nivel)) {
+        if (totalPorNivel === 1) {
             const nuevoNivel = nivel + 1;
-            if (nuevoNivel < 5) { /** TO DO */
+            if (nuevoNivel < cantidadNiveles()) { 
                 setNivel(nuevoNivel);
                 setMapa(mapas(nuevoNivel));   
                 setManzanasPendientes(0);
                 setNuecesPendientes(0);     
-            }else{
-                console.log(cantidadNiveles());                
+            }else{            
                 setMostrarMensaje(true);
                 setGano(true);
             }
@@ -156,6 +162,14 @@ export function PanelGame() {
         }
     }
 
+    const descubrir = (i: number, j: number) => {
+        if (Math.abs(i - posicionX) <= 3 && Math.abs(j - posicionY) <= 3) {
+            const nueva = [...visibilidad];
+            nueva[i][j] = true;
+            setVisibilidad(nueva);
+        }
+    };
+      
     return (
         <div>
             <div className="flex flex-col items-center justify-center pb-20 pt-10">
@@ -166,9 +180,30 @@ export function PanelGame() {
                         maxWidth: '700px',
                         aspectRatio: `${mapa[0].length} / ${mapa.length}`,
                     }}>
-                        {mapa.flat().map((celda, index) => (
-                            <Celda key={index} tipo={celda} />
-                        ))}
+                       {mapa.flatMap((fila, i) =>
+                            fila.map((celda, j) => {
+                                const index = i * mapa[0].length + j;
+                                if (celda === 'P' || celda === 'A') {
+                                    return (
+                                        <Celda
+                                            key={index}
+                                            tipo={celda}
+                                            visible={true}
+                                            onDescubrir={() => descubrir(i, j)}
+                                        />
+                                    );
+                                }else{
+                                    return (
+                                        <Celda
+                                            key={index}
+                                            tipo={celda}
+                                            visible={visibilidad[i][j]}
+                                            onDescubrir={() => descubrir(i, j)}
+                                        />
+                                    );
+                                }
+                            })
+                        )}
                     </div>
                 )}
             </div>

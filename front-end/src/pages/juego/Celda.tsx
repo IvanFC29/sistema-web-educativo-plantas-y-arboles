@@ -6,26 +6,36 @@ import manzana from '/img_juego/manzana.png';
 import nuez from '/img_juego/nuez.png';
 import flor from '/img_juego/planta.png';
 
-export function Celda({tipo}: {tipo: string}){
+type CeldaAcciones = {
+    tipo:string,
+    visible: boolean,
+    onDescubrir: () => void;
+}
+export function Celda({tipo, visible, onDescubrir}: CeldaAcciones){
     const iconos: {[key:string]:string} = {
         'P': piedra,  //obstaculo
-        '_': cesped,  // camino
+        '_': flor,  // camino
         'M': manzana,  // bonus
         'A': ardilla,  // avatar
         'N': nuez,  // bonus
-        'F': flor,  // fuego
+        'F': cesped,  // fuego
         'B': basura   // antibonus
     }
     return (
-        <div className="flex items-center justify-center border border-gray-300">
-            <img src={iconos[tipo] || '❓'} alt="ardilla"  style={{
-                width: '100%',
-                height: '100%',
-                margin: 0,
-                padding: 0,
-                objectFit: 'cover',
-                display: 'block', // elimina espacios en línea
+        <div onClick={onDescubrir} className="flex items-center justify-center border border-gray-300">
+            {visible?(
+                <img src={iconos[tipo]} alt="img" style={{
+                    width: '100%',
+                    height: '100%',
+                    margin: 0,
+                    padding: 0,
+                    objectFit: 'cover',
+                    display: 'block', 
                 }}/>
+            ):(
+                <img src={iconos['F']} alt="img" className='cursor-pointer' />
+            )}
+           
         </div>
     )
 }

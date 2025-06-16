@@ -3,6 +3,7 @@ import { listaReflexiones } from "../../assets/utils/ReflexionesGame";
 import { BarraNavegacion } from "../../components/BarraNavegacion";
 import { Pin, PinOff } from "lucide-react";
 import { useState } from "react";
+import { toast } from "react-hot-toast";
 
 export function VistaReflexiones(){
     const [seDestaco, setSeDestaco] = useState(false);
@@ -13,6 +14,7 @@ export function VistaReflexiones(){
 
     const destacarReflexion = () => {
         setSeDestaco(!seDestaco);
+        toast.success('Se destaco un mensaje en la pagina de Inicio.');
     };
 
     const volverAlJuego = () => {
@@ -28,7 +30,7 @@ export function VistaReflexiones(){
                     <div className="bg-amber-100 m-10 p-6">
                         <div className="flex justify-between">
                             <p className="text-teal-900 font-extrabold">#{reflexion[0]}</p>
-                            <button onClick={destacarReflexion} className="rounded-full p-1 bg-white cursor-pointer hover:bg-red-200" title="Destacar Reflexion">
+                            <button onClick={destacarReflexion} className="rounded-full p-1 bg-white cursor-pointer hover:bg-red-200" title="Destacar Mensaje">
                                 {seDestaco?(
                                     <Pin className="text-red-500 bg-red-200 rounded-full"/>
                                 ):(

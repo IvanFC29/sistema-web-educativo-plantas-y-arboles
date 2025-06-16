@@ -3,6 +3,7 @@ import { listaTemas } from "../../assets/utils/AprendizajeGame";
 import { BarraNavegacion } from "../../components/BarraNavegacion";
 import { Pin, PinOff } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
+import { toast } from "react-hot-toast";
 
 export function VistaAprendizaje(){
     const [seDestaco, setSeDestaco] = useState(false);
@@ -27,8 +28,9 @@ export function VistaAprendizaje(){
           return () => document.removeEventListener("click", clickFuera);
     }, []);
 
-    const destacarReflexion = () => {
+    const destacarTema = () => {
         setSeDestaco(!seDestaco);
+        toast.success('Se destaco un tema de Aprendizaje en la pagina de Inicio.');
     };
 
     const volverAlJuego = () => {
@@ -44,7 +46,7 @@ export function VistaAprendizaje(){
                     <div ref={contenedorRef} className={`bg-amber-100 mt-10 ml-5 mr-5  mb-10 p-1 transition-all overflow-hidden shadow-md md:p-6 md:ml-20 md:mr-20 ${ expandido ? "max-h-full" : "max-h-[150px]"}`}>
                         <div className="flex justify-between">
                             <p className="text-teal-900 font-extrabold">#{aprendizaje[0]}</p>
-                            <button onClick={destacarReflexion} className="rounded-full p-1 bg-white cursor-pointer hover:bg-red-200" title="Destacar aprendizaje">
+                            <button onClick={destacarTema} className="rounded-full p-1 bg-white cursor-pointer hover:bg-red-200" title="Destacar aprendizaje">
                                 {seDestaco?(
                                     <Pin className="text-red-500 bg-red-200 rounded-full"/>
                                 ):(
@@ -66,7 +68,7 @@ export function VistaAprendizaje(){
                             <p>Fuente de informacion del tema: <span><a className="text-emerald-950 font-bold" href={aprendizaje[4]} target="_blank"> Fotosíntesis: qué es, fases e importancia </a></span></p>
                             <div className="p-2">
                                 <p>Obten mas informacion en el siguiente video:</p>
-                                <iframe width="300" height="185" src="https://www.youtube.com/embed/mtGgo68VM54?si=WpkYM3QAsHPxZhKl" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+                                <iframe width="300" height="185" src={aprendizaje[4]} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
                             </div>
                         </div>
                         <button onClick={()=>{setExpandido(!expandido)}} title={expandido? "Ver menos": "Ver mas"} className="rounded-full pr-1 pl-1 absolute bottom-11 bg-amber-100 hover:bg-amber-200 text-gray-700 cursor-pointer">
