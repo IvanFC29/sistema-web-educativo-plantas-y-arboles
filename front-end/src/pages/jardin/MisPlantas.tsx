@@ -3,6 +3,7 @@ interface Planta {
     especie: string;
     tipo: string;
     descripcion: string;
+    foto: string;
 }
 
 import { BarraNavegacion } from "../../components/BarraNavegacion"
@@ -14,12 +15,13 @@ import { SinPlantas } from "../../components/SinPlantas";
 export function MisPlantas(){
     const [lista, setLista] = useState<Planta[]>([]);
 
+    async function cargarListaPlantas(){
+        const respuesta = await getPlantas();
+        setLista(respuesta.data);
+        console.log(respuesta.data);
+    }
+
     useEffect(() => {
-        async function cargarListaPlantas(){
-            const respuesta = await getPlantas();
-            setLista(respuesta.data);
-            console.log(respuesta.data);
-        }
         cargarListaPlantas()
     }, []);
 
@@ -34,7 +36,7 @@ export function MisPlantas(){
                 ): (
                     <div className="bg-transparent grid grid-cols-1 md:grid-cols-2 gap-2">
                         {lista.map((planta, index) => (
-                            <Tarjeta key={index} plantaGuardada={planta} />
+                            <Tarjeta key={index} plantaGuardada={planta} recargar={cargarListaPlantas}/>
                         ))}
                     </div>  
                 )}

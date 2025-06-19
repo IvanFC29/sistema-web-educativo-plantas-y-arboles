@@ -16,6 +16,17 @@ export const getPlantas = () =>  apiPlanta.get('/');
 
 export const getPlantaById = (id:string) => apiPlanta.get(`/${id}`);
 
+export const updateFotoPlantaById = (id:string, foto:File) => {
+    const formData = new FormData();
+    formData.append('foto', foto);
+
+    return apiPlanta.patch(`/${id}/`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data', 
+        }, 
+    });
+};
+
 /** API REST DE APORTES AMBIENTALES */
 const apiAporte = axios.create({
     baseURL: 'http://127.0.0.1:8000/sistemaWeb/api/v1/aporte/'
