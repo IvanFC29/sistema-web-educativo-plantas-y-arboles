@@ -121,10 +121,10 @@ export function TabFoto({ idPlanta, nombrePlanta, recargar, onActualizado }: Tab
                 )}
                 {activeTab === "layout2" && (
                     <div className="p-2">
-                        <input type="file" accept="image/*" onChange={subirImagen}/>
+                        <input type="file" className="cursor-pointer bg-gray-200 p-2" accept="image/*" onChange={subirImagen}/>
                         {vistaImagen &&(
                             <div className="mt-4">
-                                <img src={vistaImagen} alt="Imagen Seleccionada" />
+                                <img src={vistaImagen} className="mx-auto" alt="Imagen Seleccionada" />
                             </div>
                         )}
                         <button onClick={actualizarFoto} disabled={!vistaImagen} 

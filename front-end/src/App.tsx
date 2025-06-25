@@ -1,7 +1,7 @@
 import { Encabezado } from "./components/Encabezado";
-import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { VistaHE } from "./pages/aporteAmbiental/VistaHE";
-import {Home} from "./pages/home/Inicio";
+import { Home } from "./pages/home/Inicio";
 import { LandingPage } from "./pages/home/landingPage";
 import { MisPlantas } from "./pages/jardin/MisPlantas";
 import { MisAfiches } from "./pages/jardin/MisAfiches";
@@ -10,6 +10,7 @@ import { Toaster } from "react-hot-toast";
 import { VistaR } from "./pages/recomendaciones/VistaR";
 import { VistaReflexiones } from "./pages/juego/VistaReflexiones";
 import { VistaAprendizaje } from "./pages/juego/VistaAprendizaje";
+import { CreateUsr } from "./pages/usuario/CreateUsr";
 
 function App(){
   return(
@@ -26,6 +27,7 @@ function App(){
         <Route path="/conociendo-tu-planta" element={<VistaR />}/>
         <Route path="/mis-reflexiones" element={<VistaReflexiones /> }/>
         <Route path="/mis-aprendizajes" element={<VistaAprendizaje /> }/>
+        <Route path="/crear-cuenta" element={<CreateUsr/>} />
       </Routes>
       <Toaster />
     </BrowserRouter>

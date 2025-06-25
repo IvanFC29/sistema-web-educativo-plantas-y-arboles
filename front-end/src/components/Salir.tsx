@@ -1,8 +1,15 @@
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+
 export function Salir(){
     const navegacion = useNavigate();
+    const location = useLocation();
     const salir = () => {
-        navegacion('/inicio');
+        if (location.pathname === '/crear-cuenta') {
+            navegacion('/index');
+        }else{
+            navegacion('/inicio');
+        }
     }
 
     return (

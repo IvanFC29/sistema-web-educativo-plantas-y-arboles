@@ -35,11 +35,12 @@ export function Layout1(){
     const {register, handleSubmit, setValue, formState: {errors}} = useForm<PlantaData>();
     const navegacion = useNavigate();
 
+    async function cargarListaPlantas() {
+        const respuesta = await getPlantas();
+        setLista(respuesta.data);
+    }
+    
     useEffect(() => {
-        async function cargarListaPlantas() {
-            const respuesta = await getPlantas();
-            setLista(respuesta.data);
-        }
         cargarListaPlantas();
 
         const nuevaRecomendacion: Resultado = {
@@ -101,11 +102,11 @@ export function Layout1(){
                 }
             }
             busquedaDescripcion(especie);
-          } else {
+        } else {
             setDescripcion('');
             setError(null);
             setMostrarDescripcion(false);
-          }
+        }
     }
 
     return(
@@ -124,7 +125,7 @@ export function Layout1(){
                     </div>
                     <br />
                     <label className="flex flex-row" >
-                        <button onClick={buscarDescripcion} className="bg-sky-400 rounded-full p-1 hover:bg-blue-500 cursor-pointer" ><Search /> </button>
+                        <button onClick={buscarDescripcion} className="bg-sky-200 rounded-full p-1 hover:bg-sky-300 cursor-pointer" ><Search /> </button>
                         <p>Buscar una descripcion de la planta</p>
                     </label>
                     <br />

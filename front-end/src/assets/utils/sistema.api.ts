@@ -48,3 +48,27 @@ export const findDescripcion = (palabra: string) =>
       params: { palabra }
 });
   
+/** API REST DE USUARIO */
+export const createUser = (
+    user: {
+        
+    }
+) => {}
+
+/** API REST PARA EL LOGIN */
+export const login = (
+    userData: {
+        correo: string,
+        password: string
+    })=>{
+    fetch(`http://127.0.0.1:8000/sistemaWeb/api/v1/token/`, {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify(userData)
+    })
+    .then(res => res.json())
+    .then(data => {
+        localStorage.setItem("access", data.access);
+        localStorage.setItem("refresh",data.refresh);
+    })
+};
