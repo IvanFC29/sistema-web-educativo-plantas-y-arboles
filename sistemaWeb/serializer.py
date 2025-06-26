@@ -1,21 +1,18 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Usuario, Planta, ProgresoJuego, AporteAmbiental, AprendizajeJuego, MensajeJuego
-
-class UsuarioSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Usuario
-        fields = '__all__'
+from .models import Planta, ProgresoJuego, AporteAmbiental, AprendizajeJuego, MensajeJuego
 
 class PlantaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Planta
         fields = '__all__'
+        read_only_fields = ['usuario']
 
 class ProgresoSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProgresoJuego
         fields = '__all__'
+        read_only_fields = ['usuario']
 
 class AporteSerializer(serializers.ModelSerializer):
     class Meta:

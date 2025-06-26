@@ -1,10 +1,10 @@
 from django.db import models
-from .usuario import Usuario
+from django.contrib.auth.models import User 
 
 class ProgresoJuego(models.Model):
-    usuario = models.OneToOneField(Usuario, on_delete=models.CASCADE, related_name="progreso")
-    nivel = models.PositiveIntegerField()
-    puntos = models.PositiveIntegerField()
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, related_name="progreso")
+    nivel = models.PositiveIntegerField(default=0)
+    puntos = models.PositiveIntegerField(default=0)
    
     def __str__(self):
         return f"{self.usuario.nombre} - {self.nivel}"

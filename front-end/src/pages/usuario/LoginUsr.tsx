@@ -9,7 +9,7 @@ export default function(){
     const ingresar = handleSubmit(data => {
         console.log(data);
         const userData = {
-            correo: data.email,
+            username: data.username,
             password: data.password
         }
        
@@ -23,11 +23,11 @@ export default function(){
         <div className="w-full max-w-sm p-4 bg-white border border-green-400 rounded-lg shadow-sm sm:p-6 md:p-8 dark:bg-white dark:border-gray-700">
             <form onSubmit={ingresar} className="space-y-6">
                 <div>
-                    <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Correo Electronico</label>
-                    <input type="email" id="email" 
-                        {...register('email', {required:true})}
+                    <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Nombre de Usuario</label>
+                    <input type="text" id="username" 
+                        {...register('username', {required:true})}
                         className="bg-white border border-green-300 text-black text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:border-green-500 dark:text-black" placeholder="nombre@gmail.com"/>
-                        {errors.email && <span className="text-orange-600 text-sm">Este campo esta vacio</span>} 
+                        {errors.username && <span className="text-orange-600 text-sm">Este campo esta vacio</span>} 
                 </div>
                 <div>
                     <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Contraseña</label>

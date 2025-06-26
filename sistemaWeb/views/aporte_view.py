@@ -1,11 +1,14 @@
-from django.shortcuts import render
 from rest_framework import viewsets
 from ..models import AporteAmbiental
 from ..serializer import AporteSerializer
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
 
 class AporteVista(viewsets.ModelViewSet):
     serializer_class = AporteSerializer
     queryset = AporteAmbiental.objects.all()
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
 
     def get_queryset(self):
         queryset = super().get_queryset()
