@@ -6,17 +6,23 @@ export default function(){
     const navegador = useNavigate();
     const {register, handleSubmit, formState:{errors}} = useForm();
 
-    const ingresar = handleSubmit(data => {
-        console.log(data);
+    const ingresar = handleSubmit(async data => {
         const userData = {
             username: data.username,
-            password: data.password
+            password: data.password,
+        };
+    
+        try {
+            const res = await login(userData);
+            console.log('Token:', res.token);
+            console.log('Usuario:', res.user);
+          
+            // localStorage.setItem('nombre',res.user.first_name);
+            // localStorage.setItem('apellido',res.user.last_name);
+            navegador('/inicio');
+        } catch (error) {
+            console.error("Error al hacer login:", error);
         }
-       
-        const res = login(userData);
-        console.log('Se presiono el boton');
-        console.log(res);
-        navegador('/inicio');
     });
 
     return(
@@ -26,7 +32,7 @@ export default function(){
                     <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Nombre de Usuario</label>
                     <input type="text" id="username" 
                         {...register('username', {required:true})}
-                        className="bg-white border border-green-300 text-black text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:border-green-500 dark:text-black" placeholder="nombre@gmail.com"/>
+                        className="bg-white border border-green-300 text-black text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:border-green-500 dark:text-black" placeholder="nombre123"/>
                         {errors.username && <span className="text-orange-600 text-sm">Este campo esta vacio</span>} 
                 </div>
                 <div>

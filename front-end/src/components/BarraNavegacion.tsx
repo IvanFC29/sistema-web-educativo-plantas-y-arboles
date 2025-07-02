@@ -2,10 +2,29 @@ import { Navbar, NavbarCollapse, NavbarToggle } from 'flowbite-react';
 import { useLocation } from 'react-router-dom';
 import { Indicador } from './Indicador';
 import { LogOut, CircleUser } from 'lucide-react';
-import '../App.css'
+import { profile } from '../assets/utils/sistema.api';
+import { useState, useEffect } from 'react';
 
 export function BarraNavegacion() {
+    const [fullName, setFullName] = useState('');
     const location = useLocation();
+
+    useEffect(()=> {
+      const fetchData = async()=>{
+        const response = await profile();
+        console.log(response);
+        setFullName(response.fullName);
+      };
+      fetchData();
+    }, [])
+
+    const logout = () => {
+        localStorage.removeItem('token');
+        localStorage.clear();
+    };
+    
+    // const getUserFullName =  localStorage.getItem('nombre')+' '+localStorage.getItem('apellido')?.split(' ')[0];
+    
     return (
       <Navbar className='bg-white border-gray-200 dark:bg-gray-200 p-4' fluid rounded>
         <span className="self-rigth whitespace-nowrap text-xl font-semibold dark:text-black">
@@ -28,10 +47,10 @@ export function BarraNavegacion() {
             
             <ul className="menu-boton">
               <a href="#" className="font-semibold block py-2 px-3 text-gray-900 rounded-sm md:bg-transparent md:p-0 dark:text-black hover:bg-lime-100 md:hover:text-lime-700 md:dark:hover:text-lime-500 dark:hover:bg-lime-200 dark:hover:text-black md:dark:hover:bg-transparent">
-                 <span className='flex flex-row space-x-4'> <CircleUser />   Usuario </span>
+                 <span className='flex flex-row space-x-4'> <CircleUser /> {fullName} </span>
               </a>
               <ul className="submenu">
-                <li><a href="/index"> <span className='flex flex-row'><LogOut size={18} />Salir</span></a></li>
+                <li><a onClick={logout} href="/index"> <span className='flex flex-row'><LogOut size={18} />Salir</span></a></li>
               </ul>
             </ul>
           </div>

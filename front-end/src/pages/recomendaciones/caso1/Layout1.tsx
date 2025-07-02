@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { RecomendacionTipo1 } from "./Recomendacion1";
-import { findDescripcion, createPlanta, getPlantas } from "../../../assets/utils/sistema.api";
+import { findDescripcion, createPlanta, getPlantas, profile } from "../../../assets/utils/sistema.api";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -19,6 +19,7 @@ type PlantaData = {
 };
 
 export function Layout1(){
+    const [idUsuario, setIdUsuario] = useState(0);
     const [especie, setEspecie] = useState('');
     const [tipoPlanta, setTipoPlanta] = useState('');
     const [descripcion, setDescripcion] = useState('');
@@ -39,9 +40,15 @@ export function Layout1(){
         const respuesta = await getPlantas();
         setLista(respuesta.data);
     }
+
+    async function getID() {
+        const response = await profile();
+        setIdUsuario(response.id);
+    }
     
     useEffect(() => {
         cargarListaPlantas();
+        getID();
 
         const nuevaRecomendacion: Resultado = {
             especie: especie,
@@ -54,7 +61,7 @@ export function Layout1(){
     },[especie,descripcion,tipoPlanta,estacion, mostrarDescripcion, lista]);
 
     const guardarPlanta = async (data: PlantaData) => {
-        const idUser: number = 1;
+        const idUser: number = idUsuario;
         const planta = {
             ...data,
             usuario: idUser,

@@ -3,32 +3,65 @@ import { Salir } from "../../components/Salir";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { createUser } from "../../assets/utils/sistema.api";
+
+type Newuser = {
+    first_name: string;
+    last_name: string;
+    email: string;
+    username: string;
+    password: string;
+}
 
 export function CreateUsr(){
     const {register, handleSubmit, formState:{errors}} = useForm();
     const [mostrarError,  setMostrarError] = useState(false);
     const [mostrarError2, setMostrarError2] = useState(false);
+    const [mostrarError3, setMostrarError3] = useState(false);
     const [passwordRepetido, setPasswordRepetido] = useState('');
     const navegacion = useNavigate();
 
     const crearCuenta = handleSubmit(data => {
-        console.log(typeof(passwordRepetido));
+        const datos:Newuser={
+            first_name: data.first_name,
+            last_name: data.last_name,
+            email: data.email,
+            username: data.username,
+            password: data.password
+        }
         
-        if (passwordRepetido === '') {
-            setMostrarError2(true);
-        }else if (passwordRepetido === data.password) {
+        if(passwordRepetido === data.password && data.password.lenght >= 8){
             setMostrarError(false);
             setMostrarError2(false)
-            console.log('exito');
-            /** TO DO */ 
-            //guardar los datos en la base de datos
+            setMostrarError3(false);
+            guardarDatos(datos);
             navegacion('/index');
             toast.success('Cuenta creada correctamente!!');
-        }else{
+        }
+        if (passwordRepetido === '') {
+            setMostrarError2(true);
+        }
+        if(passwordRepetido !== data.password){
             setMostrarError(true);
             console.log('los passwords no coinciden');   
+        } 
+        if(data.password.lenght < 8 || passwordRepetido.length < 8){
+            setMostrarError3(true);
+            console.log('Password muy corta');
         }
     });
+
+    const guardarDatos = async (data: Newuser) => {
+        const newuser = {
+            ...data
+        }
+        try {
+            const res = await createUser(newuser);
+            console.log(res);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-lime-300">
@@ -37,18 +70,18 @@ export function CreateUsr(){
             <div className="w-full max-w-sm p-4 bg-white border border-green-400 rounded-lg shadow-sm sm:p-6 md:p-8 dark:bg-white dark:border-gray-700 mx-auto m-3">
                 <form onSubmit={crearCuenta}>
                     <div>
-                        <label htmlFor="nombre" className="block mb-2 text-sm font-medium text-gray-900">Nombre/s</label>
+                        <label htmlFor="first_name" className="block mb-2 text-sm font-medium text-gray-900">Nombre/s</label>
                         <input type="text" id="nombre" 
-                            {...register('nombre', {required:true})} 
+                            {...register('first_name', {required:true})} 
                             className="bg-white border border-green-300 text-black text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:border-green-500 dark:text-black" placeholder="Nombre completo"/>
-                            {errors.nombre && <span className="text-orange-600 text-sm">Este campo esta vacio</span> }
+                            {errors.first_name && <span className="text-orange-600 text-sm">Este campo esta vacio</span> }
                     </div>
                     <div>
-                        <label htmlFor="apellido" className="block mb-2 text-sm font-medium text-gray-900">Apellido/s</label>
+                        <label htmlFor="last_name" className="block mb-2 text-sm font-medium text-gray-900">Apellido/s</label>
                         <input type="text" id="apellido" 
-                            {...register('apellido', {required:true})} 
+                            {...register('last_name', {required:true})} 
                             className="bg-white border border-green-300 text-black text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:border-green-500 dark:text-black" placeholder="Apellido/s"/>
-                            {errors.apellido && <span className="text-orange-600 text-sm">Este campo esta vacio</span> }
+                            {errors.last_name && <span className="text-orange-600 text-sm">Este campo esta vacio</span> }
                     </div>
                     <div>
                         <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Correo Electronico</label>
@@ -69,7 +102,10 @@ export function CreateUsr(){
                         <input type="password" id="password" 
                             {...register('password', {required:true})} 
                             className="bg-white border border-green-300 text-black text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:border-green-500 dark:text-black"  placeholder="••••••••"/>
-                            {errors.password && <span className="text-orange-600 text-sm">Campo no valido</span>}
+                            {mostrarError3 && (
+                                <span className="text-orange-600 text-sm">La contraseña es muy corta, debe tener 8 caracteres almenos</span>
+                            )}
+                            {errors.password && <span className="text-orange-600 text-sm">Campo no valido <br /></span>}
                     </div>
                     <div>
                         <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Repite Contraseña</label>

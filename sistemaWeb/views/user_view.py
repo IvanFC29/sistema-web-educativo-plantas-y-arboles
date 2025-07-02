@@ -32,4 +32,6 @@ def register(request):
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def profile(request):
-    return Response({"mensaje": 'Tus datos de usuario son{}'.format(request.user.username)},status=status.HTTP_200_OK)
+    elId = request.user.id
+    nombreCompleto = request.user.first_name+' '+request.user.last_name
+    return Response({"id":elId , "fullName": nombreCompleto},status=status.HTTP_200_OK)
