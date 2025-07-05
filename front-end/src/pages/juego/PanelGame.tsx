@@ -6,6 +6,28 @@ import corazon from '/img_juego/vida.png';
 import manzana from '/img_juego/manzana.png';
 import nuez from '/img_juego/nuez.png';
 import { SquareArrowDown, SquareArrowLeft, SquareArrowRight, SquareArrowUp } from "lucide-react";
+import { saveAprendizajeDesbloqueado, saveMensajeDesbloqueado, updateContadorAprendizaje, updateContadorMensajes, getProgresoJuego } from "../../assets/utils/sistema.api";
+import { listaMensajes } from "../../assets/utils/ReflexionesGame";
+import { listaTemas } from "../../assets/utils/AprendizajeGame";
+
+type MensajeData = {
+    progreso: number;
+    titulo: string;
+    descripcion: string;
+    destacado: boolean;
+    desbloqueado: boolean;
+}
+
+type AprendizajeData = {
+    progreso: number;
+    titulo: string;
+    contenido: string;
+    imagen: string;
+    fuente: string;
+    video: string;
+    destacado: boolean;
+    desbloqueado: boolean;
+}
 
 export function PanelGame() {
     const [mapa, setMapa] = useState<string[][]>(mapas(0));
@@ -22,6 +44,8 @@ export function PanelGame() {
     const [listaNueces, setListaNueces] = useState<string[]>([]);
     const [mostrarMensaje, setMostrarMensaje] = useState(false);
     const [gano, setGano] = useState(false);
+    const [cantidadMsj, setCantidadMsj] = useState(0);
+    const [cantidadApzj, setCantidadApzj] = useState(0);
     const [visibilidad, setVisibilidad] = useState(mapa ? mapa.map(fila => fila.map(() => false)) : []);
       
     useEffect(() => {
@@ -97,7 +121,6 @@ export function PanelGame() {
             if (controlVidas === 0) {
                 setMostrarMensaje(true);
             }
-       
         }
 
         if(mapa[nuevaX][nuevaY] === 'M') {
@@ -128,12 +151,14 @@ export function PanelGame() {
         }
 
         if (manzanas === 3) {
-            toast.success('Reflexion Desbloqueada');
+            toast.success('Un consejos Desbloqueado');
+            guardarProgresoMensajes();
             setManzanas(0);
         }
 
         if (nueces === 3) {
-            toast.success('Aprendizaje Desbloqueado');
+            toast.success('Tema de Aprendizaje Desbloqueado');
+            guardarProgresoAprendizaje();
             setNueces(0);
         }
 
@@ -169,6 +194,71 @@ export function PanelGame() {
             setVisibilidad(nueva);
         }
     };
+
+    useEffect(()=>{
+        async function obtenerIndiceMensajes(){
+            const progresoActual = await getProgresoJuego();
+            setCantidadMsj(progresoActual.data[0].cantidadMsjDesbloqueados);
+            console.log(cantidadMsj); 
+        }
+        async function obtenerIndiceAprendizajes(){
+            const progresoActual = await getProgresoJuego();
+            setCantidadApzj(progresoActual.data[0].cantidadApzjDesbloqueados);
+            console.log(cantidadApzj); 
+        }
+        obtenerIndiceMensajes();
+        obtenerIndiceAprendizajes();
+    });
+
+    async function guardarProgresoMensajes() {
+        console.log(cantidadMsj);
+        
+        const mensaje = listaMensajes(cantidadMsj);
+        console.log("el ID es: "+location.pathname.split('/').pop());
+
+        console.log(mensaje);
+
+        const mensajeDesbloqueado: MensajeData = {
+            progreso: Number(location.pathname.split('/').pop()),
+            titulo: mensaje[1],
+            descripcion: mensaje[2],
+            destacado: false,
+            desbloqueado: true,
+        }
+        try {
+            const res = await saveMensajeDesbloqueado(mensajeDesbloqueado);
+            console.log(res);
+            await updateContadorMensajes();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async function guardarProgresoAprendizaje() {
+        console.log(cantidadApzj);
+        
+        const tema = listaTemas(cantidadApzj);
+        console.log("el ID es: "+location.pathname.split('/').pop());
+        
+        console.log(tema);
+        const aprendizajeDesbloqueado: AprendizajeData = {
+            progreso: Number(location.pathname.split('/').pop()),
+            titulo: tema[1],
+            contenido: tema[2],
+            imagen: tema[3],
+            fuente: tema[4],
+            video: tema[5],
+            destacado: false,
+            desbloqueado: true,
+        };
+        try {
+            const res = await saveAprendizajeDesbloqueado(aprendizajeDesbloqueado);
+            console.log(res);
+            await updateContadorAprendizaje();
+        } catch (error) {
+            console.log(error);
+        } 
+    }
       
     return (
         <div>
@@ -266,3 +356,4 @@ export function PanelGame() {
         </div>
     );
 }
+

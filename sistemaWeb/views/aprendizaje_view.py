@@ -9,3 +9,10 @@ class AprendizajeVista(viewsets.ModelViewSet):
     queryset = AprendizajeJuego.objects.all()
     permission_classes = [IsAuthenticated]
     authentication_classes = [TokenAuthentication]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        ProgresoID = self.request.query_params.get('progreso')
+        if ProgresoID is not None:
+            queryset = queryset.filter(progreso=ProgresoID)
+        return queryset

@@ -1,4 +1,4 @@
-export const listaReflexiones = (indice: number): [string, string, string] => {
+export const listaMensajes = (indice: number): [string, string, string] => {
     const reflexiones = [
         {
             id: "1",

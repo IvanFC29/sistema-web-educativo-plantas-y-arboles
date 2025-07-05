@@ -7,5 +7,5 @@ class ProgresoJuego(models.Model):
     cantidadApzjDesbloqueados = models.PositiveIntegerField(default=0)
    
     def __str__(self):
-        return f"{self.usuario.nombre} - {self.cantidadMsjDesbloqueados} - {self.cantidadApzjDesbloqueados}"
+        return f"{self.usuario.first_name} - {self.cantidadMsjDesbloqueados} - {self.cantidadApzjDesbloqueados}"
  

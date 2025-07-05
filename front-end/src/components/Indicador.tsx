@@ -8,8 +8,8 @@ export function Indicador(){
         '/aporte-ambiental': 'Aporte Ambiental',
         '/conociendo-tu-planta': 'Conociendo tus Plantas',
         '/mis-plantas': 'Mis Plantas',
-        '/puzzle-plantar': 'Juego - El Jardin',
-        '/mis-reflexiones': 'Mensajes para tomar en cuenta con las plantas y arboles',
+        '/juego-educativo': 'Juego - El Jardin',
+        '/mis-mensajes-encontrados': 'Mensajes para tomar en cuenta con las plantas y arboles',
         '/mis-aprendizajes': 'Mis Aprendizajes'
     };
 

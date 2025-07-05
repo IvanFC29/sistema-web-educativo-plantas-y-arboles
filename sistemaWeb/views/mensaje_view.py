@@ -9,3 +9,11 @@ class MensajeVista(viewsets.ModelViewSet):
     queryset = MensajeJuego.objects.all()
     permission_classes = [IsAuthenticated]
     authentication_classes = [TokenAuthentication]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        progresoID = self.request.query_params.get('progreso')
+        if progresoID is not None:
+            queryset = queryset.filter(progreso=progresoID)
+        return queryset
+        

@@ -12,9 +12,9 @@ router.register(r'aprendizaje', AprendizajeVista)
 router.register(r'mensaje', MensajeVista)
 
 urlpatterns = [
-    path('api/v1/', include(router.urls)),
-    path('api/v1/buscar_descripcion/', buscar_descripcion, name='buscar_descripcion'), 
-    path('api/v1/registrar_usuario', register, name='registrar_usuario'),
-    path('api/v1/login', login, name='login'),
-    path('api/v1/profile', profile, name='profile')
+    path('api/', include(router.urls)),
+    path('api/buscar_descripcion/', buscar_descripcion, name='buscar_descripcion'), 
+    path('api/registrar_usuario', register, name='registrar_usuario'),
+    path('api/login', login, name='login'),
+    path('api/profile', profile, name='profile'),
 ]

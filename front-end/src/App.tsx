@@ -8,7 +8,7 @@ import { MisAfiches } from "./pages/jardin/MisAfiches";
 import { VistaGame } from "./pages/juego/VistaGame";
 import { Toaster } from "react-hot-toast";
 import { VistaR } from "./pages/recomendaciones/VistaR";
-import { VistaReflexiones } from "./pages/juego/VistaReflexiones";
+import { VistaMensajes } from "./pages/juego/VistaMensajes";
 import { VistaAprendizaje } from "./pages/juego/VistaAprendizaje";
 import { CreateUsr } from "./pages/usuario/CreateUsr";
 
@@ -23,9 +23,9 @@ function App(){
         <Route path="/aporte-ambiental" element={<VistaHE />} />
         <Route path="/mis-plantas" element={<MisPlantas />}/>
         <Route path="/aportes-plantas/:id" element={<MisAfiches />}/>
-        <Route path="/puzzle-plantar" element={<VistaGame />}/>
+        <Route path="/juego-educativo/:id" element={<VistaGame />}/>
         <Route path="/conociendo-tu-planta" element={<VistaR />}/>
-        <Route path="/mis-reflexiones" element={<VistaReflexiones /> }/>
+        <Route path="/mis-mensajes-encontrados" element={<VistaMensajes /> }/>
         <Route path="/mis-aprendizajes" element={<VistaAprendizaje /> }/>
         <Route path="/crear-cuenta" element={<CreateUsr/>} />
       </Routes>

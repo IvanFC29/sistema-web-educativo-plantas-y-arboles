@@ -2,7 +2,7 @@ import axios from "axios";
 
 /** API REST DE PLANTA */
 const apiPlanta = axios.create({
-    baseURL: 'http://127.0.0.1:8000/sistemaWeb/api/v1/planta/', 
+    baseURL: 'http://127.0.0.1:8000/sistemaWeb/api/planta/', 
 });
 
 export const createPlanta = (
@@ -42,7 +42,7 @@ export const updateFotoPlantaById = (id:string, foto:File) => {
 
 /** API REST DE APORTES AMBIENTALES */
 const apiAporte = axios.create({
-    baseURL: 'http://127.0.0.1:8000/sistemaWeb/api/v1/aporte/'
+    baseURL: 'http://127.0.0.1:8000/sistemaWeb/api/aporte/'
 })
 
 export const createAporte = (
@@ -65,7 +65,7 @@ export const getAportesByPlanta = (id:string) => apiAporte.get(`/?planta=${id}`,
 
 /** API REST DE FUNCION BUSQUEDA */
 export const findDescripcion = (palabra: string) =>
-    axios.get(`http://127.0.0.1:8000/sistemaWeb/api/v1/buscar_descripcion/`, {
+    axios.get(`http://127.0.0.1:8000/sistemaWeb/api/buscar_descripcion/`, {
       params: { palabra }
 });
   
@@ -79,7 +79,7 @@ export const createUser = async (
        password: string, 
     }
 ) => {
-    const response = await fetch("http://127.0.0.1:8000/sistemaWeb/api/v1/registrar_usuario", {
+    const response = await fetch("http://127.0.0.1:8000/sistemaWeb/api/registrar_usuario", {
         method: "POST", 
         headers: {"Content-Type": "application/json"}, 
         body: JSON.stringify(newuser), 
@@ -90,7 +90,7 @@ export const createUser = async (
 
 /** API REST PARA EL LOGIN */
 export const login = async (userData: { username: string, password: string }) => {
-    const response = await fetch("http://127.0.0.1:8000/sistemaWeb/api/v1/login", {
+    const response = await fetch("http://127.0.0.1:8000/sistemaWeb/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
@@ -104,7 +104,7 @@ export const login = async (userData: { username: string, password: string }) =>
 
 /** API REST DEL PERFIL - NOMBRE */
 export const profile = async() => {
-    const response = await fetch("http://127.0.0.1:8000/sistemaWeb/api/v1/profile", {
+    const response = await fetch("http://127.0.0.1:8000/sistemaWeb/api/profile", {
         method: "POST",
         headers:{
             'Authorization': `Token ${localStorage.getItem('token')}`
@@ -115,10 +115,66 @@ export const profile = async() => {
 }
 
 /** API REST DEL JUEGO */
-export const updateContadorMensajes = () => {
+const apiProgreso = axios.create({
+    baseURL: 'http://127.0.0.1:8000/sistemaWeb/api/progreso/',
+    headers:{
+        'Authorization': `Token ${localStorage.getItem('token')}`
+    }
+});
 
+export const getProgresoJuego = () =>  apiProgreso.get('/');
+
+export const updateContadorMensajes = async () => {
+    const res = await apiProgreso.post('incrementar-contador-msj/');
+    return res.data;
 }
 
-export const updateContadorAprendizaje = () => {
-    axios.patch('')
+export const updateContadorAprendizaje = async () => {
+    const res = await apiProgreso.post('incrementar-contador-apzj/');
+    return res.data;
 }
+
+/** API REST DE LOS MENSAJES */
+const apiMensajes = axios.create({
+    baseURL: 'http://127.0.0.1:8000/sistemaWeb/api/mensaje/',
+    headers:{
+        'Authorization': `Token ${localStorage.getItem('token')}`
+    }
+})
+
+export const getMensajesDesbloqueados = (id:number) => apiMensajes.get(`/?progreso=${id}`);
+
+export const saveMensajeDesbloqueado = (
+    mensaje: {
+        titulo:string;
+        descripcion:string;
+        destacado:boolean;
+        desbloqueado:boolean;
+    }
+) => {
+    apiMensajes.post('/',mensaje);
+};
+
+/** API REST DE LOS APRENDIZAJES */
+const apiAprendizaje = axios.create({
+    baseURL: 'http://127.0.0.1:8000/sistemaWeb/api/aprendizaje/',
+    headers:{
+        'Authorization': `Token ${localStorage.getItem('token')}`
+    }
+})
+
+export const getAprendizajeDesbloqueado = (id:number) => apiAprendizaje.get(`/?progreso=${id}`);
+
+export const saveAprendizajeDesbloqueado = (
+    aprendizaje: {
+        titulo:string;
+        contenido:string;
+        imagen:string;
+        video:string;
+        fuente:string;
+        destacado:boolean;
+        desbloqueado:boolean;
+    }
+) => {
+    apiAprendizaje.post('/', aprendizaje);
+};

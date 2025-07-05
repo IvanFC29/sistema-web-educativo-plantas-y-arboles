@@ -1,23 +1,51 @@
 import { BarraNavegacion } from "../../components/BarraNavegacion";
 import { Salir } from "../../components/Salir"
 import { PanelGame } from "./PanelGame";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getProgresoJuego } from "../../assets/utils/sistema.api";
 
 export function VistaGame(){
     const navegacion = useNavigate();
     const [mostrar, setMostrar] = useState(false);
+    const [habilitarBtnMsj, setHabilitarBtnMsj] = useState(false);
+    const [habilitarBtnApzj, setHabilitarBtnApzj] = useState(false);
 
     const mostrarInstruccion = () => setMostrar(true);
     const cerrarInstruccion = () => setMostrar(false);
 
+    useEffect(()=>{
+        async function habilitarBtnMensajes(){
+            const progresoActual = await getProgresoJuego();
+            if (progresoActual.data[0].cantidadMsjDesbloqueados === 0) {
+                setHabilitarBtnMsj(false);
+            }else{
+                setHabilitarBtnMsj(true);
+            }
+        }
+        async function habilitarBtnAprendizajes(){
+            const progresoActual = await getProgresoJuego();
+            if (progresoActual.data[0].cantidadApzjDesbloqueados === 0) {
+                setHabilitarBtnApzj(false);
+            }else{
+                setHabilitarBtnApzj(true);
+            }
+        }
+        habilitarBtnMensajes();
+        habilitarBtnAprendizajes();
+    });
+
     const mostrarReflexiones = () => {
         console.log('Aqui iran las reflexiones');
-        navegacion('/mis-reflexiones');
+        console.log(habilitarBtnMsj);
+        
+        navegacion('/mis-mensajes-encontrados');
     }
 
     const mostrarAprendizajes = () => {
         console.log('Aqui iran los aprendizajes');
+        console.log(habilitarBtnApzj);
+        
         navegacion('/mis-aprendizajes');
     }
 
@@ -27,8 +55,8 @@ export function VistaGame(){
             <Salir/>
             <div className="p-2 m-0 flex flex-row justify-center bg-amber-100">
                 <button onClick={mostrarInstruccion} className="bg-amber-700 text-white text-center p-2 m-2 border-2 border-yellow-400 cursor-pointer rounded-2xl hover:bg-amber-900">¿Como Jugar?</button>
-                <button onClick={mostrarReflexiones} className="bg-amber-700 text-white text-center p-2 m-2 border-2 border-yellow-400 cursor-pointer rounded-2xl hover:bg-amber-900">Para tomar en cuenta</button>
-                <button onClick={mostrarAprendizajes} className="bg-amber-700 text-white text-center p-2 m-2 border-2 border-yellow-400 cursor-pointer rounded-2xl hover:bg-amber-900">Aprendizaje</button>
+                <button onClick={mostrarReflexiones} disabled={!habilitarBtnMsj} className="bg-amber-700 text-white text-center p-2 m-2 border-2 border-yellow-400 cursor-pointer rounded-2xl hover:bg-amber-900">Para tomar en cuenta</button>
+                <button onClick={mostrarAprendizajes} disabled={!habilitarBtnApzj} className="bg-amber-700 text-white text-center p-2 m-2 border-2 border-yellow-400 cursor-pointer rounded-2xl hover:bg-amber-900">Aprendizaje</button>
             </div>
             <div className="bg-[url('/fondo.JPG')] bg-cover bg-no-repeat bg-center h-full w-full bg-fixed bg-transparent">
                 <PanelGame/>   
