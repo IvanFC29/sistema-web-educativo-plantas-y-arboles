@@ -4,6 +4,7 @@ import { PanelGame } from "./PanelGame";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getProgresoJuego } from "../../assets/utils/sistema.api";
+import { Lock, Blocks, Book, Paperclip } from "lucide-react";
 
 export function VistaGame(){
     const navegacion = useNavigate();
@@ -39,14 +40,14 @@ export function VistaGame(){
         console.log('Aqui iran las reflexiones');
         console.log(habilitarBtnMsj);
         
-        navegacion('/mis-mensajes-encontrados');
+        navegacion('/consejos-encontrados/'+location.pathname.split('/').pop());
     }
 
     const mostrarAprendizajes = () => {
         console.log('Aqui iran los aprendizajes');
         console.log(habilitarBtnApzj);
         
-        navegacion('/mis-aprendizajes');
+        navegacion('/mis-aprendizajes/'+location.pathname.split('/').pop());
     }
 
     return (
@@ -54,9 +55,29 @@ export function VistaGame(){
             <BarraNavegacion />
             <Salir/>
             <div className="p-2 m-0 flex flex-row justify-center bg-amber-100">
-                <button onClick={mostrarInstruccion} className="bg-amber-700 text-white text-center p-2 m-2 border-2 border-yellow-400 cursor-pointer rounded-2xl hover:bg-amber-900">¿Como Jugar?</button>
-                <button onClick={mostrarReflexiones} disabled={!habilitarBtnMsj} className="bg-amber-700 text-white text-center p-2 m-2 border-2 border-yellow-400 cursor-pointer rounded-2xl hover:bg-amber-900">Para tomar en cuenta</button>
-                <button onClick={mostrarAprendizajes} disabled={!habilitarBtnApzj} className="bg-amber-700 text-white text-center p-2 m-2 border-2 border-yellow-400 cursor-pointer rounded-2xl hover:bg-amber-900">Aprendizaje</button>
+                <button onClick={mostrarInstruccion} className="flex items-center justify-center gap-2 px-4 py-1.5 m-1 text-sm font-semibold transition-all duration-300 shadow-sm border bg-amber-700 text-white text-center p-2 border-yellow-400 cursor-pointer rounded-2xl hover:bg-amber-900">
+                    <Blocks size={14}/>
+                    <span className="whitespace-nowrap hidden md:inline-block">¿Como Jugar?</span>
+                </button>
+                <button
+                    onClick={mostrarReflexiones}
+                    disabled={!habilitarBtnMsj}
+                    className={`flex items-center justify-center gap-2 px-4 py-1.5 m-1 rounded-full text-sm font-semibold transition-all duration-300 shadow-sm border
+                        ${habilitarBtnMsj ? 'bg-amber-700 text-white border-yellow-400 hover:bg-amber-800 cursor-pointer' : 'bg-amber-700 text-white/60 border-yellow-400 cursor-not-allowed'}`}
+                    >
+                    {!habilitarBtnMsj ? <Lock size={14}/> : <Paperclip size={14}/>}
+                    <span className="whitespace-nowrap hidden md:inline-block">Para tomar en cuenta</span>
+                </button>
+                <button
+                    onClick={mostrarAprendizajes}
+                    disabled={!habilitarBtnApzj}
+                    className={`flex items-center justify-center gap-2 px-4 py-1.5 m-1 rounded-full text-sm font-semibold transition-all duration-300 shadow-sm border
+                        ${habilitarBtnApzj ? 'bg-amber-700 text-white border-yellow-400 hover:bg-amber-800 cursor-pointer' : 'bg-amber-700 text-white/60 border-yellow-400 cursor-not-allowed'}`}
+                    >
+                    {!habilitarBtnApzj ? <Lock size={14}/> : <Book size={14}/>}
+                    <span className="whitespace-nowrap hidden md:inline-block">Aprendizaje</span>
+                </button>
+
             </div>
             <div className="bg-[url('/fondo.JPG')] bg-cover bg-no-repeat bg-center h-full w-full bg-fixed bg-transparent">
                 <PanelGame/>   
@@ -70,7 +91,7 @@ export function VistaGame(){
                             <p className="mt-1">- Busca nueces y manzanas </p>
                             <p className="mt-1">- Para encontrar objetos haz click en las flores cera de ti para descubrir lo que hay detras </p>
                             <p className="mt-1">- Descubre temas de aprendizaje acumulando tres manzanas </p>
-                            <p className="mt-1">- Descubre mensajes de reflexion acumulando tres nueces </p>
+                            <p className="mt-1">- Descubre consejos acumulando tres nueces </p>
                             <p className="mt-1">- Cuidate de los montones de basura, te haran perder salud </p>
                             <p className="mt-1">- Cada busqueda es diaria, luedo de recorrer los 5 laberintos termina el juego diario </p>   
                         </div>

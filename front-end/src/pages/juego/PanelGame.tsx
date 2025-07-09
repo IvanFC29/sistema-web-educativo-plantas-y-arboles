@@ -2,13 +2,17 @@ import { Celda } from "./Celda";
 import { mapas, cantidadNiveles } from "../../assets/utils/NivelesGame";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import corazon from '/img_juego/vida.png';
-import manzana from '/img_juego/manzana.png';
-import nuez from '/img_juego/nuez.png';
 import { SquareArrowDown, SquareArrowLeft, SquareArrowRight, SquareArrowUp } from "lucide-react";
 import { saveAprendizajeDesbloqueado, saveMensajeDesbloqueado, updateContadorAprendizaje, updateContadorMensajes, getProgresoJuego } from "../../assets/utils/sistema.api";
 import { listaMensajes } from "../../assets/utils/ReflexionesGame";
 import { listaTemas } from "../../assets/utils/AprendizajeGame";
+import corazon from '/img_juego/vida.png';
+import manzana from '/img_juego/manzana.png';
+import nuez from '/img_juego/nuez.png';
+import juegoCompletado from '/audio/juegoCompletado.wav';
+import juegoPerdido from '/audio/juegoPerdido.wav';
+import itemEncontrado from '/audio/itemEncontrado.wav';
+import itemBasuraEncontrado from '/audio/itemBasuraEncontrado.wav';
 
 type MensajeData = {
     progreso: number;
@@ -47,6 +51,10 @@ export function PanelGame() {
     const [cantidadMsj, setCantidadMsj] = useState(0);
     const [cantidadApzj, setCantidadApzj] = useState(0);
     const [visibilidad, setVisibilidad] = useState(mapa ? mapa.map(fila => fila.map(() => false)) : []);
+    const audioCompletado = new Audio(juegoCompletado);
+    const audioPerdido = new Audio(juegoPerdido);
+    const audioItemEncontrado = new Audio(itemEncontrado);
+    const audioBasura = new Audio(itemBasuraEncontrado);
       
     useEffect(() => {
         if (mapa) {
@@ -118,6 +126,7 @@ export function PanelGame() {
         if(mapa[nuevaX][nuevaY] === 'B') {
             var controlVidas = vidas -1;
             setVidas(controlVidas);
+            audioBasura.play();
             if (controlVidas === 0) {
                 setMostrarMensaje(true);
             }
@@ -125,11 +134,13 @@ export function PanelGame() {
 
         if(mapa[nuevaX][nuevaY] === 'M') {
             setManzanas(manzanas+1);
+            audioBasura.play();
             setManzanasPendientes(manzanasPendientes+1);
         }
 
         if(mapa[nuevaX][nuevaY] === 'N') {
             setNueces(nueces+1); 
+            audioBasura.play();
             setNuecesPendientes(nuecesPendientes+1);
         }
     };
@@ -151,18 +162,29 @@ export function PanelGame() {
         }
 
         if (manzanas === 3) {
-            toast.success('Un consejos Desbloqueado');
+            toast.success('Un consejo ha sido Desbloqueado');
+            audioItemEncontrado.play();
             guardarProgresoMensajes();
             setManzanas(0);
         }
 
         if (nueces === 3) {
             toast.success('Tema de Aprendizaje Desbloqueado');
+            audioItemEncontrado.play();
             guardarProgresoAprendizaje();
             setNueces(0);
         }
 
     }, [manzanasPendientes, nuecesPendientes]);    
+
+    useEffect(()=> {
+        if(mostrarMensaje && gano){
+            audioCompletado.play();
+        }
+        if(mostrarMensaje && !gano){
+            audioPerdido.play();
+        }
+    }, [mostrarMensaje, gano])
 
     const arriba = () => {
         mover(-1, 0);

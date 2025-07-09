@@ -49,7 +49,7 @@ export function VistaAprendizaje(){
     };
 
     const volverAlJuego = () => {
-        navegacion('/juego-educativo');
+        navegacion('/juego-educativo/'+location.pathname.split('/').pop());
     }
 
     return(

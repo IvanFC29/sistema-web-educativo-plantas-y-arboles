@@ -32,7 +32,7 @@ export function VistaMensajes(){
     };
 
     const volverAlJuego = () => {
-        navegacion('/juego-educativo');
+        navegacion('/juego-educativo/'+location.pathname.split('/').pop());
     }
 
     return(

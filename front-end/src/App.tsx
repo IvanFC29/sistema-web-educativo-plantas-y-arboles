@@ -25,8 +25,8 @@ function App(){
         <Route path="/aportes-plantas/:id" element={<MisAfiches />}/>
         <Route path="/juego-educativo/:id" element={<VistaGame />}/>
         <Route path="/conociendo-tu-planta" element={<VistaR />}/>
-        <Route path="/mis-mensajes-encontrados" element={<VistaMensajes /> }/>
-        <Route path="/mis-aprendizajes" element={<VistaAprendizaje /> }/>
+        <Route path="/consejos-encontrados/:id" element={<VistaMensajes /> }/>
+        <Route path="/mis-aprendizajes/:id" element={<VistaAprendizaje /> }/>
         <Route path="/crear-cuenta" element={<CreateUsr/>} />
       </Routes>
       <Toaster />

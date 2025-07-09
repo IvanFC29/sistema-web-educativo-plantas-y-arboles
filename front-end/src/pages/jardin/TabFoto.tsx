@@ -18,10 +18,18 @@ export function TabFoto({ idPlanta, nombrePlanta, recargar, onActualizado }: Tab
 
     const imagenesPreelaboradas = [
         "/fotoDefault.png",
-        "/fotoDefault.png",
-        "/fotoDefault.png",
-        "/fotoDefault.png",
-        "/fotoDefault.png",
+        "/imgPreelaboradas/fotoPE1.jpg",
+        "/imgPreelaboradas/fotoPE2.jpg",
+        "/imgPreelaboradas/fotoPE3.jpg",
+        "/imgPreelaboradas/fotoPE4.jpg",
+        "/imgPreelaboradas/fotoPE5.jpg",
+        "/imgPreelaboradas/fotoPE6.jpg",
+        "/imgPreelaboradas/fotoPE7.jpg",
+        "/imgPreelaboradas/fotoPE8.jpg",
+        "/imgPreelaboradas/fotoPE9.jpg",
+        "/imgPreelaboradas/fotoPE10.jpg",
+        "/imgPreelaboradas/fotoPE11.jpg",
+        "/imgPreelaboradas/fotoPE12.jpg",
     ]
 
     useEffect(()=>{
