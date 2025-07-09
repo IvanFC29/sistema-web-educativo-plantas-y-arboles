@@ -32,7 +32,7 @@ const nivel3: string[][] = [
     ['P','_','P','_','_','P','P','_','P','P'],
     ['P','_','P','_','P','_','_','_','_','P'],
     ['_','_','_','_','P','P','P','_','P','P'],
-    ['_','_','_','_','P','P','P','_','P','P'],
+    ['_','_','P','B','P','P','P','_','P','P'],
     ['_','P','P','_','_','_','_','_','_','P'],
     ['P','_','P','P','_','P','P','P','_','P']
 ];
@@ -71,23 +71,12 @@ const armarLaberinto = (mapa: string[][]): string[][] => {
 
     const espaciosDisponibles: [number, number][] = [];
 
-    // Contadores de objetos existentes
-    let contadorM = 0;
-    let contadorN = 0;
-    let contadorB = 0;
-
     // Buscar espacios vacíos y contar objetos ya existentes
     for (let i = 0; i < mapa.length; i++) {
         for (let j = 0; j < mapa[0].length; j++) {
             const celda = mapaRespuesta[i][j];
             if (celda === '_') {
                 espaciosDisponibles.push([i, j]);
-            } else if (celda === 'M') {
-                contadorM++;
-            } else if (celda === 'N') {
-                contadorN++;
-            } else if (celda === 'B') {
-                contadorB++;
             }
         }
     }
@@ -100,22 +89,14 @@ const armarLaberinto = (mapa: string[][]): string[][] => {
 
     let pos = 0;
 
-    // Añadir objetos que falten (solo uno de cada tipo)
-    if(contadorN === 0){
-        if (contadorM === 0 && pos < espaciosDisponibles.length) {
-            const [i, j] = espaciosDisponibles[pos++];
-            mapaRespuesta[i][j] = 'M';
-        }
+    const itemDelLaberinto = Math.random() < 0.5 ? 'M' : 'N';
+
+    if ( pos < espaciosDisponibles.length) {
+        const [i, j] = espaciosDisponibles[pos++];
+        mapaRespuesta[i][j] = itemDelLaberinto;
     }
 
-    if(contadorM === 0){
-        if (contadorN === 0 && pos < espaciosDisponibles.length) {
-            const [i, j] = espaciosDisponibles[pos++];
-            mapaRespuesta[i][j] = 'N';
-        }
-    }
-
-    if (contadorB === 0 && pos < espaciosDisponibles.length) {
+    if (pos < espaciosDisponibles.length) {
         const [i, j] = espaciosDisponibles[pos++];
         mapaRespuesta[i][j] = 'B';
     }

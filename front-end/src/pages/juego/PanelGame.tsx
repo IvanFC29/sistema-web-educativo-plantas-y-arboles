@@ -3,7 +3,7 @@ import { mapas, cantidadNiveles } from "../../assets/utils/NivelesGame";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { SquareArrowDown, SquareArrowLeft, SquareArrowRight, SquareArrowUp } from "lucide-react";
-import { saveAprendizajeDesbloqueado, saveMensajeDesbloqueado, updateContadorAprendizaje, updateContadorMensajes, getProgresoJuego } from "../../assets/utils/sistema.api";
+import { saveAprendizajeDesbloqueado, saveMensajeDesbloqueado, updateContadorAprendizaje, updateContadorMensajes, getProgresoJuego, updateFechaJuego } from "../../assets/utils/sistema.api";
 import { listaMensajes } from "../../assets/utils/ReflexionesGame";
 import { listaTemas } from "../../assets/utils/AprendizajeGame";
 import corazon from '/img_juego/vida.png';
@@ -33,7 +33,11 @@ type AprendizajeData = {
     desbloqueado: boolean;
 }
 
-export function PanelGame() {
+type props ={
+    onJuegoCompletado: ()=> void;
+}
+
+export function PanelGame({onJuegoCompletado}: props) {
     const [mapa, setMapa] = useState<string[][]>(mapas(0));
     const [nivel, setNivel] = useState(0);
     const [manzanasPendientes, setManzanasPendientes] = useState(0);
@@ -50,17 +54,13 @@ export function PanelGame() {
     const [gano, setGano] = useState(false);
     const [cantidadMsj, setCantidadMsj] = useState(0);
     const [cantidadApzj, setCantidadApzj] = useState(0);
+    const [etiquetaGame, setEtiquetaGame] = useState('Primer Laberinto');
     const [visibilidad, setVisibilidad] = useState(mapa ? mapa.map(fila => fila.map(() => false)) : []);
+   
     const audioCompletado = new Audio(juegoCompletado);
     const audioPerdido = new Audio(juegoPerdido);
     const audioItemEncontrado = new Audio(itemEncontrado);
     const audioBasura = new Audio(itemBasuraEncontrado);
-      
-    useEffect(() => {
-        if (mapa) {
-          setVisibilidad(mapa.map(fila => fila.map(() => false)));
-        }
-    }, [mapa]);
       
     useEffect(() => {
         for (let i = 0; i < mapa.length; i++) {
@@ -129,6 +129,7 @@ export function PanelGame() {
             audioBasura.play();
             if (controlVidas === 0) {
                 setMostrarMensaje(true);
+                completarJuego();
             }
         }
 
@@ -150,14 +151,24 @@ export function PanelGame() {
 
         if (totalPorNivel === 1) {
             const nuevoNivel = nivel + 1;
+            const etiquetas: {[key:number]:string} = {
+                1: 'Segundo Laberinto',
+                2: 'Tercer Laberinto',
+                3: 'Cuarto Laberinto',
+                4: 'Quinto Laberinto'
+            }
+
             if (nuevoNivel < cantidadNiveles()) { 
                 setNivel(nuevoNivel);
                 setMapa(mapas(nuevoNivel));   
+                setEtiquetaGame(etiquetas[nuevoNivel]);
+                console.log(etiquetaGame);
                 setManzanasPendientes(0);
                 setNuecesPendientes(0);     
-            }else{            
-                setMostrarMensaje(true);
+            }else{   
                 setGano(true);
+                setMostrarMensaje(true);
+                completarJuego();
             }
         }
 
@@ -166,6 +177,9 @@ export function PanelGame() {
             audioItemEncontrado.play();
             guardarProgresoMensajes();
             setManzanas(0);
+            setGano(true);
+            setMostrarMensaje(true);
+            completarJuego();
         }
 
         if (nueces === 3) {
@@ -173,8 +187,10 @@ export function PanelGame() {
             audioItemEncontrado.play();
             guardarProgresoAprendizaje();
             setNueces(0);
+            setGano(true);
+            setMostrarMensaje(true);
+            completarJuego();
         }
-
     }, [manzanasPendientes, nuecesPendientes]);    
 
     useEffect(()=> {
@@ -199,23 +215,29 @@ export function PanelGame() {
         mover(0, 1);
     }
 
+    async function completarJuego () {
+       
+        const res = await updateFechaJuego();
+        console.log(res);    
+    }
+
     const cerrarMensaje = () => {
         setMostrarMensaje(false);
-        /** TO DO */
-        if (!gano) {
-            console.log('reinciar');
-        }else{
-
+        if (onJuegoCompletado) {
+            onJuegoCompletado();
         }
     }
 
     const descubrir = (i: number, j: number) => {
-        if (Math.abs(i - posicionX) <= 3 && Math.abs(j - posicionY) <= 3) {
-            const nueva = [...visibilidad];
-            nueva[i][j] = true;
-            setVisibilidad(nueva);
+        if (Math.abs(i - posicionX) <= 2 && Math.abs(j - posicionY) <= 2) {
+          setVisibilidad(prev => {
+            const nueva = prev.map((fila, x) =>
+              fila.map((val, y) => val || (x === i && y === j))
+            );
+            return nueva;
+          });
         }
-    };
+    };      
 
     useEffect(()=>{
         async function obtenerIndiceMensajes(){
@@ -284,6 +306,10 @@ export function PanelGame() {
       
     return (
         <div>
+            <span className="mb-4 bg-green-100 border-green-500 border-2 px-5 py-2 rounded-xl text-emerald-900 font-bold shadow">
+                🗺️ {etiquetaGame}
+            </span>
+
             <div className="flex flex-col items-center justify-center pb-20 pt-10">
                 {mapa && (
                     <div className="grid" style={{
@@ -364,11 +390,15 @@ export function PanelGame() {
             {mostrarMensaje &&(
                 <div className="fixed z-10 inset-0 overflow-y-auto bg-opacity-50 flex items-center justify-center">
                     <div className="bg-amber-200 border-green-700 border-2 rounded-lg p-8">
-                        {gano ?(
-                            <p className="font-extrabold text-center">JUEGO TERMINADO!!!</p>
-                        ):(
-                            <p className="font-extrabold text-center">JUEGO PERDIDO </p>
-                        )}
+                        <h2 className="text-3xl font-bold mb-4">
+                            {gano ? "🎉 ¡JUEGO COMPLETADO!" : "😓 ¡JUEGO PERDIDO!"}
+                        </h2>
+                        <p className="text-xl font-semibold">
+                            {gano ? "Has completado tu desafío del día." : "No lograste desbloquear el recurso diario."}
+                        </p>
+                        <p className="mt-2 text-sm text-gray-700">
+                            Este es un juego diario. Podrás intentarlo nuevamente mañana 🌱
+                        </p>
                         <div className="flex items-center justify-center mt-4">
                             <button onClick={cerrarMensaje} className="bg-gray-200 hover:bg-gray-500 rounded-2xl p-2 cursor-pointer">Okey</button>
                         </div>

@@ -120,7 +120,7 @@ export function TabFoto({ idPlanta, nombrePlanta, recargar, onActualizado }: Tab
                                     rutaImagen === ruta ? "border-green-500" : "border-amber-200"
                                     }`}
                                 >
-                                    <img src={ruta} alt="foto por defecto" width={60} height={60} className="mx-auto p-1" />
+                                    <img src={ruta} alt="foto por defecto" width={75} height={75} className="mx-auto p-1" />
                                 </div>
                             ))}
                         </div>

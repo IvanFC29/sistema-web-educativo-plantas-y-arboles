@@ -134,6 +134,16 @@ export const updateContadorAprendizaje = async () => {
     return res.data;
 }
 
+export const getFechaJuego = async () => {
+    const res = await apiProgreso.get('puede-jugar/');
+    return res.data;
+}
+
+export const updateFechaJuego = async () => {
+    const res = await apiProgreso.post('actualizar-fecha/');
+    return res.data;
+}
+
 /** API REST DE LOS MENSAJES */
 const apiMensajes = axios.create({
     baseURL: 'http://127.0.0.1:8000/sistemaWeb/api/mensaje/',

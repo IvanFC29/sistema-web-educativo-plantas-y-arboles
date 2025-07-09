@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { BarraNavegacion } from "../../components/BarraNavegacion";
-import { Pin, PinOff } from "lucide-react";
+import { ArrowLeftSquare, Pin, PinOff } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { getAprendizajeDesbloqueado } from "../../assets/utils/sistema.api";
@@ -56,7 +56,10 @@ export function VistaAprendizaje(){
         <div>
             <BarraNavegacion/>
             <div className="bg-[url('/fondo.JPG')] bg-cover bg-no-repeat bg-center min-h-screen max-h-full w-full bg-fixed bg-transparent">
-                <button onClick={volverAlJuego} className="bg-amber-700 text-white text-center p-2 m-2 border-2 border-yellow-400 cursor-pointer rounded-2xl hover:bg-amber-900">Volver al Juego</button>
+                <button onClick={volverAlJuego} className="flex items-center justify-center gap-2 px-4 py-1.5 m-1 rounded-full text-sm font-semibold transition-all duration-300 shadow-sm border bg-amber-700 text-white border-yellow-400 hover:bg-amber-800 cursor-pointer">
+                    <ArrowLeftSquare size={14}/>
+                    <span className="whitespace-nowrap hidden md:inline-block">Volver al Juego</span>
+                </button>
                 <div className="grid grid-cols-1 relative">
                     {lista.length === 0? (
                         <div></div>

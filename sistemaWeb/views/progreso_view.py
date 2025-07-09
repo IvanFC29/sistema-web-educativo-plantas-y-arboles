@@ -1,3 +1,4 @@
+from datetime import date
 from rest_framework import viewsets
 from ..models import ProgresoJuego
 from ..serializer import ProgresoSerializer
@@ -35,3 +36,20 @@ class ProgresoVista(viewsets.ModelViewSet):
         progreso.cantidadApzjDesbloqueados += 1
         progreso.save()
         return Response({"mensaje":"Item aprendizaje desbloqueado", "cantidad":progreso.cantidadApzjDesbloqueados}, status=status.HTTP_202_ACCEPTED)
+    
+    @action(detail=False, methods=['get'], url_path='puede-jugar')
+    def puedeJugar(self, request):
+        progreso, created = ProgresoJuego.objects.get_or_create(usuario=request.user)
+
+        hoy = date.today()
+        if progreso.fechaJuego == hoy:
+            return Response({"habilitado": False, "mensaje": "Ya jugaste hoy"}, status=status.HTTP_200_OK)
+        
+        return Response({"habilitado": True, "mensaje": "Juega el reto diario"}, status=status.HTTP_200_OK)
+    
+    @action(detail=False, methods=['post'], url_path='actualizar-fecha')
+    def updateFechaJuego(self, request):
+        progreso, created = ProgresoJuego.objects.get_or_create(usuario=request.user)
+        progreso.fechaJuego = date.today()
+        progreso.save()
+        return Response({"mensaje":"Se actualizo la fecha del juego"}, status=status.HTTP_200_OK)

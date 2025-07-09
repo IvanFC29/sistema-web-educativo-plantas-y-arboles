@@ -8,8 +8,6 @@ export function Indicador(){
         '/aporte-ambiental': 'Aporte Ambiental',
         '/conociendo-tu-planta': 'Conociendo tus Plantas',
         '/mis-plantas': 'Mis Plantas',
-        '/mis-mensajes-encontrados': 'Mensajes para tomar en cuenta con las plantas y arboles',
-        '/mis-aprendizajes': 'Mis Aprendizajes'
     };
 
     let nombreSeccion = '';
@@ -21,6 +19,12 @@ export function Indicador(){
     }
     if (locacion.pathname.startsWith('/juego-educativo')) {
         nombreSeccion = 'Juego - El Jardin';
+    }
+    if (locacion.pathname.startsWith('/mis-aprendizajes')) {
+        nombreSeccion = 'Mis Temas de Aprendizajes';
+    }
+    if (locacion.pathname.startsWith('/consejos-encontrados')) {
+        nombreSeccion = 'Mensajes para tomar en cuenta con las plantas y arboles';
     }
     return(
         <h4 className="text-sm sm:text-base rounded-lg">{nombreSeccion}</h4>

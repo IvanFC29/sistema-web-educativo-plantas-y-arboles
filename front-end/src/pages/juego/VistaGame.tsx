@@ -1,9 +1,10 @@
 import { BarraNavegacion } from "../../components/BarraNavegacion";
 import { Salir } from "../../components/Salir"
 import { PanelGame } from "./PanelGame";
+import { VistaGameOver } from "./VistaGameOver";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getProgresoJuego } from "../../assets/utils/sistema.api";
+import { getProgresoJuego, getFechaJuego } from "../../assets/utils/sistema.api";
 import { Lock, Blocks, Book, Paperclip } from "lucide-react";
 
 export function VistaGame(){
@@ -11,6 +12,7 @@ export function VistaGame(){
     const [mostrar, setMostrar] = useState(false);
     const [habilitarBtnMsj, setHabilitarBtnMsj] = useState(false);
     const [habilitarBtnApzj, setHabilitarBtnApzj] = useState(false);
+    const [habilitarJuego, setHabilitarJuego] = useState(true);
 
     const mostrarInstruccion = () => setMostrar(true);
     const cerrarInstruccion = () => setMostrar(false);
@@ -32,8 +34,16 @@ export function VistaGame(){
                 setHabilitarBtnApzj(true);
             }
         }
+        async function verificarFechaJuego() {
+            const res = await getFechaJuego();
+            setHabilitarJuego(res.habilitado);
+            console.log('El estado del juego es: '+habilitarJuego);
+        }
+
         habilitarBtnMensajes();
         habilitarBtnAprendizajes();
+        verificarFechaJuego();
+       
     });
 
     const mostrarReflexiones = () => {
@@ -79,9 +89,15 @@ export function VistaGame(){
                 </button>
 
             </div>
-            <div className="bg-[url('/fondo.JPG')] bg-cover bg-no-repeat bg-center h-full w-full bg-fixed bg-transparent">
-                <PanelGame/>   
-            </div>
+            {habilitarJuego ? (
+                <div className="bg-[url('/fondo.JPG')] bg-cover bg-no-repeat bg-center h-full w-full bg-fixed bg-transparent">
+                    <PanelGame onJuegoCompletado={() => setHabilitarJuego(false)}/>   
+                </div>
+            ):(
+                <div className="bg-[url('/fondo.JPG')] bg-cover bg-no-repeat bg-center h-svh w-full bg-fixed bg-transparent pt-8">
+                    <VistaGameOver/>
+                </div>
+            )}
             {mostrar && (
                 <div className="fixed z-10 inset-0 overflow-y-auto bg-opacity-50 flex items-center justify-center">
                     <div className="bg-amber-200 border-green-700 border-2 rounded-lg shadow-xl overflow-hidden">
