@@ -5,7 +5,6 @@ class MensajeJuego(models.Model):
     progreso = models.ForeignKey(ProgresoJuego, on_delete=models.CASCADE, related_name='mensajes')
     titulo = models.CharField(max_length=150)
     descripcion = models.CharField(max_length=900)
-    destacado = models.BooleanField(default=False)
     desbloqueado = models.BooleanField(default=False)
 
     class Meta:

@@ -7,7 +7,7 @@ interface Progreso {
 import { BarraNavegacion } from "../../components/BarraNavegacion"
 import { Footer } from "../../components/PiePagina";
 import { Link } from "react-router-dom"
-import { getProgresoJuego } from "../../assets/utils/sistema.api";
+import { getProgresoJuego, profile, getPlantas, getAportes } from "../../assets/utils/sistema.api";
 import { useEffect, useState } from "react";
 
 export function Home(){
@@ -19,8 +19,18 @@ export function Home(){
         console.log(progresoJuego);
     }
 
+    async function perfilDelUsuario() {
+        const res = await profile();
+        console.log('datos',res);
+        const plantas = getPlantas();
+        console.log('plantas',plantas);
+        const aportes = getAportes();
+        console.log('aportes',aportes);    
+    }
+    
     useEffect(()=> {
         cargarProgreso();
+        perfilDelUsuario();
     }, []);
 
     return (

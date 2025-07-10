@@ -18,7 +18,6 @@ type MensajeData = {
     progreso: number;
     titulo: string;
     descripcion: string;
-    destacado: boolean;
     desbloqueado: boolean;
 }
 
@@ -29,7 +28,6 @@ type AprendizajeData = {
     imagen: string;
     fuente: string;
     video: string;
-    destacado: boolean;
     desbloqueado: boolean;
 }
 
@@ -267,7 +265,6 @@ export function PanelGame({onJuegoCompletado}: props) {
             progreso: Number(location.pathname.split('/').pop()),
             titulo: mensaje[1],
             descripcion: mensaje[2],
-            destacado: false,
             desbloqueado: true,
         }
         try {
@@ -293,7 +290,6 @@ export function PanelGame({onJuegoCompletado}: props) {
             imagen: tema[3],
             fuente: tema[4],
             video: tema[5],
-            destacado: false,
             desbloqueado: true,
         };
         try {

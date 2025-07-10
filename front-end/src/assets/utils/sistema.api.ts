@@ -45,6 +45,12 @@ const apiAporte = axios.create({
     baseURL: 'http://127.0.0.1:8000/sistemaWeb/api/aporte/'
 })
 
+export const getAportes = () => apiAporte.get('/', {
+    headers:{
+        'Authorization': `Token ${localStorage.getItem('token')}`
+    }
+})
+
 export const createAporte = (
     aporte: {
         cantidad: number, 
@@ -158,7 +164,6 @@ export const saveMensajeDesbloqueado = (
     mensaje: {
         titulo:string;
         descripcion:string;
-        destacado:boolean;
         desbloqueado:boolean;
     }
 ) => {
@@ -182,7 +187,6 @@ export const saveAprendizajeDesbloqueado = (
         imagen:string;
         video:string;
         fuente:string;
-        destacado:boolean;
         desbloqueado:boolean;
     }
 ) => {

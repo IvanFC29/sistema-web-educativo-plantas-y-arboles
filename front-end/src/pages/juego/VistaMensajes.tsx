@@ -1,19 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import { BarraNavegacion } from "../../components/BarraNavegacion";
-import { Pin, PinOff, ArrowLeftSquare } from "lucide-react";
+import { ArrowLeftSquare } from "lucide-react";
 import { useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
 import { getMensajesDesbloqueados } from "../../assets/utils/sistema.api";
 
 interface MensajeData {
     id: number;
     titulo: string;
     descripcion: string;
-    destacado: boolean;
     desbloqueado: boolean;
 }
 export function VistaMensajes(){
-    const [seDestaco, setSeDestaco] = useState(false);
     const navegacion = useNavigate();
     const [lista, setLista] = useState<MensajeData[]>([]);
 
@@ -27,11 +24,6 @@ export function VistaMensajes(){
         cargarMensajes();
     },[]);
 
-    const destacarMensaje = () => {
-        setSeDestaco(!seDestaco);
-        toast.success('Se destaco un mensaje en la pagina de Inicio.');
-    };
-
     const volverAlJuego = () => {
         navegacion('/juego-educativo/'+location.pathname.split('/').pop());
     }
@@ -39,37 +31,27 @@ export function VistaMensajes(){
     return(
         <div>
             <BarraNavegacion/>
-            <div className="bg-[url('/fondo.JPG')] bg-cover bg-no-repeat bg-center h-svh w-full bg-fixed bg-transparent">
+            <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-lime-300">
                 <button onClick={volverAlJuego} className="flex items-center justify-center gap-2 px-4 py-1.5 m-1 rounded-full text-sm font-semibold transition-all duration-300 shadow-sm border bg-amber-700 text-white border-yellow-400 hover:bg-amber-800 cursor-pointer">
                     <ArrowLeftSquare size={14}/>
                     <span className="whitespace-nowrap hidden md:inline-block">Volver al Juego</span>
                 </button>
-                <div className="grid grid-cols-1 md:grid-cols-2">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 px-4 py-8">
                     {lista.length !== 0 &&
                         lista.map((mensaje, index) => (
-                            <div key={index} className="bg-amber-100 m-6 p-6 rounded-lg shadow-lg">
-                                <div className="flex justify-between">
-                                    <p className="text-teal-900 font-extrabold">#{mensaje.id}</p>
-                                    <button 
-                                        onClick={destacarMensaje} 
-                                        className="rounded-full p-1 bg-white cursor-pointer hover:bg-red-200" 
-                                        title="Destacar Mensaje"
-                                    >
-                                        {seDestaco ? (
-                                            <Pin className="text-red-500 bg-red-200 rounded-full"/>
-                                        ) : (
-                                            <PinOff className="text-red-500"/>
-                                        )}
-                                    </button>
-                                </div>
-                                <div>
-                                    <p className="font-semibold text-center">{mensaje.titulo}</p>
-                                    <hr className="my-2" />
-                                    <p className="p-2">{mensaje.descripcion}</p>
-                                </div>
+                        <div
+                            key={index}
+                            className={`bg-yellow-100 p-4 w-[90%] mx-auto rounded-md shadow-lg transform transition-transform duration-300 hover:scale-105 
+                            ${index % 2 === 0 ? 'rotate-[-2deg]' : 'rotate-[2deg]'}`}
+                            style={{ border: '2px dashed #facc15' }} 
+                        >
+                            <div className="flex justify-between items-center mb-2">
+                                <p className="font-bold text-lg text-center mb-2 p-2">{mensaje.titulo}</p>
+                                <hr className="border-t border-yellow-300 mb-2" />
+                                <p className="text-sm text-gray-800">{mensaje.descripcion}</p>
                             </div>
-                        ))
-                    }
+                        </div>
+                    ))}
                 </div>
            </div>
         </div>

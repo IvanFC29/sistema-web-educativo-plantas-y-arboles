@@ -1,8 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { BarraNavegacion } from "../../components/BarraNavegacion";
-import { ArrowLeftSquare, Pin, PinOff } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
-import { toast } from "react-hot-toast";
+import { ArrowLeftSquare, ChevronDown, ChevronUp } from "lucide-react";
+import { useState, useEffect } from "react";
 import { getAprendizajeDesbloqueado } from "../../assets/utils/sistema.api";
 
 interface AprendizajeData {
@@ -12,16 +11,12 @@ interface AprendizajeData {
     imagen: string;
     fuente: string;
     video: string;
-    destacado: boolean;
     desbloqueado: boolean;
 }
 
 export function VistaAprendizaje(){
-    const [seDestaco, setSeDestaco] = useState(false);
-    const [expandido, setExpandido] = useState(false);
+    const [expandidoIndex, setExpandidoIndex] = useState<number | null>(null);
     const [lista, setLista] = useState<AprendizajeData[]>([]);
-    
-    const contenedorRef = useRef<HTMLDivElement>(null);
     const navegacion = useNavigate();
 
     async function cargarAprendizajes(){
@@ -31,76 +26,86 @@ export function VistaAprendizaje(){
 
     useEffect(()=> {
         cargarAprendizajes();
-        const clickFuera = (e: MouseEvent) => {
-            if (
-              contenedorRef.current &&
-              !contenedorRef.current.contains(e.target as Node)
-            ) {
-              setExpandido(false);
-            }
-          };
-          document.addEventListener("click", clickFuera);
-          return () => document.removeEventListener("click", clickFuera);
     }, []);
-
-    const destacarTema = () => {
-        setSeDestaco(!seDestaco);
-        toast.success('Se destaco un tema de Aprendizaje en la pagina de Inicio.');
-    };
 
     const volverAlJuego = () => {
         navegacion('/juego-educativo/'+location.pathname.split('/').pop());
     }
+    const toggleExpandido = (index: number) => {
+        setExpandidoIndex(prev => (prev === index ? null : index));
+    };
 
     return(
         <div>
             <BarraNavegacion/>
-            <div className="bg-[url('/fondo.JPG')] bg-cover bg-no-repeat bg-center min-h-screen max-h-full w-full bg-fixed bg-transparent">
+            <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-lime-300">
                 <button onClick={volverAlJuego} className="flex items-center justify-center gap-2 px-4 py-1.5 m-1 rounded-full text-sm font-semibold transition-all duration-300 shadow-sm border bg-amber-700 text-white border-yellow-400 hover:bg-amber-800 cursor-pointer">
                     <ArrowLeftSquare size={14}/>
                     <span className="whitespace-nowrap hidden md:inline-block">Volver al Juego</span>
                 </button>
-                <div className="grid grid-cols-1 relative">
-                    {lista.length === 0? (
-                        <div></div>
-                    ): (
-                        <div>
-                            {lista.map((aprendizaje, index) => (
-                                <div key={index} ref={contenedorRef} className={`bg-amber-100 mt-10 ml-5 mr-5  mb-10 p-1 transition-all overflow-hidden shadow-md md:p-6 md:ml-20 md:mr-20 ${ expandido ? "max-h-full" : "max-h-[150px]"}`}>
-                                    <div className="flex justify-between">
-                                        <p className="text-teal-900 font-extrabold">#{aprendizaje.id}</p>
-                                        <button onClick={destacarTema} className="rounded-full p-1 bg-white cursor-pointer hover:bg-red-200" title="Destacar aprendizaje">
-                                            {seDestaco?(
-                                                <Pin className="text-red-500 bg-red-200 rounded-full"/>
-                                            ):(
-                                                <PinOff className="text-red-500"/>
-                                            )}
-                                        </button>
-                                    </div>
-                                    <div className="pl-7 pr-7">
-                                        <p className="font-semibold text-center">{aprendizaje.titulo.toUpperCase()}</p>
-                                        <hr />
-                                        <div className="pl-7 pr-7 grid grid-cols-1 md:grid-cols-2">
-                                            <p className="p-2">{aprendizaje.contenido}</p>
-                                            <div className="m-4">
-                                                <img src={aprendizaje.imagen} alt="Ilustracion Del Tema" width={400} height={400}/>
-                                            </div>
-                                        </div>    
-                                    </div>
-                                    <div className="p-10">
-                                        <p>Fuente de informacion del tema: <span><a className="text-emerald-950 font-bold" href={aprendizaje.fuente} target="_blank"> Fotosíntesis: qué es, fases e importancia </a></span></p>
-                                        <div className="p-2">
-                                            <p>Obten mas informacion en el siguiente video:</p>
-                                            <iframe width="300" height="185" src={aprendizaje.video} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
-                                        </div>
-                                    </div>
-                                    <button onClick={()=>{setExpandido(!expandido)}} title={expandido? "Ver menos": "Ver mas"} className="rounded-full pr-1 pl-1 absolute bottom-11 bg-amber-100 hover:bg-amber-200 text-gray-700 cursor-pointer">
-                                        {expandido?  "▲" : "▼"}
-                                    </button>
+                <div className="p-4 md:p-8 space-y-4">
+                    {lista.map((aprendizaje, index) => (
+                        <div
+                        key={index}
+                        className="border border-gray-300 rounded-md shadow-md bg-white overflow-hidden transition-all"
+                        >
+                        {/* CABECERA */}
+                        <button
+                            className="w-full flex items-center justify-between p-4 bg-amber-100 hover:bg-amber-200 transition-colors"
+                            onClick={() => toggleExpandido(index)}
+                        >
+                            <h2 className="font-bold text-start text-teal-900">
+                            {`Tema ${index + 1}: ${aprendizaje.titulo}`}
+                            </h2>
+                            {expandidoIndex === index ? (
+                            <ChevronUp className="text-gray-600" />
+                            ) : (
+                            <ChevronDown className="text-gray-600" />
+                            )}
+                        </button>
+
+                        {/* CONTENIDO EXPANDIBLE */}
+                        {expandidoIndex === index && (
+                            <div className="p-4 md:p-6 bg-amber-50">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <p className="text-gray-800">{aprendizaje.contenido}</p>
+                                <div className="flex justify-center">
+                                <img
+                                    src={aprendizaje.imagen}
+                                    alt="Ilustración"
+                                    className="rounded-md  h-auto max-w-xs md:max-w-xl"
+                                />
                                 </div>
-                            ))}
+                            </div>
+
+                            <div className="mt-6 text-sm text-gray-700">
+                                <p>
+                                Fuente:
+                                <a
+                                    href={aprendizaje.fuente}
+                                    className="text-emerald-900 font-semibold ml-1 underline"
+                                    target="_blank"
+                                >
+                                    Ver artículo
+                                </a>
+                                </p>
+                                <div className="mt-3">
+                                <p>Video relacionado:</p>
+                                <iframe
+                                    width="300"
+                                    height="185"
+                                    src={aprendizaje.video}
+                                    title="YouTube video player"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                    className="rounded-md mt-2"
+                                ></iframe>
+                                </div>
+                            </div>
+                            </div>
+                        )}
                         </div>
-                    )}
+                    ))}
                 </div>
             </div>
         </div>

@@ -8,7 +8,6 @@ class AprendizajeJuego(models.Model):
     imagen = models.CharField(max_length=200)
     video = models.CharField(max_length=200)
     fuente = models.CharField(max_length=200)
-    destacado = models.BooleanField(default=False)
     desbloqueado = models.BooleanField(default=False)
 
     class Meta:
