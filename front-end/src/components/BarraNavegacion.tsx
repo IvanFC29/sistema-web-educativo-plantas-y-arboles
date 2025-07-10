@@ -6,14 +6,14 @@ import { profile } from '../assets/utils/sistema.api';
 import { useState, useEffect } from 'react';
 
 export function BarraNavegacion() {
-    const [fullName, setFullName] = useState('');
+    const [nombre, setNombre] = useState('');
     const location = useLocation();
 
     useEffect(()=> {
       const fetchData = async()=>{
         const response = await profile();
         console.log(response);
-        setFullName(response.fullName);
+        setNombre(response.firstName);
       };
       fetchData();
     }, [])
@@ -47,7 +47,7 @@ export function BarraNavegacion() {
             
             <ul className="menu-boton">
               <a href="#" className="font-semibold block py-2 px-3 text-gray-900 rounded-sm md:bg-transparent md:p-0 dark:text-black hover:bg-lime-100 md:hover:text-lime-700 md:dark:hover:text-lime-500 dark:hover:bg-lime-200 dark:hover:text-black md:dark:hover:bg-transparent">
-                 <span className='flex flex-row space-x-4'> <CircleUser /> {fullName} </span>
+                 <span className='flex flex-row space-x-4 gap-2'> <CircleUser /> {nombre} </span>
               </a>
               <ul className="submenu">
                 <li><a onClick={logout} href="/index"> <span className='flex flex-row'><LogOut size={18} />Salir</span></a></li>

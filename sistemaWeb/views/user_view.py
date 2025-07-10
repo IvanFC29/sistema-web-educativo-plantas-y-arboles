@@ -8,6 +8,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
+from ..models import Planta, AporteAmbiental
 
 @api_view(['POST'])
 def login(request):
@@ -33,5 +34,23 @@ def register(request):
 @permission_classes([IsAuthenticated])
 def profile(request):
     elId = request.user.id
-    nombreCompleto = request.user.first_name+' '+request.user.last_name
-    return Response({"id":elId , "fullName": nombreCompleto},status=status.HTTP_200_OK)
+    nombre = request.user.first_name
+    apellidos = request.user.last_name
+    correo = request.user.email
+    return Response({"id":elId , "firstName": nombre, "lastName": apellidos, "email": correo},status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def totalPlantas(request):
+    user = request.user
+    total = Planta.objects.filter(usuario=user).count()
+    return Response({'total': total},status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def totalAportes(request):
+    user = request.user
+    total = AporteAmbiental.objects.filter(planta__usuario=user).count()
+    return Response({"total":total}, status=status.HTTP_200_OK)

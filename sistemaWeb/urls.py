@@ -2,7 +2,7 @@ from django.urls import path, include
 from rest_framework import routers
 from .views import PlantaVista, ProgresoVista, AporteVista, AprendizajeVista, MensajeVista
 from .resources.buscador_view import buscar_descripcion
-from .views import register, login, profile
+from .views import register, login, profile, totalPlantas, totalAportes
 
 router = routers.DefaultRouter()
 router.register(r'planta', PlantaVista)
@@ -17,4 +17,6 @@ urlpatterns = [
     path('api/registrar_usuario', register, name='registrar_usuario'),
     path('api/login', login, name='login'),
     path('api/profile', profile, name='profile'),
+    path('api/total-plantas',  totalPlantas,  name='plantasTotales'), 
+    path('api/total-aportes', totalAportes, name='totalAportes')
 ]

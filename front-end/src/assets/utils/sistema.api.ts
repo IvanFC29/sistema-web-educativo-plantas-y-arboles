@@ -45,12 +45,6 @@ const apiAporte = axios.create({
     baseURL: 'http://127.0.0.1:8000/sistemaWeb/api/aporte/'
 })
 
-export const getAportes = () => apiAporte.get('/', {
-    headers:{
-        'Authorization': `Token ${localStorage.getItem('token')}`
-    }
-})
-
 export const createAporte = (
     aporte: {
         cantidad: number, 
@@ -112,6 +106,28 @@ export const login = async (userData: { username: string, password: string }) =>
 export const profile = async() => {
     const response = await fetch("http://127.0.0.1:8000/sistemaWeb/api/profile", {
         method: "POST",
+        headers:{
+            'Authorization': `Token ${localStorage.getItem('token')}`
+        }
+    });
+    const data = await response.json();
+    return data;
+}
+
+export const getTotalPlantas = async() => {
+    const response = await fetch("http://127.0.0.1:8000/sistemaWeb/api/total-plantas", {
+        method: "GET",
+        headers:{
+            'Authorization': `Token ${localStorage.getItem('token')}`
+        }
+    });
+    const data = await response.json();
+    return data;
+}
+
+export const getTotalAportes = async() => {
+    const response = await fetch("http://127.0.0.1:8000/sistemaWeb/api/total-aportes", {
+        method: "GET",
         headers:{
             'Authorization': `Token ${localStorage.getItem('token')}`
         }

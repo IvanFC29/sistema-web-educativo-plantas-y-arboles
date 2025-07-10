@@ -4,7 +4,7 @@ export function Indicador(){
     const locacion = useLocation();
 
     const rutas: {[key:string]:string}={
-        '/inicio': 'Hola !! 👏',
+        '/inicio': 'Bienvenido !! 👏',
         '/aporte-ambiental': 'Aporte Ambiental',
         '/conociendo-tu-planta': 'Conociendo tus Plantas',
         '/mis-plantas': 'Mis Plantas',
