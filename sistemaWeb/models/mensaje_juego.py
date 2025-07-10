@@ -8,5 +8,8 @@ class MensajeJuego(models.Model):
     destacado = models.BooleanField(default=False)
     desbloqueado = models.BooleanField(default=False)
 
+    class Meta:
+        unique_together = ('progreso', 'titulo') 
+
     def __str__(self):
         return f"{self.titulo} - {self.desbloqueado}"

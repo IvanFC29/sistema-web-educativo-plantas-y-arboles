@@ -20,6 +20,7 @@ export function VistaMensajes(){
     async function cargarMensajes(){
         const res = await getMensajesDesbloqueados(1);
         setLista(res.data);
+        console.log(res);
     }
     
     useEffect(()=>{
@@ -38,37 +39,39 @@ export function VistaMensajes(){
     return(
         <div>
             <BarraNavegacion/>
-            <div className="bg-[url('/fondo.JPG')] bg-cover bg-no-repeat bg-center h-screen w-full bg-fixed bg-transparent">
+            <div className="bg-[url('/fondo.JPG')] bg-cover bg-no-repeat bg-center h-svh w-full bg-fixed bg-transparent">
                 <button onClick={volverAlJuego} className="flex items-center justify-center gap-2 px-4 py-1.5 m-1 rounded-full text-sm font-semibold transition-all duration-300 shadow-sm border bg-amber-700 text-white border-yellow-400 hover:bg-amber-800 cursor-pointer">
                     <ArrowLeftSquare size={14}/>
                     <span className="whitespace-nowrap hidden md:inline-block">Volver al Juego</span>
                 </button>
                 <div className="grid grid-cols-1 md:grid-cols-2">
-                    {lista.length !== 0 && (
-                        <div>
-                            {lista.map((mensaje, index) => (
-                                <div key={index} className="bg-amber-100 m-10 p-6">
-                                    <div className="flex justify-between">
-                                        <p className="text-teal-900 font-extrabold">#{mensaje.id}</p>
-                                        <button onClick={destacarMensaje} className="rounded-full p-1 bg-white cursor-pointer hover:bg-red-200" title="Destacar Mensaje">
-                                            {seDestaco?(
-                                                <Pin className="text-red-500 bg-red-200 rounded-full"/>
-                                            ):(
-                                                <PinOff className="text-red-500"/>
-                                            )}
-                                        </button>
-                                    </div>
-                                    <div>
-                                        <p className="font-semibold text-center">{mensaje.titulo}</p>
-                                        <hr />
-                                        <p className="p-2">{mensaje.descripcion}</p>
-                                    </div>
+                    {lista.length !== 0 &&
+                        lista.map((mensaje, index) => (
+                            <div key={index} className="bg-amber-100 m-6 p-6 rounded-lg shadow-lg">
+                                <div className="flex justify-between">
+                                    <p className="text-teal-900 font-extrabold">#{mensaje.id}</p>
+                                    <button 
+                                        onClick={destacarMensaje} 
+                                        className="rounded-full p-1 bg-white cursor-pointer hover:bg-red-200" 
+                                        title="Destacar Mensaje"
+                                    >
+                                        {seDestaco ? (
+                                            <Pin className="text-red-500 bg-red-200 rounded-full"/>
+                                        ) : (
+                                            <PinOff className="text-red-500"/>
+                                        )}
+                                    </button>
                                 </div>
-                            ))}
-                        </div>
-                    )}
+                                <div>
+                                    <p className="font-semibold text-center">{mensaje.titulo}</p>
+                                    <hr className="my-2" />
+                                    <p className="p-2">{mensaje.descripcion}</p>
+                                </div>
+                            </div>
+                        ))
+                    }
                 </div>
-            </div>
+           </div>
         </div>
     )
 }

@@ -196,9 +196,11 @@ export function PanelGame({onJuegoCompletado}: props) {
     useEffect(()=> {
         if(mostrarMensaje && gano){
             audioCompletado.play();
+            completarJuego();
         }
         if(mostrarMensaje && !gano){
             audioPerdido.play();
+            completarJuego();
         }
     }, [mostrarMensaje, gano])
 
@@ -216,7 +218,6 @@ export function PanelGame({onJuegoCompletado}: props) {
     }
 
     async function completarJuego () {
-       
         const res = await updateFechaJuego();
         console.log(res);    
     }

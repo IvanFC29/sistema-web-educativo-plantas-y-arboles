@@ -9,7 +9,7 @@ export function listaTemas(indice:number): [number, string, string, string, stri
             video: "https://www.youtube.com/embed/mtGgo68VM54?si=WpkYM3QAsHPxZhKl"
         },
         {
-            id: 1,
+            id: 2,
             titulo: "",
             imagen: "",
             contenido: "",
@@ -17,7 +17,7 @@ export function listaTemas(indice:number): [number, string, string, string, stri
             video: ""
         },
         {
-            id: 1,
+            id: 3,
             titulo: "",
             imagen: "",
             contenido: "",
@@ -25,7 +25,7 @@ export function listaTemas(indice:number): [number, string, string, string, stri
             video: ""
         },
         {
-            id: 1,
+            id: 4,
             titulo: "",
             imagen: "",
             contenido: "",
