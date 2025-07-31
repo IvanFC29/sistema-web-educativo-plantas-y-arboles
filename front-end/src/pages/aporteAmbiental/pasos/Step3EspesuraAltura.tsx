@@ -1,6 +1,8 @@
 import { useForm } from "react-hook-form";
 import { calcularImpacto } from "../../../assets/utils/CalculosAporte";
+import { Ayuda } from "../Help";
 import { useEffect,  useState} from "react";
+import { HelpCircle } from "lucide-react";
 
 type Acciones = {
     atras: () => void;
@@ -11,6 +13,7 @@ type Acciones = {
 
 export function Step3EspesuraAltura({atras, siguiente, datos, datoActual}: Acciones){
     const [usarMismosValores, setUsarMismosValores] = useState(false);
+    const [mostrar, setMostrar] = useState(false);
     const [valoresComunes, setValoresComunes] = useState({
         altura: 0,
         follaje: 0
@@ -76,14 +79,14 @@ export function Step3EspesuraAltura({atras, siguiente, datos, datoActual}: Accio
                             <p className="dark:text-gray-500 text-2xl">Valores comunes</p> </div>
                         <div className="relative z-0 group">
                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
-                                Altura (en m.)
+                                Altura (en m.) 
                             </label>
                             <input  type="number"
                                 {...register('alturaComun', {required: true})}
                                 className="bg-white border border-green-300 text-black text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5"/> </div>
                         <div className="relative z-0 group">
                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
-                                Grosor (diametro tronco/follaje cm.)
+                                Espesura (diametro tronco/follaje cm.) 
                             </label>
                             <input  type="number" 
                                 {...register('grosorComun', {required: true})}
@@ -94,6 +97,19 @@ export function Step3EspesuraAltura({atras, siguiente, datos, datoActual}: Accio
                     > Listo !!</button>
                 </form>
             )}
+            <br />
+            <div className="flex flex-row space-x-2.5">
+                Necesitas ayuda para llenar los valores: 
+                <button
+                    onClick={() => setMostrar(!mostrar)}
+                    className="text-blue-600 hover:text-blue-800 cursor-pointer ml-1.5"
+                >
+                    <HelpCircle className="w-5 h-5" />
+                </button>
+                {mostrar && (
+                    <Ayuda/>
+                )}
+            </div>
             <form onSubmit={finalizar}>
                 <div className="mt-10 space-y-6">
                     {[...Array(datoActual.cantidadPlantas || 1)].map((_, index) => (
@@ -116,7 +132,7 @@ export function Step3EspesuraAltura({atras, siguiente, datos, datoActual}: Accio
 
                         <div className="relative z-0 group">
                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
-                                Grosor aproximado (diametro tronco/follaje cm.)
+                                Espesura aproximada (diametro tronco/follaje cm.)
                             </label>
                             <input
                                 type="number"

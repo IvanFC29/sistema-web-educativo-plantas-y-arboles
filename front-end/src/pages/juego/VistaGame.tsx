@@ -37,7 +37,6 @@ export function VistaGame(){
         async function verificarFechaJuego() {
             const res = await getFechaJuego();
             setHabilitarJuego(res.habilitado);
-            console.log('El estado del juego es: '+habilitarJuego);
         }
 
         habilitarBtnMensajes();
@@ -47,16 +46,10 @@ export function VistaGame(){
     });
 
     const mostrarReflexiones = () => {
-        console.log('Aqui iran las reflexiones');
-        console.log(habilitarBtnMsj);
-        
         navegacion('/consejos-encontrados/'+location.pathname.split('/').pop());
     }
 
     const mostrarAprendizajes = () => {
-        console.log('Aqui iran los aprendizajes');
-        console.log(habilitarBtnApzj);
-        
         navegacion('/mis-aprendizajes/'+location.pathname.split('/').pop());
     }
 

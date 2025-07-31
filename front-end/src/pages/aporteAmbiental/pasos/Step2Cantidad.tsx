@@ -23,7 +23,6 @@ export function Step2Cantidad({atras, siguiente, datos, datoActual}: Acciones){
     
     const registrarCantidadPersonalizada = handleSubmit( data => {
         const valor = parseInt(data.otraCantidad);
-        console.log(valor);
         if (!isNaN(valor) && valor > 0) {
             datos({cantidadPlantas: valor});
             siguiente();

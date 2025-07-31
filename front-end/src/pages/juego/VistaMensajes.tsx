@@ -17,7 +17,6 @@ export function VistaMensajes(){
     async function cargarMensajes(){
         const res = await getMensajesDesbloqueados(1);
         setLista(res.data);
-        console.log(res);
     }
     
     useEffect(()=>{

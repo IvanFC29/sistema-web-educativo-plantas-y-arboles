@@ -24,14 +24,12 @@ export function MisAfiches(){
             if(params.id){
                 const respuesta = await getAportesByPlanta(params.id);
                 setLista(respuesta.data);
-                console.log(respuesta.data);
             }
         }
         cargarTarjetasAportes();
 
         async function cargarPlanta(){
             if(params.id){
-                console.log(params.id);
                 const respuesta = await getPlantaById(params.id);
                 setEspecie(respuesta.data.especie);
             }   

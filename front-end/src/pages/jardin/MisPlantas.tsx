@@ -18,7 +18,6 @@ export function MisPlantas(){
     async function cargarListaPlantas(){
         const respuesta = await getPlantas();
         setLista(respuesta.data);
-        console.log(respuesta.data);
     }
 
     useEffect(() => {

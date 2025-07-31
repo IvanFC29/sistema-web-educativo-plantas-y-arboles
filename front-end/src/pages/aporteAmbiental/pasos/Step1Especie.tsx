@@ -27,7 +27,6 @@ export function Step1Especie({siguiente, datos}: Acciones){
     useEffect(() => {
         async function cargarPlantas() {
             const res = await getPlantas();
-            console.log(res);
             setLista(res.data);
         }
         cargarPlantas();

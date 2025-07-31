@@ -23,9 +23,11 @@ export function Layout1(){
     const [especie, setEspecie] = useState('');
     const [tipoPlanta, setTipoPlanta] = useState('');
     const [descripcion, setDescripcion] = useState('');
-    
     const [estacion, setEstacion] =  useState('');
+
+    const [buscando, setBuscando] = useState(false);
     const [mostrarDescripcion, setMostrarDescripcion] = useState(false);
+
     const [divResultado, setDivResultado] = useState<Resultado | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [mostrar, setMostrar] = useState(false);
@@ -94,6 +96,12 @@ export function Layout1(){
     const buscarDescripcion = () => {
         if (especie.trim() !== "") {
             async function busquedaDescripcion(especie: string) {
+                setBuscando(true);
+                let progresoActual = 0;
+                const intervalo = setInterval(() => {
+                  progresoActual += 1;
+                }, 50);
+
                 try {
                     const respuesta = await findDescripcion(especie);
                     console.log("Respuesta API:", respuesta);
@@ -106,6 +114,11 @@ export function Layout1(){
                     setDescripcion("");
                     setError("No se pudo obtener la descripción");
                     setMostrarDescripcion(false); 
+                } finally{
+                    clearInterval(intervalo);
+                    setTimeout(()=>{
+                        setBuscando(false);
+                    }, 500)
                 }
             }
             busquedaDescripcion(especie);
@@ -132,8 +145,17 @@ export function Layout1(){
                     </div>
                     <br />
                     <label className="flex flex-row" >
-                        <button onClick={buscarDescripcion} className="bg-sky-200 rounded-full p-1 hover:bg-sky-300 cursor-pointer" ><Search /> </button>
-                        <p>Buscar una descripcion de la planta</p>
+                        <div className="flex flex-row">
+                            <button onClick={buscarDescripcion} className="bg-sky-200 rounded-full p-1 hover:bg-sky-300 cursor-pointer" ><Search /> </button>
+                            <p>Buscar una descripcion de la planta</p>
+                        </div>
+                        <br />
+                        {buscando && (
+                            <div className="flex items-center justify-center mt-4">
+                                <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-green-500"/> 
+                                <span className="ml-2 text-sm text-gray-600">Buscando descripción...</span>
+                            </div>
+                        )}
                     </label>
                     <br />
                     {errors.descripcion && <span className="text-orange-600">No buscaste una descripcion de tu planta</span>}

@@ -36,8 +36,7 @@ export function Step4Resultado({datos}: Acciones){
         planta: idPlant,
       };
       try {
-        const res = await createAporte(aporte);
-        console.log(res);
+        await createAporte(aporte);
       } catch (error: any) {
         console.error("Error del servidor:", error.response?.data); 
       }
@@ -46,7 +45,6 @@ export function Step4Resultado({datos}: Acciones){
       toast.success('Aporte Ambiental registrado en el historial !!');
     });
 
-    console.log(datos);
     const d = datos.resultados.map((item: any, index: number) => ({
       nombre: `Planta ${index + 1}`,
       carbono: item.carbono.toFixed(2),

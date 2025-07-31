@@ -16,9 +16,6 @@ export default function(){
             const res = await login(userData);
             console.log('Token:', res.token);
             console.log('Usuario:', res.user);
-          
-            // localStorage.setItem('nombre',res.user.first_name);
-            // localStorage.setItem('apellido',res.user.last_name);
             navegador('/inicio');
         } catch (error) {
             console.error("Error al hacer login:", error);

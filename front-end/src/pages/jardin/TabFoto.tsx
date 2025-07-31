@@ -50,7 +50,6 @@ export function TabFoto({ idPlanta, nombrePlanta, recargar, onActualizado }: Tab
     };
 
     const seleccionarImagen = async (rutaImagenPreelaborada:string) => {
-        console.log(rutaImagenPreelaborada);
         const response = await fetch(rutaImagenPreelaborada);
         const blob = await response.blob();
         const filename =  rutaImagenPreelaborada.split('/').pop() as string;
@@ -59,7 +58,6 @@ export function TabFoto({ idPlanta, nombrePlanta, recargar, onActualizado }: Tab
             updateFotoPlantaById(String(idPlanta), file)
             .then((response) => {
                 console.log(response);
-                console.log('Se actualizo');
                 toast.success('Se actualizo la foto de tu planta !!');
                 recargar(); 
                 if (onActualizado) onActualizado(); 
@@ -72,12 +70,9 @@ export function TabFoto({ idPlanta, nombrePlanta, recargar, onActualizado }: Tab
 
     const actualizarFoto = () => {
         if(image){
-            console.log('Guardando..');
-            
             updateFotoPlantaById(String(idPlanta), image)
                 .then((response) => {
                     console.log(response);
-                    console.log('Se actualizo');
                     toast.success('Se actualizo la foto de tu planta !!');
                     recargar(); 
                     if (onActualizado) onActualizado(); 

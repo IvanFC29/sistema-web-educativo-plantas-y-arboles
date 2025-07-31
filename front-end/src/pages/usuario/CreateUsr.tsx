@@ -56,8 +56,7 @@ export function CreateUsr(){
             ...data
         }
         try {
-            const res = await createUser(newuser);
-            console.log(res);
+            await createUser(newuser);
         } catch (error) {
             console.log(error);
         }

@@ -13,6 +13,7 @@ import juegoCompletado from '/audio/juegoCompletado.wav';
 import juegoPerdido from '/audio/juegoPerdido.wav';
 import itemEncontrado from '/audio/itemEncontrado.wav';
 import itemBasuraEncontrado from '/audio/itemBasuraEncontrado.wav';
+import descubrirCesped from '/audio/descubrirCesped.mp3'
 
 type MensajeData = {
     progreso: number;
@@ -54,11 +55,13 @@ export function PanelGame({onJuegoCompletado}: props) {
     const [cantidadApzj, setCantidadApzj] = useState(0);
     const [etiquetaGame, setEtiquetaGame] = useState('Primer Laberinto');
     const [visibilidad, setVisibilidad] = useState(mapa ? mapa.map(fila => fila.map(() => false)) : []);
+    const [animaciones, setAnimaciones] = useState(mapa ? mapa.map(fila => fila.map(() => false)) : []);
    
     const audioCompletado = new Audio(juegoCompletado);
     const audioPerdido = new Audio(juegoPerdido);
     const audioItemEncontrado = new Audio(itemEncontrado);
     const audioBasura = new Audio(itemBasuraEncontrado);
+    const audioCesped = new Audio(descubrirCesped);
       
     useEffect(() => {
         for (let i = 0; i < mapa.length; i++) {
@@ -160,7 +163,6 @@ export function PanelGame({onJuegoCompletado}: props) {
                 setNivel(nuevoNivel);
                 setMapa(mapas(nuevoNivel));   
                 setEtiquetaGame(etiquetas[nuevoNivel]);
-                console.log(etiquetaGame);
                 setManzanasPendientes(0);
                 setNuecesPendientes(0);     
             }else{   
@@ -216,8 +218,7 @@ export function PanelGame({onJuegoCompletado}: props) {
     }
 
     async function completarJuego () {
-        const res = await updateFechaJuego();
-        console.log(res);    
+        await updateFechaJuego();
     }
 
     const cerrarMensaje = () => {
@@ -228,6 +229,14 @@ export function PanelGame({onJuegoCompletado}: props) {
     }
 
     const descubrir = (i: number, j: number) => {
+        audioCesped.play();
+        setAnimaciones(prev => {
+            const nueva = prev.map((fila, x) =>
+                fila.map((val, y) => val || (x === i && y === j))
+            );
+            return nueva;
+        });
+
         if (Math.abs(i - posicionX) <= 2 && Math.abs(j - posicionY) <= 2) {
           setVisibilidad(prev => {
             const nueva = prev.map((fila, x) =>
@@ -236,30 +245,31 @@ export function PanelGame({onJuegoCompletado}: props) {
             return nueva;
           });
         }
+        setTimeout(()=>{
+            setAnimaciones(prev => {
+                const nueva = prev.map((fila, x) =>
+                    fila.map((val, y) => (x === i && y === j ? false : val))
+                );
+                return nueva;
+            });
+        }, 800)
     };      
 
     useEffect(()=>{
         async function obtenerIndiceMensajes(){
             const progresoActual = await getProgresoJuego();
-            setCantidadMsj(progresoActual.data[0].cantidadMsjDesbloqueados);
-            console.log(cantidadMsj); 
+            setCantidadMsj(progresoActual.data[0].cantidadMsjDesbloqueados); 
         }
         async function obtenerIndiceAprendizajes(){
             const progresoActual = await getProgresoJuego();
             setCantidadApzj(progresoActual.data[0].cantidadApzjDesbloqueados);
-            console.log(cantidadApzj); 
         }
         obtenerIndiceMensajes();
         obtenerIndiceAprendizajes();
     });
 
     async function guardarProgresoMensajes() {
-        console.log(cantidadMsj);
-        
         const mensaje = listaMensajes(cantidadMsj);
-        console.log("el ID es: "+location.pathname.split('/').pop());
-
-        console.log(mensaje);
 
         const mensajeDesbloqueado: MensajeData = {
             progreso: Number(location.pathname.split('/').pop()),
@@ -268,8 +278,7 @@ export function PanelGame({onJuegoCompletado}: props) {
             desbloqueado: true,
         }
         try {
-            const res = await saveMensajeDesbloqueado(mensajeDesbloqueado);
-            console.log(res);
+            await saveMensajeDesbloqueado(mensajeDesbloqueado);
             await updateContadorMensajes();
         } catch (error) {
             console.log(error);
@@ -277,12 +286,7 @@ export function PanelGame({onJuegoCompletado}: props) {
     }
 
     async function guardarProgresoAprendizaje() {
-        console.log(cantidadApzj);
-        
         const tema = listaTemas(cantidadApzj);
-        console.log("el ID es: "+location.pathname.split('/').pop());
-        
-        console.log(tema);
         const aprendizajeDesbloqueado: AprendizajeData = {
             progreso: Number(location.pathname.split('/').pop()),
             titulo: tema[1],
@@ -293,8 +297,7 @@ export function PanelGame({onJuegoCompletado}: props) {
             desbloqueado: true,
         };
         try {
-            const res = await saveAprendizajeDesbloqueado(aprendizajeDesbloqueado);
-            console.log(res);
+            await saveAprendizajeDesbloqueado(aprendizajeDesbloqueado);
             await updateContadorAprendizaje();
         } catch (error) {
             console.log(error);
@@ -324,6 +327,7 @@ export function PanelGame({onJuegoCompletado}: props) {
                                             key={index}
                                             tipo={celda}
                                             visible={true}
+                                            animado={animaciones[i][j]}
                                             onDescubrir={() => descubrir(i, j)}
                                         />
                                     );
@@ -333,6 +337,7 @@ export function PanelGame({onJuegoCompletado}: props) {
                                             key={index}
                                             tipo={celda}
                                             visible={visibilidad[i][j]}
+                                            animado={animaciones[i][j]}
                                             onDescubrir={() => descubrir(i, j)}
                                         />
                                     );

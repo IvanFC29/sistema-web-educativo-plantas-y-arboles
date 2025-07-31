@@ -12,7 +12,6 @@ export function BarraNavegacion() {
     useEffect(()=> {
       const fetchData = async()=>{
         const response = await profile();
-        console.log(response);
         setNombre(response.firstName);
       };
       fetchData();
