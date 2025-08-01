@@ -4,8 +4,20 @@ export function listaTemas(indice:number): [number, string, string, string, stri
             id: 1,
             titulo: "La fotosintesis en las plantas",
             imagen: "/img_juego/aprendizaje/fotosintesis.JPG",
-            contenido: "Todas las plantas realizan un proceso a lo largo de su vida. Este proceso consiste en crear materia organiza a partir de materia inorganica; esto quiere decir que las plantas producen oxigeno y lo expulsan a la atmosfera. Es por esta capacidad de las plantas que el medio ambiente necesita de ellas. La fotosintesis al ser un proceso quimico cuenta con una formula quimica por la cual realiza el proceso: Donde 6 moleculas de agua y 6 moleculas de dioxido de carbono junto con la luz solar hacen una transformacion quimica; Gracias a los cloroplastos y al proceso de fotosíntesis, estos ingredientes se acaban transformando en una molécula de glucosa (C6H12O6) y 6 moléculas de oxígeno (02). ",
-            fuente: "https://www.ecologiaverde.com/fotosintesis-que-es-fases-e-importancia-2948.html",
+            contenido: `Todas las plantas realizan un proceso a lo largo de su vida. Este proceso consiste en crear materia orgánica a partir de materia inorgánica.  
+                        Es por esta capacidad que el medio ambiente depende de ellas. 
+                        
+                        ## Fórmula química 
+                        - 6 moléculas de agua
+                        - 6 moléculas de dióxido de carbono
+                        - Luz solar
+
+                        Gracias a los cloroplastos, se transforman en:
+
+                        - 1 molécula de glucosa (C6H12O6)
+                        - 6 moléculas de oxígeno (O2)`,
+            fuente:  `Texto: [Ecología Verde: Fotosíntesis Fases e Importancia](https://www.ecologiaverde.com/fotosintesis-que-es-fases-e-importancia-2948.html) 
+                      Imagen: [Ecología Verde](https://www.ecologiaverde.com/fotosintesis-que-es-fases-e-importancia-2948.html)`,
             video: "https://www.youtube.com/embed/mtGgo68VM54?si=WpkYM3QAsHPxZhKl"
         },
         {

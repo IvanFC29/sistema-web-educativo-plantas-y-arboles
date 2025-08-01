@@ -3,6 +3,7 @@ import { BarraNavegacion } from "../../components/BarraNavegacion";
 import { ArrowLeftSquare, ChevronDown, ChevronUp } from "lucide-react";
 import { useState, useEffect } from "react";
 import { getAprendizajeDesbloqueado } from "../../assets/utils/sistema.api";
+import ReactMarkdown from 'react-markdown';
 
 interface AprendizajeData {
     id: number;
@@ -68,7 +69,17 @@ export function VistaAprendizaje(){
                         {expandidoIndex === index && (
                             <div className="p-4 md:p-6 bg-amber-50">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <p className="text-gray-800">{aprendizaje.contenido}</p>
+                            <div className="prosa max-w-none">
+                            <ReactMarkdown
+                                components={{
+                                    h2: ({ children }) => <h2 className="text-xl font-semibold mb-2 mt-4">{children}</h2>,
+                                    ul: ({ children }) => <ul className="list-disc list-inside pl-4 mb-4">{children}</ul>,
+                                    p: ({ children }) => <p className="mb-4 text-justify">{children}</p>,
+                                }}
+                            >
+                                {aprendizaje.contenido}
+                            </ReactMarkdown>
+                            </div>
                                 <div className="flex justify-center">
                                 <img
                                     src={aprendizaje.imagen}
@@ -79,18 +90,21 @@ export function VistaAprendizaje(){
                             </div>
 
                             <div className="mt-6 text-sm text-gray-700">
-                                <p>
-                                Fuente:
-                                <a
-                                    href={aprendizaje.fuente}
-                                    className="text-emerald-900 font-semibold ml-1 underline"
-                                    target="_blank"
-                                >
-                                    Ver artículo
-                                </a>
-                                </p>
+                                <p className="font-bold">Fuentes:</p>
+                                <ReactMarkdown
+                                    components={{
+                                        p: ({ children }) => <p className="mb-2 text-sm">{children}</p>,
+                                        a: ({ children, href }) => (
+                                        <a href={href} target="_blank" className="underline text-emerald-900 font-semibold">
+                                            {children}
+                                        </a>
+                                        ),
+                                    }}
+                                >  
+                                    {aprendizaje.fuente}
+                                </ReactMarkdown>
                                 <div className="mt-3">
-                                <p>Video relacionado:</p>
+                                <p className="font-bold">Video relacionado:</p>
                                 <iframe
                                     width="300"
                                     height="185"
