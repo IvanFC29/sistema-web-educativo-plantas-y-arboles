@@ -171,56 +171,56 @@ export function Layout1(){
                         <div className="grid grid-cols-2 md:grid-cols-4">
                             <div className="p-2 mx-auto m-2">
                                 <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
-                                    ${tipoPlanta.includes('arboles') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
-                                    <input className="hidden" type="radio" value="arboles"
+                                    ${tipoPlanta.includes('arbol') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
+                                    <input className="hidden" type="radio" value="arbol"
                                         onChange={(e) => {
                                             const valor = e.target.value;
                                             setTipoPlanta(valor);
                                             setValue('tipo', valor);
                                         }}
-                                        checked={tipoPlanta.includes('arboles')}
+                                        checked={tipoPlanta.includes('arbol')}
                                         name="tipoPlanta" />
                                         <span className="text-sm font-medium">Arboles</span>
                                 </label>
                             </div>
                             <div className="p-2 mx-auto m-2">
                                 <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
-                                    ${tipoPlanta.includes('arbustos') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
-                                    <input className="hidden" type="radio" value="arbustos"
+                                    ${tipoPlanta.includes('arbusto') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
+                                    <input className="hidden" type="radio" value="arbusto"
                                          onChange={(e) => {
                                             const valor = e.target.value;
                                             setTipoPlanta(valor);
                                             setValue('tipo', valor);
                                         }}
-                                        checked={tipoPlanta.includes('arbustos')}
+                                        checked={tipoPlanta.includes('arbusto')}
                                         name="tipoPlanta" />
                                         <span className="text-sm font-medium">Arbustos</span>
                                 </label>
                             </div>
                             <div className="p-2 mx-auto m-2">
                                 <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
-                                    ${tipoPlanta.includes('flores') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
-                                    <input className="hidden" type="radio" value="flores"
+                                    ${tipoPlanta.includes('flor') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
+                                    <input className="hidden" type="radio" value="flor"
                                         onChange={(e) => {
                                             const valor = e.target.value;
                                             setTipoPlanta(valor);
                                             setValue('tipo', valor);
                                         }}
-                                        checked={tipoPlanta.includes('flores')}
+                                        checked={tipoPlanta.includes('flor')}
                                         name="tipoPlanta" />
                                         <span className="text-sm font-medium">Flores</span>
                                 </label>
                             </div>
                             <div className="p-2 mx-auto m-2">
                                 <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
-                                    ${tipoPlanta.includes('suculentas') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
-                                    <input className="hidden" type="radio" value="suculentas"
+                                    ${tipoPlanta.includes('suculenta') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
+                                    <input className="hidden" type="radio" value="suculenta"
                                          onChange={(e) => {
                                             const valor = e.target.value;
                                             setTipoPlanta(valor);
                                             setValue('tipo', valor);
                                         }}
-                                        checked={tipoPlanta.includes('suculentas')}
+                                        checked={tipoPlanta.includes('suculenta')}
                                         name="tipoPlanta" />
                                         <span className="text-sm font-medium">Suculentas</span>
                                 </label>

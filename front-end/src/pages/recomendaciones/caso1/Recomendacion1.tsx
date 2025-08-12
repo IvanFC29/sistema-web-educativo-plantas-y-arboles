@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { toPng } from 'html-to-image';
-import { Leaf, Trees,  Download, Flower2,  Cannabis  } from "lucide-react"; 
-import { segunTipoPlanta, segunEstacion, segunDimension } from '../../../assets/utils/recomendaciones';
+import { Leaf, Trees, Download, Flower2, Cannabis } from "lucide-react"; 
+import { plantas} from '../../../assets/utils/recomendaciones';
 
 type Respuesta = {
     especie: string;
@@ -50,8 +50,8 @@ export function RecomendacionTipo1({especie,tipoPlanta,estacion}: Respuesta){
                                 </div>
                                 <div className='m-1.5'>
                                     <p className='font-semibold'>🖈 Ubicacion de tu planta:</p>
-                                    <p className='font-sans text-sm ml-1.5'> - {segunTipoPlanta(tipoPlanta)} </p>
-                                    <p className='font-sans text-sm ml-1.5'> - {segunDimension(tipoPlanta)}</p>
+                                    <p className='font-sans text-sm ml-1.5'> - {plantas[tipoPlanta].ubicacion} </p>
+                                    <p className='font-sans text-sm ml-1.5'> - {plantas[tipoPlanta].separacion}</p>
                                 </div>
                             </div>
                         )}
@@ -59,7 +59,7 @@ export function RecomendacionTipo1({especie,tipoPlanta,estacion}: Respuesta){
                         {estacion !== '' &&(
                             <div className='m-1.5'>
                                 <p className='font-semibold'>🗓 ¿Es buena epoca para plantar?</p>
-                                <p className='font-sans text-sm ml-1.5'> - {segunEstacion(estacion)}</p>
+                                <p className='font-sans text-sm ml-1.5'> - {plantas[tipoPlanta].estaciones[estacion]}</p>
                             </div>
                         )}
 

@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { toPng } from 'html-to-image';
 import { Download, Droplet } from "lucide-react"; 
-import { segunTipoTierra, segunHojas, segunClima, riegoSegunTipoPlanta } from '../../../assets/utils/recomendaciones';
+import { plantas } from '../../../assets/utils/recomendaciones';
 
 type Respuesta = {
     especie: string;
@@ -13,7 +13,7 @@ type Respuesta = {
 
 export function RecomendacionTipo2({especie, tipo, tierra, clima, hojas}: Respuesta){
     const divRef = useRef(null);
-
+    
     const descargarRecomendacion = async () =>{
         if(divRef.current === null) return;
 
@@ -38,26 +38,26 @@ export function RecomendacionTipo2({especie, tipo, tierra, clima, hojas}: Respue
                         </div>
                     </div>
                     <div>
-                        <p className='font-sans text-sm ml-1.5'>{riegoSegunTipoPlanta(tipo)}</p>
+                        <p className='font-sans text-sm ml-1.5'>{plantas[tipo].riego}</p>
                     </div>
                     {tierra !== "" &&(
                         <div className='m-1.5'>
                            <p className='font-semibold'> Sobre la tierra </p>
-                           <p className='font-sans text-sm ml-1.5'> - {segunTipoTierra(tierra)}</p>
+                           <p className='font-sans text-sm ml-1.5'> - {plantas[tipo].tierra[tierra]}</p>
                         </div>
                     )}
                     <br />
                     {clima !== "" &&(
                         <div className='m-1.5'>
                             <p className='font-semibold'> Sobre el Clima </p>
-                            <p className='font-sans text-sm ml-1.5'> -{segunClima(clima)} </p>
+                            <p className='font-sans text-sm ml-1.5'> -{plantas[tipo].clima[clima]} </p>
                         </div>
                     )}
                     <br />
                     {hojas !== "" &&(
                         <div className='m-1.5'>
                             <p className='font-semibold'> Sobre las hojas </p>
-                            <p className='font-sans text-sm ml-1.5'> - {segunHojas(hojas)} </p>
+                            <p className='font-sans text-sm ml-1.5'> - {plantas[tipo].hojas[hojas]} </p>
                         </div>
                     )}
                 </div>
