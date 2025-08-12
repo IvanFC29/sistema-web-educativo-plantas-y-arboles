@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { SquareArrowDown, SquareArrowLeft, SquareArrowRight, SquareArrowUp } from "lucide-react";
 import { saveAprendizajeDesbloqueado, saveMensajeDesbloqueado, updateContadorAprendizaje, updateContadorMensajes, getProgresoJuego, updateFechaJuego } from "../../assets/utils/sistema.api";
-import { listaMensajes } from "../../assets/utils/ReflexionesGame";
+import { listaMensajes } from "../../assets/utils/ConsejosGame";
 import { listaTemas } from "../../assets/utils/AprendizajeGame";
 import corazon from '/img_juego/vida.png';
 import manzana from '/img_juego/manzana.png';
