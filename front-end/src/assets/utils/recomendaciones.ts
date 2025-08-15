@@ -1,147 +1,156 @@
 export interface InfoPlanta{
     ubicacion: string;
     separacion: string;
-    profundidad: string; 
-    riego: string;
-    estaciones: Record<string, string>; 
+    etapa: Record<number, Record<string, string>>; 
     tierra: Record<string, string>; 
     clima: Record<string, string>;
     hojas: Record<string, string>;
+    tip: string;
 }
 
 export const plantas: Record<string, InfoPlanta> = {
     arbol: {
-        ubicacion: "Los árboles son ideales para espacios amplios y suelen necesitar más profundidad y separación.",
-        separacion: "3-5 metros",
-        profundidad: "",
-        riego: "Los árboles requieren riego profundo",
-        estaciones: {
-            primavera: "La primavera es excelente para la mayoría de plantas: temperaturas suaves y buena humedad.",
-            verano: "El verano exige más cuidado por el calor, sombra parcial y riegos frecuentes son claves.",
-            otoño: "En otoño se recomienda plantar árboles y arbustos, aprovechando la tierra aún cálida.",
-            invierno: "El invierno es época de reposo. Solo algunas especies resistentes pueden plantarse entonces."
+        ubicacion: "Plantar en espacios amplios no muy pegado a infraestructuras.",
+        separacion: "3-5 metros entre otro árbol",
+        etapa: {
+            0: {
+                profundidad: "Enterrar a una profundidad de aprox. 2 veces su tamaño",
+                riego: "Mantener la tierra húmeda, sin encharcar.",
+            },
+            1: {
+                profundidad: "Colocar a ras del cepellón",
+                riego: "Riego profundo y abundante después de plantar.",
+            },
+            2: {
+                profundidad: "A ras del cepellón con un pequeño cuenco alrededor del tallo para retener agua en los primeros riegos",
+                riego: "Riego profundo cada 3-4 días durante el primer mes.",
+            },
         },
         tierra:{
-            pedregoso: "La frecuencia de riego debe ser mayor porque el suelo retiene menos agua",
-            arenoso: "La frecuencia de riego debe ser menor porque el suelo retiene mas agua"
+            pedregoso: "Frecuencia de riego mayor: El agua drena más rápido",
+            arenoso: "Frecuencia de riego menor: El suelo retiene más humedad"
         },
         clima:{
-            lluvioso: "Si vez que las hojas se han tornado amarillentas y sin brillo la planta necesita mas agua",
-            nublado: "Si el clima esta ventoso el riego debe ser regular y se debe eviatar el exceso de agua par aevitar hongos",
-            caluroso: "El calor hace que el agua se evapore mas rapido por lo que es necesario regar con mayor frecuencia ",    
+            lluvioso: "Riego disminuido: Aprovechar el agua de lluvia",
+            nublado: "Riego regular: Evitar el exceso de agua para prevenir hongos",
+            caluroso: "Regar con mayor frecuencia: El agua se evapora rápido",    
         },
         hojas:{
-            tipoA: "Si vez que las hojas se han tornado amarillentas y sin brillo la planta necesita mas agua",
-            tipoB: "Si vez que las nuevas hojas tienden a ser mas pequeñas la planta necesita mas luz solar",
-            tipoC: "Si vez que las hojas tienen manchas o mas hojas secas la planta necesita mas sombra",
-            tipoD: "Si al tocar las hojas ves que estan blandas necesita menos agua",
-            tipoE: "Si vez que las hojas tienen pequeños agujeros indica que los bichos estan comiendo las hojas",
-            tipoF: "Puede tener hongos"
-        }
+            tipoA: "Hojas amarillas y sin brillo: falta de agua.",
+            tipoB: "Hojas nuevas pequeñas: falta de luz solar.",
+            tipoC: "Manchas o secas: exceso de sol, necesita más sombra.",
+            tipoD: "Hojas blandas: exceso de agua.",
+            tipoE: "Pequeños agujeros: insectos alimentándose.",
+            tipoF: "Manchas oscuras: posible presencia de hongos."
+        },
+        tip: "Los árboles frutales no ocupan mucho espacio"
     },
     flor: {
-        ubicacion: "Las flores aportan color y requieren buena exposición solar y riego regular.",
-        separacion: "20-30 cm",
-        profundidad: "",
-        riego: "Las flores necesitan un riego equilibrado para mantener su floracion y se recomienda regar cada dos o tres dias en verano",
-        estaciones: {
-            primavera: "La primavera es excelente para la mayoría de plantas: temperaturas suaves y buena humedad.",
-            verano: "El verano exige más cuidado por el calor, sombra parcial y riegos frecuentes son claves.",
-            otoño: "En otoño se recomienda plantar árboles y arbustos, aprovechando la tierra aún cálida.",
-            invierno: "El invierno es época de reposo. Solo algunas especies resistentes pueden plantarse entonces."    
-        },
+        ubicacion: "Entre sol y sombre equilibrada",
+        separacion: "20-30 cm entre flores",
+        etapa: {
+            0: {
+                profundidad: "Las semillas de flores deben cubrirse con una capa de tierra de aproximadamente 2 veces su tamaño.",
+                riego: "Mantener el sustrato húmedo, regando con atomizador o lluvia fina para no desplazar la semilla."
+            },
+            1: {
+                profundidad: "Mantener al mismo nivel del cepellón.",
+                riego: "Regar de forma regular (cada 2-3 días si es verano) evitando encharcar."
+            },
+            2: {
+                profundidad: "Mantener al mismo nivel del cepellón.",
+                riego: "Riego equilibrado: frecuente pero moderado, procurando que el suelo no se seque."
+            }
+        },    
         tierra:{
-            pedregoso: "La frecuencia de riego debe ser mayor porque el suelo retiene menos agua",
-            arenoso: "La frecuencia de riego debe ser menor porque el suelo retiene mas agua"
+            pedregoso: "Frecuencia de riego mayor: El agua drena más rápido",
+            arenoso: "Frecuencia de riego menor: El suelo retiene más humedad"
         },
         clima:{
-            lluvioso: "Si vez que las hojas se han tornado amarillentas y sin brillo la planta necesita mas agua",
-            nublado: "Si el clima esta ventoso el riego debe ser regular y se debe eviatar el exceso de agua par aevitar hongos",
-            caluroso: "El calor hace que el agua se evapore mas rapido por lo que es necesario regar con mayor frecuencia ",    
+            lluvioso: "Riego disminuido: Aprovechar el agua de lluvia. Si llueve muy fuerte cubrir la flor",
+            nublado: "Riego regular: Evitar el exceso de agua para prevenir hongos",
+            caluroso: "Regar con mayor frecuencia: El agua se evapora rápido",    
         },
         hojas:{
-            tipoA: "Si vez que las hojas se han tornado amarillentas y sin brillo la planta necesita mas agua",
-            tipoB: "Si vez que las nuevas hojas tienden a ser mas pequeñas la planta necesita mas luz solar",
-            tipoC: "Si vez que las hojas tienen manchas o mas hojas secas la planta necesita mas sombra",
-            tipoD: "Si al tocar las hojas ves que estan blandas necesita menos agua",
-            tipoE: "Si vez que las hojas tienen pequeños agujeros indica que los bichos estan comiendo las hojas",
-            tipoF: "Puede tener hongos"
-        }
+            tipoA: "Hojas amarillas y sin brillo: falta de agua.",
+            tipoB: "Hojas nuevas pequeñas: falta de luz solar.",
+            tipoC: "Manchas o secas: exceso de sol, necesita más sombra.",
+            tipoD: "Hojas blandas: exceso de agua.",
+            tipoE: "Pequeños agujeros: insectos alimentándose.",
+            tipoF: "Manchas oscuras: posible presencia de hongos."
+        },
+        tip: "La primavera es excelente para la mayoría de las flores",
     },
     arbusto: {
-        ubicacion: "Los arbustos son resistentes y útiles para delimitar espacios o crear barreras naturales.",
-        separacion: "1 metro",
-        profundidad: "",
-        riego: "Los arbustos son resistentes y útiles para delimitar espacios o crear barreras naturales.",
-        estaciones: {
-            primavera: "La primavera es excelente para la mayoría de plantas: temperaturas suaves y buena humedad.",
-            verano: "El verano exige más cuidado por el calor, sombra parcial y riegos frecuentes son claves.",
-            otoño: "En otoño se recomienda plantar árboles y arbustos, aprovechando la tierra aún cálida.",
-            invierno: "El invierno es época de reposo. Solo algunas especies resistentes pueden plantarse entonces."
+        ubicacion: "En cualquier espacio abierto",
+        separacion: "1 metro entre otros arbustos",
+        etapa: {
+            0: {
+                profundidad: "Las semillas de arbustos deben cubrirse con tierra equivalente a 2 veces su tamaño.",
+                riego: "Riego ligero y constante hasta la germinación, manteniendo humedad superficial."
+            },
+            1: {
+                profundidad: "El plantín debe colocarse a ras del cepellón.",
+                riego: "Regar profundo después del trasplante (2-3 veces por semana) para estimular raíces fuertes."
+            },
+            2: {
+                profundidad: "Mantener a ras del cepellón.",
+                riego: "Riego moderado pero profundo 1-2 veces por semana, aumentando en épocas de calor prolongado."
+            }
         },
         tierra:{
-            pedregoso: "La frecuencia de riego debe ser mayor porque el suelo retiene menos agua",
-            arenoso: "La frecuencia de riego debe ser menor porque el suelo retiene mas agua"
+            pedregoso: "Frecuencia de riego mayor: El agua drena más rápido",
+            arenoso: "Frecuencia de riego menor: El suelo retiene más humedad"
         },
         clima:{
-            lluvioso: "Si vez que las hojas se han tornado amarillentas y sin brillo la planta necesita mas agua",
-            nublado: "Si el clima esta ventoso el riego debe ser regular y se debe eviatar el exceso de agua par aevitar hongos",
-            caluroso: "El calor hace que el agua se evapore mas rapido por lo que es necesario regar con mayor frecuencia ",    
+            lluvioso: "Riego reducido: Aprovechar el agua de lluvia",
+            nublado: "Riego regular: Evitar el exceso de agua para prevenir hongos",
+            caluroso: "Regar con mayor frecuencia: El agua se evapora rápido",    
         },
         hojas:{
-            tipoA: "Si vez que las hojas se han tornado amarillentas y sin brillo la planta necesita mas agua",
-            tipoB: "Si vez que las nuevas hojas tienden a ser mas pequeñas la planta necesita mas luz solar",
-            tipoC: "Si vez que las hojas tienen manchas o mas hojas secas la planta necesita mas sombra",
-            tipoD: "Si al tocar las hojas ves que estan blandas necesita menos agua",
-            tipoE: "Si vez que las hojas tienen pequeños agujeros indica que los bichos estan comiendo las hojas",
-            tipoF: "Puede tener hongos"
-        }
+            tipoA: "Hojas amarillas y sin brillo: falta de agua.",
+            tipoB: "Hojas nuevas pequeñas: falta de luz solar.",
+            tipoC: "Manchas o secas: exceso de sol, necesita más sombra.",
+            tipoD: "Hojas blandas: exceso de agua.",
+            tipoE: "Pequeños agujeros: insectos alimentándose.",
+            tipoF: "Manchas oscuras: posible presencia de hongos."
+        },
+        tip: "Los arbustos son resistentes y útiles para delimitar espacios o crear barreras naturales.",
     },
     suculenta: {
-        ubicacion: "Las suculentas, como los cactus, retienen agua y necesitan poca humedad. Perfectas para climas secos.",
-        separacion: "10-15 cm",   
-        profundidad: "",   
-        riego: "Las suculentas por lo general son plantas de interior, sulene necesitar un riego de una o dos veces por semana.",
-        estaciones: {
-            primavera: "La primavera es excelente para la mayoría de plantas: temperaturas suaves y buena humedad.",
-            verano: "El verano exige más cuidado por el calor, sombra parcial y riegos frecuentes son claves.",
-            otoño: "En otoño se recomienda plantar árboles y arbustos, aprovechando la tierra aún cálida.",
-            invierno: "El invierno es época de reposo. Solo algunas especies resistentes pueden plantarse entonces."    
+        ubicacion: "En macetas, dentro el hogar o al pie de ventanas",
+        separacion: "10-15 cm entre todo tipo de planta",  
+        etapa: {
+            0: {
+                profundidad: "Las semillas de suculentas deben cubrirse con una capa muy fina de tierra o arena (no más de 2 mm).",
+                riego: "Rociar con atomizador manteniendo humedad ligera pero sin encharcar."
+            },
+            1: {
+                profundidad: "Trasplantar el plantín a ras del cepellón.",
+                riego: "Riego ligero cada 7-10 días; esperar a que el sustrato se seque por completo antes de volver a regar."
+            },
+            2: {
+                profundidad: "Mantener a ras del cepellón, en maceta o suelo con excelente drenaje.",
+                riego: "Riego espaciado: cada 10-15 días en clima cálido; reducir a 1 vez al mes en invierno."
+            }
         },
         tierra:{
-            pedregoso: "La frecuencia de riego debe ser mayor porque el suelo retiene menos agua",
-            arenoso: "La frecuencia de riego debe ser menor porque el suelo retiene mas agua"
+            pedregoso: "Frecuencia de riego mayor: El agua drena más rápido",
+            arenoso: "Frecuencia de riego menor: El suelo retiene más humedad"
         },
         clima:{
-            lluvioso: "Si vez que las hojas se han tornado amarillentas y sin brillo la planta necesita mas agua",
-            nublado: "Si el clima esta ventoso el riego debe ser regular y se debe eviatar el exceso de agua par aevitar hongos",
-            caluroso: "El calor hace que el agua se evapore mas rapido por lo que es necesario regar con mayor frecuencia ",    
+            lluvioso: "Se puede omitir riego por la humedad en el ambiente",
+            nublado: "Riego regular: Una vez a la semana y en poca cantidad ",
+            caluroso: "Similar a los dias nublados",    
         },
         hojas:{
-            tipoA: "Si vez que las hojas se han tornado amarillentas y sin brillo la planta necesita mas agua",
-            tipoB: "Si vez que las nuevas hojas tienden a ser mas pequeñas la planta necesita mas luz solar",
-            tipoC: "Si vez que las hojas tienen manchas o mas hojas secas la planta necesita mas sombra",
-            tipoD: "Si al tocar las hojas ves que estan blandas necesita menos agua",
-            tipoE: "Si vez que las hojas tienen pequeños agujeros indica que los bichos estan comiendo las hojas",
-            tipoF: "Puede tener hongos"
-        }
+            tipoA: "Hojas amarillas y sin brillo: falta de agua.",
+            tipoB: "Hojas nuevas pequeñas: falta de luz solar.",
+            tipoC: "Manchas o secas: exceso de sol, necesita más sombra.",
+            tipoD: "Hojas blandas: exceso de agua.",
+            tipoE: "Pequeños agujeros: insectos alimentándose.",
+            tipoF: "Manchas oscuras: posible presencia de hongos."
+        },
+        tip: "Perfectas para climas secos.",
     }
 };
-
-/**
- * Flores en primavera La primavera es de los mejores momentos para plantar flores ya que muchas plantas se encuentran en su mejor estado en esta época del año, debido a la temperatura y clima.
- * Los árboles y arbustos plantados en otoño/invierno requieren un mantenimiento mínimo porque el suelo es como el mar:
- * Flora en verano: la estación del año más calurosa para tus plantas
-    El verano puede llegar a ser engañoso para la jardinería si no se sabe qué plantas y hortalizas pueden soportar el calor extremo, los rayos fuertes del sol y la escasez del agua
- *
- *  
- * 
- * 
- * 
- * 
-
-
-
- */
-
-   

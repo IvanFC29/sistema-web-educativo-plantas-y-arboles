@@ -9,12 +9,13 @@ import { Search } from "lucide-react";
 type Resultado = {
     especie: string;
     tipoPlanta: string;
-    estacion: string;
+    etapa: number;
 }
 type PlantaData = {
     especie: string;
     descripcion: string;
     tipo: string;
+    etapa: string;
     usuario: number; 
 };
 
@@ -23,7 +24,7 @@ export function Layout1(){
     const [especie, setEspecie] = useState('');
     const [tipoPlanta, setTipoPlanta] = useState('');
     const [descripcion, setDescripcion] = useState('');
-    const [estacion, setEstacion] =  useState('');
+    const [etapa, setEtapa] = useState(-1); // 0: Semilla, 1: Plantín, 2: Planta joven
 
     const [buscando, setBuscando] = useState(false);
     const [mostrarDescripcion, setMostrarDescripcion] = useState(false);
@@ -55,12 +56,12 @@ export function Layout1(){
         const nuevaRecomendacion: Resultado = {
             especie: especie,
             tipoPlanta: tipoPlanta,
-            estacion: estacion
+            etapa: etapa
         };
 
         setDivResultado(nuevaRecomendacion);
 
-    },[especie,descripcion,tipoPlanta,estacion, mostrarDescripcion, lista]);
+    },[especie,descripcion,tipoPlanta,etapa, mostrarDescripcion, lista]);
 
     const guardarPlanta = async (data: PlantaData) => {
         const idUser: number = idUsuario;
@@ -228,60 +229,32 @@ export function Layout1(){
                             {errors.tipo && <span className="text-orange-600">No seleccionaste el tipo de planta</span>}
                         </div>  
                     </div>
+                    <div className="w-full max-w-md mx-auto my-4">
+                    <label className="block mb-2 font-semibold">Selecciona la etapa de la planta:</label>
+                        <input
+                            type="range"
+                            min="0"
+                            max="2"
+                            step="1"
+                            value={etapa}
+                            onChange={(e) => setEtapa(parseInt(e.target.value))}
+                            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-green-500"
+                        />
+                        <div className="flex justify-between mt-2 text-sm font-medium text-gray-700">
+                            <span>Semilla</span>
+                            <span>Plantín</span>
+                            <span>Planta joven</span>
+                        </div>
+                        <p className="mt-2 font-semibold">Etapa seleccionada: {etapa === 0 ? "Semilla" : etapa === 1 ? "Plantín" : "Planta joven"}</p>
+                    </div>
                     <form onSubmit={handleSubmit(confirmarPlanta)}>
                         <input type="text" className="hidden" {...register('especie', {required:true})} value={especie}/>
                         <input type="text" className="hidden" {...register('tipo', {required:true})} value={tipoPlanta}/>
                         <input type="text" className="hidden" {...register('descripcion', {required:true})} value={descripcion}/>
+                        <input type="text" className="hidden" {...register('etapa', {required:true})} value={["semilla", "plantin", "planta_joven"][etapa] }/>
                         <button className="text-white font-bold cursor-pointer rounded-lg mt-2 bg-green-500 hover:bg-green-600 text-sm sm:w-auto px-5 py-2.5 text-center focus:ring-green-300">Guardar ⮞</button>    
                     </form>
                 </section> 
-                {especie.length > 3&&(
-                    <section className="m-2 p-4 max-w-4xl w-full mx-auto border-2 border-gray-400 rounded-lg">
-                        <p className="text-sm font-medium">Descubre si es una buena epoca para plantar</p>
-                        <div className="grid grid-cols-2 md:grid-cols-4">
-                            <div className="p-2 mx-auto m-2">
-                                <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
-                                    ${estacion.includes('primavera') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
-                                    <input className="hidden" type="radio" value="primavera"
-                                        onChange={e => setEstacion(e.target.value)}
-                                        checked={estacion.includes('primavera')}
-                                        name="estacion" />
-                                        <span className="text-sm font-medium">Primavera</span>
-                                </label>
-                            </div>
-                            <div className="p-2 mx-auto m-2">
-                                <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
-                                    ${estacion.includes('verano') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
-                                    <input className="hidden" type="radio" value="verano"
-                                        onChange={e => setEstacion(e.target.value)}
-                                        checked={estacion.includes('verano')}
-                                        name="estacion" />
-                                        <span className="text-sm font-medium">Verano</span>
-                                </label>
-                            </div>
-                            <div className="p-2 mx-auto m-2">
-                                <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
-                                    ${estacion.includes('otoño') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
-                                    <input className="hidden" type="radio" value="otoño"
-                                        onChange={e => setEstacion(e.target.value)}
-                                        checked={estacion.includes('otoño')}
-                                        name="estacion" />
-                                        <span className="text-sm font-medium">Otoño</span>
-                                </label>
-                            </div>
-                            <div className="p-2 mx-auto m-2">
-                                <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
-                                    ${estacion.includes('invierno') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
-                                    <input className="hidden" type="radio" value="invierno"
-                                        onChange={e => setEstacion(e.target.value)}
-                                        checked={estacion.includes('invierno')}
-                                        name="estacion" />
-                                        <span className="text-sm font-medium">Invierno</span>
-                                </label>
-                            </div>
-                        </div>  
-                    </section>
-                )}
             </div>
             <div className="w-full md:w-1/3 p-4">
                 <p className="text-xl dark:text-teal-900 font-semibold mb-2">Recomendaciones para plantar</p>
@@ -289,7 +262,7 @@ export function Layout1(){
                     <RecomendacionTipo1 
                         especie={divResultado.especie}
                         tipoPlanta={divResultado.tipoPlanta}
-                        estacion={divResultado.estacion}
+                        etapa={divResultado.etapa}
                     />
                 )}
             </div>

@@ -37,9 +37,6 @@ export function RecomendacionTipo2({especie, tipo, tierra, clima, hojas}: Respue
                             <Droplet  className="w-10 h-10 text-lime-700" /> 
                         </div>
                     </div>
-                    <div>
-                        <p className='font-sans text-sm ml-1.5'>{plantas[tipo].riego}</p>
-                    </div>
                     {tierra !== "" &&(
                         <div className='m-1.5'>
                            <p className='font-semibold'> Sobre la tierra </p>

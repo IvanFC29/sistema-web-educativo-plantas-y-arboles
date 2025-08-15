@@ -2,14 +2,15 @@ import { useRef } from 'react';
 import { toPng } from 'html-to-image';
 import { Leaf, Trees, Download, Flower2, Cannabis } from "lucide-react"; 
 import { plantas} from '../../../assets/utils/recomendaciones';
+import { SemillaIcon, PlantinIcon, PlantaJovenIcon } from './svg';
 
 type Respuesta = {
     especie: string;
     tipoPlanta: string;
-    estacion: string;
+    etapa: number;
 }
 
-export function RecomendacionTipo1({especie,tipoPlanta,estacion}: Respuesta){
+export function RecomendacionTipo1({especie,tipoPlanta,etapa}: Respuesta){
     const divRef = useRef(null);
 
     const descargarRecomendacion = async () =>{
@@ -27,42 +28,63 @@ export function RecomendacionTipo1({especie,tipoPlanta,estacion}: Respuesta){
             {especie.length >= 4 &&(
                 <div>
                     <div ref={divRef} className='p-5 bg-green-200 rounded-lg max-w-lg ml-5 mr-5'>
-                        <p className='text-center font-semibold'> Nueva Plantacion !!</p>
-                        <p className='text-center'> {especie.charAt(0).toUpperCase()+especie.slice(1).toLowerCase()}</p>
+                        {/* Título */}
+                        <div className="text-center">
+                            <p className="font-semibold text-lg">Nueva Plantación !!</p>
+                            <p className="capitalize">{especie}</p>
+                        </div>
                         <br />
-                        {tipoPlanta !== '' &&(
+                        {/* Icono central */}
+                        {tipoPlanta && (
+                            <div className="flex flex-col items-center">
+                            <div className="bg-lime-200 rounded-full p-3">
+                                {tipoPlanta === "arbol" && <Trees className="w-10 h-10 text-lime-700" />}
+                                {tipoPlanta === "suculenta" && <Leaf className="w-10 h-10 text-lime-700" />}
+                                {tipoPlanta === "flor" && <Flower2 className="w-10 h-10 text-lime-700" />}
+                                {tipoPlanta === "arbusto" && <Cannabis className="w-10 h-10 text-lime-700" />}
+                            </div>
+                            </div>
+                        )}
+                        <br />
+                         {/* Ubicación */}
+                        {tipoPlanta && (
                             <div>
-                                <div className="flex flex-col items-center">
-                                    <div className="bg-lime-200 rounded-full p-3">
-                                        {tipoPlanta === "arboles" &&(
-                                            <Trees className="w-10 h-10 text-lime-700" />
-                                        )}
-                                        {tipoPlanta === "suculentas" && (
-                                            <Leaf className="w-10 h-10 text-lime-700" />
-                                        )}
-                                        {tipoPlanta === "flores" &&(
-                                            <Flower2 className="w-10 h-10 text-lime-700"/>
-                                        )}
-                                        {tipoPlanta === "arbustos" &&(
-                                            <Cannabis className="w-10 h-10 text-lime-700"/>
-                                        )}
-                                    </div>
+                                <p className="font-semibold flex items-center gap-2">
+                                    <span>🖈</span> Ubicación de tu planta: 
+                                </p>
+                                <p className="text-sm ml-5"> - {plantas[tipoPlanta].ubicacion}</p>
+                                <p className="text-sm ml-5"> - Separación recomendada: {plantas[tipoPlanta].separacion}</p>
+                            </div>
+                        )}
+                        {/* Etapa */}
+                        <br />
+                        {etapa !== -1 && (
+                            <div>
+                                <p className="font-semibold flex items-center gap-2">
+                                    <span>⛏</span> Profundidad de plantado:
+                                </p>
+                                <p className="text-sm ml-5"> - {plantas[tipoPlanta].etapa[etapa].profundidad}</p>
+                                <div className="flex justify-center my-2">
+                                    {etapa === 0 && <SemillaIcon />}
+                                    {etapa === 1 && <PlantinIcon />}
+                                    {etapa === 2 && <PlantaJovenIcon />}
                                 </div>
-                                <div className='m-1.5'>
-                                    <p className='font-semibold'>🖈 Ubicacion de tu planta:</p>
-                                    <p className='font-sans text-sm ml-1.5'> - {plantas[tipoPlanta].ubicacion} </p>
-                                    <p className='font-sans text-sm ml-1.5'> - {plantas[tipoPlanta].separacion}</p>
-                                </div>
+                                <p className="font-semibold flex items-center gap-2 mt-2">
+                                    <span>💧</span> Riego inicial:
+                                </p>
+                                <p className="text-sm ml-5"> - {plantas[tipoPlanta].etapa[etapa].riego}</p>
                             </div>
                         )}
                         <br />
-                        {estacion !== '' &&(
-                            <div className='m-1.5'>
-                                <p className='font-semibold'>🗓 ¿Es buena epoca para plantar?</p>
-                                <p className='font-sans text-sm ml-1.5'> - {plantas[tipoPlanta].estaciones[estacion]}</p>
+                        {/* Tip rápido */}
+                        {tipoPlanta && (
+                            <div>
+                            <p className="font-semibold flex items-center gap-2">
+                                <span>💡</span> Tip rápido:
+                            </p>
+                            <p className="text-sm ml-5"> - {plantas[tipoPlanta].tip}</p>
                             </div>
                         )}
-
                     </div>
                     <button onClick={descargarRecomendacion} className="mt-4 cursor-pointer bg-lime-500 hover:bg-lime-600 text-white px-4 py-2 rounded" title='Descargar recomendacion en .jpg'>
                         <Download />

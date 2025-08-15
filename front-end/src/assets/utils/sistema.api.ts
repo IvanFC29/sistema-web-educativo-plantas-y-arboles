@@ -9,7 +9,8 @@ export const createPlanta = (
     planta: {
         especie: string, 
         descripcion:string, 
-        tipo: string
+        tipo: string, 
+        etapa: string
     }) => apiPlanta.post('/', planta, {
         headers:{
             'Authorization': `Token ${localStorage.getItem('token')}`, 
