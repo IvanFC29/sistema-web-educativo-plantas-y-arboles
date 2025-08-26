@@ -79,7 +79,7 @@ export function Step3EspesuraAltura({atras, siguiente, datos, datoActual}: Accio
                             <p className="dark:text-gray-500 text-2xl">Valores comunes</p> </div>
                         <div className="relative z-0 group">
                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
-                                Altura (en m.) 
+                                Altura (en cm.) 
                             </label>
                             <input  type="number"
                                 {...register('alturaComun', {required: true})}
@@ -120,12 +120,12 @@ export function Step3EspesuraAltura({atras, siguiente, datos, datoActual}: Accio
 
                         <div className="relative z-0 group">
                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
-                                Altura aproximada (en m.)
+                                Altura aproximada (en cm.)
                             </label>
                             <input
                                 type="number"
                                 {...register(`altura_${index}`, {required: true})}
-                                placeholder="4"
+                                placeholder="40"
                                 className="bg-white border border-green-300 text-black text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5"
                             />
                         </div>

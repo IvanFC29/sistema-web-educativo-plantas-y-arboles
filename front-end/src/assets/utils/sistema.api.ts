@@ -41,6 +41,15 @@ export const updateFotoPlantaById = (id:string, foto:File) => {
     });
 };
 
+export const updateEtapa = (id:string, nuevaEtapa:string)=>{
+    return apiPlanta.patch(`${id}/actualizar-etapa/`,{etapa: nuevaEtapa}, {
+        headers: {
+            'Content-Type': 'multipart/form-data', 
+            'Authorization': `Token ${localStorage.getItem('token')}`, 
+        }, 
+    });
+};
+
 /** API REST DE APORTES AMBIENTALES */
 const apiAporte = axios.create({
     baseURL: 'http://127.0.0.1:8000/sistemaWeb/api/aporte/'

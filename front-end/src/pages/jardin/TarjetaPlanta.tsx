@@ -2,6 +2,7 @@ interface Planta{
     id: number
     especie: string;
     tipo: string;
+    etapa: string;
     descripcion: string;
     foto: string;
 }
@@ -44,6 +45,7 @@ export function Tarjeta( {plantaGuardada, recargar}: plantaProps){
             <div className="flex-1">
                 <p className="font-semibold">{formatear(plantaGuardada.especie)}</p>
                 <p className="text-sm text-gray-500">Tipo de planta: ({formatear(plantaGuardada.tipo)})</p>
+                <p className="text-sm text-gray-500">Etapa actual: ({formatear(plantaGuardada.etapa)})</p>
                 <hr />
                 <div className='grid grid-cols-2'>
                     <button onClick={() => mostrarModal(plantaGuardada.descripcion)} className='text-green-700 cursor-pointer text-sm font-medium'>Descripcion</button>

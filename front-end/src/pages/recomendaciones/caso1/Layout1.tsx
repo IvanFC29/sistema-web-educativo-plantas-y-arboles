@@ -241,11 +241,11 @@ export function Layout1(){
                             className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-green-500"
                         />
                         <div className="flex justify-between mt-2 text-sm font-medium text-gray-700">
-                            <span>Semilla</span>
-                            <span>Plantín</span>
-                            <span>Planta joven</span>
+                            <span>Semilla 🌱</span>
+                            <span>Plantín 🌿</span>
+                            <span>Planta joven 🌳</span>
                         </div>
-                        <p className="mt-2 font-semibold">Etapa seleccionada: {etapa === 0 ? "Semilla" : etapa === 1 ? "Plantín" : "Planta joven"}</p>
+                        <p className="mt-2 font-semibold">Etapa seleccionada: {etapa === 0 ? "Semilla" : etapa === 1 ? "Plantín" : etapa === 2 ? "Planta joven": ""}</p>
                     </div>
                     <form onSubmit={handleSubmit(confirmarPlanta)}>
                         <input type="text" className="hidden" {...register('especie', {required:true})} value={especie}/>

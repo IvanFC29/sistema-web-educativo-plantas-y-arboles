@@ -21,11 +21,7 @@ function calcularOxigenoPorPlanta(planta: {altura: number, espesura: number}): n
     /** Primero calculamos el volumen del arbol */ 
     const numero_PI: number = Math.PI;
     var DAP: number = planta.espesura/numero_PI;
-    // promedio para casi todas las especies
-    // const factor_forma: number = 0.496; 
-    // //Area basal
-    // var AB: number = (numero_PI * Math.pow(DAP, 2))/4;
-    // var volumen: number = AB * planta.altura * factor_forma;
+    let altura_m: number =  planta.altura/100;
      
     /** Calculamos la biomasa del tronco y ramas */
     const a: number = 0.026;
@@ -33,7 +29,7 @@ function calcularOxigenoPorPlanta(planta: {altura: number, espesura: number}): n
     const c: number = 1.747;
 
     /** Biomasa aerea */
-    var Bva:number = a * Math.pow(DAP, b) * Math.pow(planta.altura, c);
+    var Bva:number = a * Math.pow(DAP, b) * Math.pow(altura_m, c);
     /** Biomasa radicular */
     var Bvr:number = Bva*0.20;
     /** Biomasa verde total */
