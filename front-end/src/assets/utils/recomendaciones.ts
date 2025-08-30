@@ -296,10 +296,19 @@ export function estimarFrecuenciaRiego(tipoPlanta: TipoPlanta, etapaPlanta: keyo
 
     if(tierra === 'arenoso' || tierra === 'pedregoso'){
         frecuenciaEstimada += " con poca cantidad de agua";
+        if (etapaPlanta as keyof 'plantin') {
+            frecuenciaEstimada += " \n 1 litro de agua aproximadamente";
+        }
     }else if(tierra === 'arcillso'){
         frecuenciaEstimada += " con abundante agua";
+        if (etapaPlanta as keyof 'floracion' || etapaPlanta as keyof 'planta_adulta' || etapaPlanta as keyof 'arbusto_adulto' || etapaPlanta as keyof 'arbol_adulto') {
+            frecuenciaEstimada += " \n 2 - 3 litros de agua aproximadamente";
+        }
     }else if(tierra === 'mixto'){
-        frecuenciaEstimada += " (revisar la humedad antes de regar)"
+        frecuenciaEstimada += " (mantener la humedad con el riego)"
+        if (etapaPlanta as keyof 'floracion' || etapaPlanta as keyof 'planta_adulta' || etapaPlanta as keyof 'arbusto_adulto' || etapaPlanta as keyof 'arbol_adulto') {
+            frecuenciaEstimada += " \n 2 litros de agua aproximadamente";
+        }
     }
 
     return frecuenciaEstimada;
