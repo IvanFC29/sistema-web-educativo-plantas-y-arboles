@@ -105,6 +105,10 @@ export const login = async (userData: { username: string, password: string }) =>
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
     });
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Usuario o contraseña incorrectos");
+    }
     const data = await response.json();
     // Guardar en localStorage
     localStorage.setItem("token", data.token);
@@ -147,44 +151,55 @@ export const getTotalAportes = async() => {
 }
 
 /** API REST DEL JUEGO */
-const apiProgreso = axios.create({
-    baseURL: 'http://127.0.0.1:8000/sistemaWeb/api/progreso/',
+const apiProgreso = axios.create({baseURL: 'http://127.0.0.1:8000/sistemaWeb/api/progreso/'});
+
+export const getProgresoJuego = () =>  apiProgreso.get('/',{
     headers:{
         'Authorization': `Token ${localStorage.getItem('token')}`
     }
 });
 
-export const getProgresoJuego = () =>  apiProgreso.get('/');
-
 export const updateContadorMensajes = async () => {
-    const res = await apiProgreso.post('incrementar-contador-msj/');
+    const res = await apiProgreso.post('incrementar-contador-msj/',{
+        headers:{
+            'Authorization': `Token ${localStorage.getItem('token')}`
+        }}
+    );
     return res.data;
 }
 
 export const updateContadorAprendizaje = async () => {
-    const res = await apiProgreso.post('incrementar-contador-apzj/');
+    const res = await apiProgreso.post('incrementar-contador-apzj/',{
+        headers:{
+            'Authorization': `Token ${localStorage.getItem('token')}`
+        }});
     return res.data;
 }
 
 export const getFechaJuego = async () => {
-    const res = await apiProgreso.get('puede-jugar/');
+    const res = await apiProgreso.get('puede-jugar/',{
+        headers:{
+            'Authorization': `Token ${localStorage.getItem('token')}`
+        }});
     return res.data;
 }
 
 export const updateFechaJuego = async () => {
-    const res = await apiProgreso.post('actualizar-fecha/');
+    const res = await apiProgreso.post('actualizar-fecha/',{
+        headers:{
+            'Authorization': `Token ${localStorage.getItem('token')}`
+        }});
     return res.data;
 }
 
 /** API REST DE LOS MENSAJES */
-const apiMensajes = axios.create({
-    baseURL: 'http://127.0.0.1:8000/sistemaWeb/api/mensaje/',
+const apiMensajes = axios.create({baseURL: 'http://127.0.0.1:8000/sistemaWeb/api/mensaje/',});
+
+export const getMensajesDesbloqueados = (id:number) => apiMensajes.get(`/?progreso=${id}`,{
     headers:{
         'Authorization': `Token ${localStorage.getItem('token')}`
-    }
-})
-
-export const getMensajesDesbloqueados = (id:number) => apiMensajes.get(`/?progreso=${id}`);
+    }}
+);
 
 export const saveMensajeDesbloqueado = (
     mensaje: {
@@ -193,18 +208,23 @@ export const saveMensajeDesbloqueado = (
         desbloqueado:boolean;
     }
 ) => {
-    apiMensajes.post('/',mensaje);
+    apiMensajes.post('/',mensaje,{
+        headers:{
+            'Authorization': `Token ${localStorage.getItem('token')}`
+        }}
+    );
 };
 
 /** API REST DE LOS APRENDIZAJES */
 const apiAprendizaje = axios.create({
     baseURL: 'http://127.0.0.1:8000/sistemaWeb/api/aprendizaje/',
-    headers:{
-        'Authorization': `Token ${localStorage.getItem('token')}`
-    }
 })
 
-export const getAprendizajeDesbloqueado = (id:number) => apiAprendizaje.get(`/?progreso=${id}`);
+export const getAprendizajeDesbloqueado = (id:number) => apiAprendizaje.get(`/?progreso=${id}`,{
+    headers:{
+        'Authorization': `Token ${localStorage.getItem('token')}`
+    }}
+);
 
 export const saveAprendizajeDesbloqueado = (
     aprendizaje: {
@@ -216,5 +236,9 @@ export const saveAprendizajeDesbloqueado = (
         desbloqueado:boolean;
     }
 ) => {
-    apiAprendizaje.post('/', aprendizaje);
+    apiAprendizaje.post('/', aprendizaje,{
+        headers:{
+            'Authorization': `Token ${localStorage.getItem('token')}`
+        }}
+    );
 };

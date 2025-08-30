@@ -3,8 +3,8 @@ import { toPng } from 'html-to-image';
 import { Leaf, Trees, Download, Flower2, Cannabis } from "lucide-react"
 import { plantas,  estimarFrecuenciaRiego} from '../../../assets/utils/recomendaciones';
 
-type TipoPlanta = "arbol" | "arbusto" | "flor" | "suculenta";
-type EtapaPlanta = 'plantin' | 'planta_joven' | 'floracion';
+type TipoPlanta = 'arbol' | 'arbusto' | 'flor' | 'suculenta';
+type EtapaPlanta = 'plantin' | 'planta_joven' | 'floracion' | 'arbol_adulto' | 'arbusto_adulto' | 'planta_adulta';
 type Clima = 'caluroso' | 'nublado' | 'lluvioso';
 
 interface Planta {

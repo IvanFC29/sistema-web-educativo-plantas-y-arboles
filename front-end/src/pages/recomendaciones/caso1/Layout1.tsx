@@ -245,7 +245,9 @@ export function Layout1(){
                             <span>Plantín 🌿</span>
                             <span>Planta joven 🌳</span>
                         </div>
-                        <p className="mt-2 font-semibold">Etapa seleccionada: {etapa === 0 ? "Semilla" : etapa === 1 ? "Plantín" : etapa === 2 ? "Planta joven": ""}</p>
+                        {etapa !== -1 &&(
+                            <p className="mt-2 font-semibold">Etapa seleccionada: {etapa === 0 ? "Semilla" : etapa === 1 ? "Plantín" : etapa === 2 ? "Planta joven": ""}</p>
+                        )}
                     </div>
                     <form onSubmit={handleSubmit(confirmarPlanta)}>
                         <input type="text" className="hidden" {...register('especie', {required:true})} value={especie}/>
