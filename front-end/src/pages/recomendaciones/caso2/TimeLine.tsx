@@ -63,7 +63,7 @@ export default function TimeLine({idPlanta, tipo, etapa}: TimeLineProps){
     return (
         <div className="p-1">
             <h3 className="text-xl dark:text-teal-900 font-semibold mb-2">Etapas de tu planta</h3>
-            <h4 className="pb-2"> Quieres actualizar la etapa de tu planta? </h4>
+            <h4 className="pb-2"> ¿Quieres actualizar la etapa de tu planta? </h4>
             {/* TimeLine de 5 etapas */}
             <div className="flex items-center justify-between">
                 {etapas.map((etapa, index) => (

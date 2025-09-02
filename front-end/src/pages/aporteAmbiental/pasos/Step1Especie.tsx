@@ -39,12 +39,16 @@ export function Step1Especie({siguiente, datos}: Acciones){
                     <SinPlantas/>
                 ) : (
                     <div>
-                        <p className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black text-center">Elige una de tus plantas</p>
+                        <p className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black text-center">Elige un árbol</p>
                         <select className="bg-white border border-green-300 text-black text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:border-green-500 dark:text-black" 
                             {...register("nombrePlanta", {required: true})}>
                             <option value="">Tu planta es</option>
                                 {lista.map((planta, index) => (
-                                    <option key={index} value={planta.id+planta.especie}>{planta.especie}</option>
+                                    <div>
+                                        {planta.tipo === 'arbol' && (
+                                            <option key={index} value={planta.id+planta.especie}>{planta.especie}</option>
+                                        )}
+                                    </div>
                                 ))}
                         </select>
                         <br />

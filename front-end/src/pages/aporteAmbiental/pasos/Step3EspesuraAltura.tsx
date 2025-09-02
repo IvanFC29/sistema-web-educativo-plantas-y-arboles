@@ -62,7 +62,7 @@ export function Step3EspesuraAltura({atras, siguiente, datos, datoActual}: Accio
 
     return (
         <div>
-            <p className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black text-center">Proporciona la altura y espesura de cada planta.</p>
+            <p className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black text-center">Proporciona la altura y diametro de cada árbol.</p>
             <p className="dark:text-gray-500 text-center"> 💡 "Puedes aplicar los mismos datos a todas tus plantas si son similares. Si hay alguna que varía tambien la puedes editar, activa la opción usar valores comunes."</p>
             <label className="mt-4">
                 <input
@@ -86,7 +86,7 @@ export function Step3EspesuraAltura({atras, siguiente, datos, datoActual}: Accio
                                 className="bg-white border border-green-300 text-black text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5"/> </div>
                         <div className="relative z-0 group">
                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
-                                Espesura (diametro tronco/follaje cm.) 
+                                Diametro aproximado (tronco cm.) 
                             </label>
                             <input  type="number" 
                                 {...register('grosorComun', {required: true})}
@@ -132,7 +132,7 @@ export function Step3EspesuraAltura({atras, siguiente, datos, datoActual}: Accio
 
                         <div className="relative z-0 group">
                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
-                                Espesura aproximada (diametro tronco/follaje cm.)
+                                Diametro aproximado (tronco cm.)
                             </label>
                             <input
                                 type="number"

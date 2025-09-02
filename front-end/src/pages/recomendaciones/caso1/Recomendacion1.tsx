@@ -8,9 +8,10 @@ type Respuesta = {
     especie: string;
     tipoPlanta: string;
     etapa: number;
+    descripcion: string;
 }
 
-export function RecomendacionTipo1({especie,tipoPlanta,etapa}: Respuesta){
+export function RecomendacionTipo1({especie,tipoPlanta,etapa, descripcion}: Respuesta){
     const divRef = useRef(null);
 
     const descargarRecomendacion = async () =>{
@@ -76,30 +77,16 @@ export function RecomendacionTipo1({especie,tipoPlanta,etapa}: Respuesta){
                         )}
                         <br />
                         {/* Tip rápido */}
-                        {/* {tipoPlanta && (
+                        {descripcion && tipoPlanta && (
                             <div>
-                                <p className="font-semibold flex items-center gap-2">
-                                    <span>💡</span> Tip rápido:
-                                </p>
-                                <p className="text-sm ml-5"> - {plantas[tipoPlanta].tip}</p>
                                 <div className='mt-4 p-3 rounded-lg shadow-md text-center bg-amber-100'>
                                     <p className="font-semibold flex items-center gap-2">
                                         <span>👀</span> Dato curioso:
                                     </p>
-                                    {tipoPlanta === 'arbol' ?(
-                                        <div>
-                                            <p className="text-sm ml-5">{plantas[tipoPlanta].altura}</p>
-                                            <p className="text-sm ml-5 text-teal-700 font-bold">Cuida que tu arbol no sea un pariente de esta especie o cuida de su posible crecimiento</p>
-                                        </div>
-                                    ):(
-                                        <div>
-                                            <p className="text-sm ml-5">{plantas[tipoPlanta].altura}</p> 
-                                            <p className="text-sm ml-5 text-teal-700 font-bold">Si tu planta es pariente o cercano a esta especie es una buena opcion</p>
-                                        </div>
-                                    )}
+                                    <p className="text-sm ml-5"> - {plantas[tipoPlanta].tip}</p>
                                 </div>
                             </div>
-                        )} */}
+                        )}
                     </div>
                     <button onClick={descargarRecomendacion} className="mt-4 cursor-pointer bg-lime-500 hover:bg-lime-600 text-white px-4 py-2 rounded" title='Descargar recomendacion en .jpg'>
                         <Download />

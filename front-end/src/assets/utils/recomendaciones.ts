@@ -1,7 +1,6 @@
 export interface InfoPlanta{
     ubicacion: string;
     separacion: string;
-    altura: string;
     etapa: Record<number, Record<string, string>>; 
     tierra: Record<string, string>; 
     clima: Record<string, string>;
@@ -9,17 +8,10 @@ export interface InfoPlanta{
     tip: string;
 }
 
-const listaAG = ['Tajibo','Molle','Jacaranda', 'Sauces'];
-var arbolEj = listaAG[Math.floor(Math.random()*listaAG.length)];
-
-const listaFAS = ['Jazmin','Pino enano','Tola', 'Cedron'];
-var ejemplo = listaFAS[Math.floor(Math.random()*listaFAS.length)];
-
 export const plantas: Record<string, InfoPlanta> = {
     arbol: {
         ubicacion: "Plantar en espacios amplios no muy pegado a infraestructuras.",
         separacion: "3-5 metros entre otro árbol",
-        altura: "El árbol de "+arbolEj+" es un ejemplar que crece alrededor de 7 metros.",
         etapa: {
             0: {
                 profundidad: "Enterrar a una profundidad de aprox. 2 veces su tamaño",
@@ -53,12 +45,11 @@ export const plantas: Record<string, InfoPlanta> = {
             tipoE: "Pequeños agujeros: insectos alimentándose.",
             tipoF: "Manchas oscuras: posible presencia de hongos."
         },
-        tip: "Los árboles frutales no ocupan mucho espacio"
+        tip: "Los árboles tienden a requerir de mucho espacio tanto de raices como de altura, la mayoria de árboles frutales no ocupan mucho espacio. Considera el espacio a la hora de plantar un árbol"
     },
     flor: {
         ubicacion: "Entre sol y sombre equilibrada",
         separacion: "20-30 cm entre flores",
-        altura: "La planta de: "+ejemplo+" es un buen candidato para tu jardin",
         etapa: {
             0: {
                 profundidad: "Las semillas de flores deben cubrirse con una capa de tierra de aproximadamente 2 veces su tamaño.",
@@ -97,7 +88,6 @@ export const plantas: Record<string, InfoPlanta> = {
     arbusto: {
         ubicacion: "En cualquier espacio abierto",
         separacion: "1 metro entre otros arbustos",
-        altura: "La planta de: "+ejemplo+" es un buen candidato para tu jardin",
         etapa: {
             0: {
                 profundidad: "Las semillas de arbustos deben cubrirse con tierra equivalente a 2 veces su tamaño.",
@@ -136,7 +126,6 @@ export const plantas: Record<string, InfoPlanta> = {
     suculenta: {
         ubicacion: "En macetas, dentro el hogar o al pie de ventanas",
         separacion: "10-15 cm entre todo tipo de planta",  
-        altura: "La planta de: "+ejemplo+" es un buen candidato para tu jardin",
         etapa: {
             0: {
                 profundidad: "Las semillas de suculentas deben cubrirse con una capa muy fina de tierra o arena (no más de 2 mm).",

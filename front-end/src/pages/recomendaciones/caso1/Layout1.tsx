@@ -4,12 +4,14 @@ import { findDescripcion, createPlanta, getPlantas, profile } from "../../../ass
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { Search } from "lucide-react";
+import { HelpCircle, Search } from "lucide-react";
+import { Listas } from "./Lista";
 
 type Resultado = {
     especie: string;
     tipoPlanta: string;
     etapa: number;
+    descripcion: string;
 }
 type PlantaData = {
     especie: string;
@@ -28,6 +30,10 @@ export function Layout1(){
 
     const [buscando, setBuscando] = useState(false);
     const [mostrarDescripcion, setMostrarDescripcion] = useState(false);
+    const [mostrarListaArboles, setMostrarListaArboles] = useState(false);
+    const [mostrarListaArbustos, setMostrarListaArbustos] = useState(false);
+    const [mostrarListaFlores, setMostrarListaFlores] = useState(false);
+    const [mostrarListaSuculentas, setMostrarListaSuculentas] = useState(false);
 
     const [divResultado, setDivResultado] = useState<Resultado | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -55,6 +61,7 @@ export function Layout1(){
             especie: especie,
             tipoPlanta: tipoPlanta,
             etapa: etapa,
+            descripcion: descripcion
         };
 
         setDivResultado(nuevaRecomendacion);
@@ -147,33 +154,10 @@ export function Layout1(){
                             className="bg-white border border-green-300 text-black text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:border-green-500 dark:text-black" />
                             {errors.especie && <span className="text-orange-600">No ingresaste un nombre de planta</span> }
                     </div>
-                    <br />
-                    <label className="flex flex-row" >
-                        <div className="flex flex-row">
-                            <button onClick={buscarDescripcion} className="bg-sky-200 rounded-full p-1 hover:bg-sky-300 cursor-pointer" ><Search /> </button>
-                            <p>Buscar una descripcion de la planta</p>
-                        </div>
-                        <br />
-                        {buscando && (
-                            <div className="flex items-center justify-center mt-4">
-                                <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-green-500"/> 
-                                <span className="ml-2 text-sm text-gray-600">Buscando descripción...</span>
-                            </div>
-                        )}
-                    </label>
-                    <br />
-                    {errors.descripcion && <span className="text-orange-600">No buscaste una descripcion de tu planta</span>}
-                    {mostrarDescripcion && descripcion &&(
-                        <div className="m-1.5">
-                            {descripcion && <p className="text-sm text-teal-800"><strong>Descripción:</strong> {descripcion}</p>}
-                            {error && <p className="text-red-500">{error}</p>}
-                        </div>
-                    )}
-                    <br />
-                    <div className="m-2 p-4 max-w-4xl w-full mx-auto border-2 border-gray-400 rounded-lg">
+                    <div className="m-2 p-4 max-w-4xl w-full mx-auto ">
                         <p className="text-sm font-medium mb-3">Tu planta puede pertenecer a uno de estos tipos</p>
                         <div className="grid grid-cols-2 md:grid-cols-4">
-                            <div className="p-2 mx-auto m-2">
+                            <div className="p-2 mx-auto m-2 flex justify-center">
                                 <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
                                     ${tipoPlanta.includes('arbol') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
                                     <input className="hidden" type="radio" value="arbol"
@@ -184,10 +168,22 @@ export function Layout1(){
                                         }}
                                         checked={tipoPlanta.includes('arbol')}
                                         name="tipoPlanta" />
-                                        <span className="text-sm font-medium">Arboles</span>
+                                        <img src="arboles.JPG" alt="arboles" className="w-28 h-28 object-contain"/>
+                                        <span className="text-sm font-medium">Arboles <span>
+                                            <button
+                                                onClick={() => setMostrarListaArboles(!mostrarListaArboles)}
+                                                className="text-blue-600 hover:text-blue-800 cursor-pointer ml-1.5"
+                                            >
+                                                <HelpCircle className="w-5 h-5" />
+                                            </button>
+                                            {mostrarListaArboles && (
+                                                <Listas tipoPlanta="arbol"/>
+                                            )}
+                                            </span>
+                                        </span>
                                 </label>
                             </div>
-                            <div className="p-2 mx-auto m-2">
+                            <div className="p-2 mx-auto m-2 flex justify-center">
                                 <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
                                     ${tipoPlanta.includes('arbusto') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
                                     <input className="hidden" type="radio" value="arbusto"
@@ -198,10 +194,22 @@ export function Layout1(){
                                         }}
                                         checked={tipoPlanta.includes('arbusto')}
                                         name="tipoPlanta" />
-                                        <span className="text-sm font-medium">Arbustos</span>
+                                        <img src="arbustos.JPG" alt="arboles" className="w-28 h-28 object-contain"/>
+                                        <span className="text-sm font-medium">Arbustos <span>
+                                            <button
+                                                onClick={() => setMostrarListaArbustos(!mostrarListaArbustos)}
+                                                className="text-blue-600 hover:text-blue-800 cursor-pointer ml-1.5"
+                                            >
+                                                <HelpCircle className="w-5 h-5" />
+                                            </button>
+                                            {mostrarListaArbustos && (
+                                                <Listas tipoPlanta="arbusto"/>
+                                            )}
+                                            </span>
+                                        </span>
                                 </label>
                             </div>
-                            <div className="p-2 mx-auto m-2">
+                            <div className="p-2 mx-auto m-2 flex justify-center">
                                 <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
                                     ${tipoPlanta.includes('flor') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
                                     <input className="hidden" type="radio" value="flor"
@@ -212,10 +220,22 @@ export function Layout1(){
                                         }}
                                         checked={tipoPlanta.includes('flor')}
                                         name="tipoPlanta" />
-                                        <span className="text-sm font-medium">Flores</span>
+                                        <img src="flores.jpg" alt="arboles" className="w-28 h-28 object-contain"/>
+                                        <span className="text-sm font-medium">Flores <span>
+                                            <button
+                                                onClick={() => setMostrarListaFlores(!mostrarListaFlores)}
+                                                className="text-blue-600 hover:text-blue-800 cursor-pointer ml-1.5"
+                                            >
+                                                <HelpCircle className="w-5 h-5" />
+                                            </button>
+                                            {mostrarListaFlores && (
+                                                <Listas tipoPlanta="flor"/>
+                                            )}
+                                            </span>
+                                        </span>
                                 </label>
                             </div>
-                            <div className="p-2 mx-auto m-2">
+                            <div className="p-2 mx-auto m-2 flex justify-center">
                                 <label className={`cursor-pointer border rounded-lg p-3 text-center transition-all 
                                     ${tipoPlanta.includes('suculenta') ? 'border-green-500 bg-green-50' : 'border-gray-300'}`}>
                                     <input className="hidden" type="radio" value="suculenta"
@@ -226,14 +246,49 @@ export function Layout1(){
                                         }}
                                         checked={tipoPlanta.includes('suculenta')}
                                         name="tipoPlanta" />
-                                        <span className="text-sm font-medium">Suculentas</span>
+                                        <img src="suculentas.JPG" alt="arboles" className="w-28 h-28 object-contain"/>
+                                        <span className="text-sm font-medium">Suculentas <span>
+                                            <button
+                                                onClick={() => setMostrarListaSuculentas(!mostrarListaSuculentas)}
+                                                className="text-blue-600 hover:text-blue-800 cursor-pointer ml-1.5"
+                                            >
+                                                <HelpCircle className="w-5 h-5" />
+                                            </button>
+                                            {mostrarListaSuculentas && (
+                                                <Listas tipoPlanta="suculenta"/>
+                                            )}
+                                            </span>
+                                        </span>
                                 </label>
                             </div>
                             {errors.tipo && <span className="text-orange-600">No seleccionaste el tipo de planta</span>}
                         </div>  
                     </div>
+                    <br />
+                    <label className="flex flex-row" >
+                        <div className="flex flex-row">
+                            <button onClick={buscarDescripcion} className="bg-sky-200 rounded-full p-1 hover:bg-sky-300 cursor-pointer" ><Search /> </button>
+                            <p>Buscar una descripción de la planta</p>
+                        </div>
+                        <br />
+                        {buscando && (
+                            <div className="flex items-center justify-center mt-4">
+                                <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-green-500"/> 
+                                <span className="ml-2 text-sm text-gray-600">Buscando descripción...</span>
+                            </div>
+                        )}
+                    </label>
+                    <br />
+                    {errors.descripcion && <span className="text-orange-600">No buscaste una descripción de tu planta</span>}
+                    {mostrarDescripcion && descripcion &&(
+                        <div className="m-1.5">
+                            {descripcion && <p className="text-sm text-teal-800"><strong>Descripción:</strong> {descripcion}</p>}
+                            {error && <p className="text-red-500">{error}</p>}
+                        </div>
+                    )}
+                    <br />
                     <div className="w-full max-w-md mx-auto my-4">
-                    <label className="block mb-2 font-semibold">Selecciona la etapa de la planta:</label>
+                        <label className="block mb-2 font-semibold">Selecciona la etapa de la planta:</label>
                         <input
                             type="range"
                             min="0"
@@ -274,6 +329,7 @@ export function Layout1(){
                         especie={divResultado.especie}
                         tipoPlanta={divResultado.tipoPlanta}
                         etapa={divResultado.etapa}
+                        descripcion={divResultado.descripcion}
                     />
                 )}
             </div>

@@ -177,7 +177,7 @@ export function Layout2() {
                         </section>
                         <section className="m-2 p-4 max-w-4xl w-full mx-auto border-2 border-gray-400 rounded-lg">
                             <p className="text-xl dark:text-teal-900 font-semibold mb-2">Las hojas de tu planta</p>
-                            <p>Algunas de las hojas de tu planta lucen o tienen algun aspecto similar:</p>
+                            <p>¿Algunas de las hojas de tu planta lucen o tienen algun aspecto similar ?</p>
                             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                                 {hojas.map((hoja) => (
                                     <label
