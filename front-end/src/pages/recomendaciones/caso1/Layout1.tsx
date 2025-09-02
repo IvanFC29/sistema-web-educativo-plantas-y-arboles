@@ -20,11 +20,11 @@ type PlantaData = {
 };
 
 export function Layout1(){
-    const [idUsuario, setIdUsuario] = useState(0);
+    const [idUsuario, setIdUsuario] = useState(-1);
     const [especie, setEspecie] = useState('');
     const [tipoPlanta, setTipoPlanta] = useState('');
     const [descripcion, setDescripcion] = useState('');
-    const [etapa, setEtapa] = useState(-1); // 0: Semilla, 1: Plantín, 2: Planta joven
+    const [etapa, setEtapa] = useState(0); // 0: Semilla, 1: Plantín, 2: Planta joven
 
     const [buscando, setBuscando] = useState(false);
     const [mostrarDescripcion, setMostrarDescripcion] = useState(false);
@@ -39,29 +39,27 @@ export function Layout1(){
     const {register, handleSubmit, setValue, formState: {errors}} = useForm<PlantaData>();
     const navegacion = useNavigate();
 
-    async function cargarListaPlantas() {
-        const respuesta = await getPlantas();
-        setLista(respuesta.data);
-    }
-
-    async function getID() {
-        const response = await profile();
-        setIdUsuario(response.id);
-    }
-    
     useEffect(() => {
+        async function cargarListaPlantas() {
+            const respuesta = await getPlantas();
+            setLista(respuesta.data);
+        }
         cargarListaPlantas();
+        async function getID() {
+            const response = await profile();
+            setIdUsuario(response.id);
+        }
         getID();
 
         const nuevaRecomendacion: Resultado = {
             especie: especie,
             tipoPlanta: tipoPlanta,
-            etapa: etapa
+            etapa: etapa,
         };
 
         setDivResultado(nuevaRecomendacion);
 
-    },[especie,descripcion,tipoPlanta,etapa, mostrarDescripcion, lista]);
+    },[especie,descripcion,tipoPlanta,etapa]);
 
     const guardarPlanta = async (data: PlantaData) => {
         const idUser: number = idUsuario;
@@ -128,6 +126,11 @@ export function Layout1(){
             setError(null);
             setMostrarDescripcion(false);
         }
+    }
+
+    const clasificar = (et: number) => {
+        let res = ["semilla", "plantin", "planta_joven"][et];
+        return res;
     }
 
     return(
@@ -237,7 +240,12 @@ export function Layout1(){
                             max="2"
                             step="1"
                             value={etapa}
-                            onChange={(e) => setEtapa(parseInt(e.target.value))}
+                            onChange={(e) => {
+                                const valor = e.target.value;
+                                const nuevoValor = parseInt(valor);
+                                setEtapa(nuevoValor);
+                                setValue('etapa',clasificar(nuevoValor));
+                            }}
                             className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-green-500"
                         />
                         <div className="flex justify-between mt-2 text-sm font-medium text-gray-700">
@@ -245,6 +253,7 @@ export function Layout1(){
                             <span>Plantín 🌿</span>
                             <span>Planta joven 🌳</span>
                         </div>
+                        {errors.etapa && <span className="text-orange-600">No seleccionaste la etapa actual de tu planta</span>}
                         {etapa !== -1 &&(
                             <p className="mt-2 font-semibold">Etapa seleccionada: {etapa === 0 ? "Semilla" : etapa === 1 ? "Plantín" : etapa === 2 ? "Planta joven": ""}</p>
                         )}
@@ -253,7 +262,7 @@ export function Layout1(){
                         <input type="text" className="hidden" {...register('especie', {required:true})} value={especie}/>
                         <input type="text" className="hidden" {...register('tipo', {required:true})} value={tipoPlanta}/>
                         <input type="text" className="hidden" {...register('descripcion', {required:true})} value={descripcion}/>
-                        <input type="text" className="hidden" {...register('etapa', {required:true})} value={["semilla", "plantin", "planta_joven"][etapa] }/>
+                        <input type="text" className="hidden" {...register('etapa', {required:true})} value={clasificar(etapa)}/>
                         <button className="text-white font-bold cursor-pointer rounded-lg mt-2 bg-green-500 hover:bg-green-600 text-sm sm:w-auto px-5 py-2.5 text-center focus:ring-green-300">Guardar ⮞</button>    
                     </form>
                 </section> 
