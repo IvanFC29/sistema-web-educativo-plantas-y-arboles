@@ -1,11 +1,7 @@
 import { useRef } from 'react';
 import { toPng } from 'html-to-image';
 import { Leaf, Trees, Download, Flower2, Cannabis } from "lucide-react"
-import { plantas,  estimarFrecuenciaRiego} from '../../../assets/utils/recomendaciones';
-
-type TipoPlanta = 'arbol' | 'arbusto' | 'flor' | 'suculenta';
-type EtapaPlanta = 'plantin' | 'planta_joven' | 'floracion' | 'arbol_adulto' | 'arbusto_adulto' | 'planta_adulta';
-type Clima = 'caluroso' | 'nublado' | 'lluvioso';
+import { TipoPlanta, Clima, plantas, EtapasArbol, EtapasArbusto, EtapasFlor, EtapasSuculenta, estimarFrecuenciaRiego} from '../../../assets/utils/recomendaciones';
 
 interface Planta {
     especie: string;
@@ -32,8 +28,34 @@ export function RecomendacionTipo2({laPlanta, tierra, clima, hojas}: Respuesta){
         link.click();
     }
 
-    const estimacionRiego = (laPlanta.tipo && laPlanta.etapa && clima && tierra) 
-    ? estimarFrecuenciaRiego(laPlanta.tipo as TipoPlanta , laPlanta.etapa as EtapaPlanta, clima as Clima, tierra)
+    function toTipoPlanta(value: string): TipoPlanta | null {
+        switch(value){
+            case 'arbol':
+                return TipoPlanta.Arbol
+            case 'arbusto':
+                return TipoPlanta.Arbusto;
+            case 'flor':
+                return TipoPlanta.Flor;
+            case 'suculenta':
+                return TipoPlanta.Suculenta;
+            default:
+                return null;
+        }
+    }
+
+    const estimacionRiego =
+    (laPlanta.tipo && laPlanta.etapa && clima && tierra) 
+    ? (() => {
+        const tipoEnum = toTipoPlanta(laPlanta.tipo);
+        if (!tipoEnum) return null; // si llega algo raro
+
+        return estimarFrecuenciaRiego(
+          tipoEnum,                        // ahora es TipoPlanta
+          laPlanta.etapa as keyof (EtapasArbol | EtapasArbusto | EtapasFlor | EtapasSuculenta),
+          clima as Clima,
+          tierra
+        );
+      })()
     : null;
 
     return (

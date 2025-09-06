@@ -160,17 +160,16 @@ export const getProgresoJuego = () =>  apiProgreso.get('/',{
 });
 
 export const updateContadorMensajes = async () => {
-    const res = await apiProgreso.post('incrementar-contador-msj/',{
-        headers:{
+    const res = await apiProgreso.post('incrementar-contador-msj/',{},
+        { headers:{
             'Authorization': `Token ${localStorage.getItem('token')}`
-        }}
-    );
+        }});
     return res.data;
 }
 
 export const updateContadorAprendizaje = async () => {
-    const res = await apiProgreso.post('incrementar-contador-apzj/',{
-        headers:{
+    const res = await apiProgreso.post('incrementar-contador-apzj/', {},
+        { headers:{
             'Authorization': `Token ${localStorage.getItem('token')}`
         }});
     return res.data;
@@ -185,8 +184,9 @@ export const getFechaJuego = async () => {
 }
 
 export const updateFechaJuego = async () => {
-    const res = await apiProgreso.post('actualizar-fecha/',{
-        headers:{
+    const res = await apiProgreso.post('actualizar-fecha/', 
+        {},
+        { headers:{
             'Authorization': `Token ${localStorage.getItem('token')}`
         }});
     return res.data;

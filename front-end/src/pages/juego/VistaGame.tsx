@@ -99,7 +99,7 @@ export function VistaGame(){
                             <p className="mt-5">- Desplazate alrededor del jardin junto a la ardilla </p>
                             <p className="mt-1">- Busca nueces y manzanas </p>
                             <p className="mt-1">- Para encontrar objetos haz click en las flores cera de ti para descubrir lo que hay detras </p>
-                            <p className="mt-1">- Descubre temas de aprendizaje acumulando tres manzanas </p>
+                            <p className="mt-1">- Descubre temas de aprendizaje acumulando tres nueces </p>
                             <p className="mt-1">- Descubre consejos acumulando tres nueces </p>
                             <p className="mt-1">- Cuidate de los montones de basura, te haran perder salud </p>
                             <p className="mt-1">- Cada busqueda es diaria, luedo de recorrer los 5 laberintos termina el juego diario </p>   

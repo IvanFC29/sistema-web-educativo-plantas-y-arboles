@@ -177,7 +177,7 @@ export function calcularFrecuenciaRiego(temperatura:number, humedad:number): num
      return Math.round(frecuencia);
 }
 
-enum TipoPlanta {
+export enum TipoPlanta {
     Arbol = 'arbol',
     Arbusto = 'arbusto',
     Flor = 'flor',
@@ -185,33 +185,33 @@ enum TipoPlanta {
 }
 
 // Interfaces para las etapas de crecimiento de cada tipo de planta
-interface EtapasArbol {
+export interface EtapasArbol {
     semilla: number;
     plantín: number;
     planta_joven: number;
     arbol_adulto: number;
-  }
+}
   
-  interface EtapasArbusto {
+export interface EtapasArbusto {
     semilla: number;
     plantín: number;
     planta_joven: number;
     arbusto_adulto: number;
-  }
+}
   
-  interface EtapasFlor {
+export interface EtapasFlor {
     semilla: number;
     plantín: number;
     planta_joven: number;
     floracion: number;
-  }
+}
   
-  interface EtapasSuculenta {
+export interface EtapasSuculenta {
     semilla: number;
     plantín: number;
     planta_joven: number;
     planta_adulta: number;
-  }
+}
 // Valores de referencia para Kc (coeficiente del cultivo) por tipo de planta y etapa
 const kcValores = {
     [TipoPlanta.Arbol]: {
@@ -240,7 +240,7 @@ const kcValores = {
     } as EtapasSuculenta,
   };
 
-type Clima = "caluroso" | "nublado" | "lluvioso";
+export type Clima = "caluroso" | "nublado" | "lluvioso";
 
 // Valores de referencia para ET0 (evapotranspiración de referencia en mm/día)
 // Basado en rangos típicos para diferentes climas
