@@ -13,12 +13,13 @@ import { useParams } from "react-router-dom";
 import { getAportesByPlanta, getPlantaById } from "../../assets/utils/sistema.api";
 import { Wind } from 'lucide-react';
 import { Tarjetas } from "./TarjetaAporte";
+import { CuadroOxigeno } from "./CuadroOxigeno";
 
 export function MisAfiches(){
     const [lista, setLista] = useState<Aporte[]>([]);
     const [especie, setEspecie] = useState('');
     const params = useParams();
-
+   
     useEffect(() => {
         async function cargarTarjetasAportes(){
             if(params.id){
@@ -35,7 +36,6 @@ export function MisAfiches(){
             }   
         }
         cargarPlanta();
-        
     }, []);
 
     const formatear = (palabra:string) =>{
@@ -46,14 +46,17 @@ export function MisAfiches(){
         <section className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-lime-300">
             <BarraNavegacion />     
             <br /> 
-            <a href="/mis-plantas" className="text-green-700 text-sm font-medium m-15">Mis Plantas </a>
+            <a href="/mis-plantas" className="text-green-700 text-sm font-medium m-15 hover:underline">Mis Plantas </a>
             <div className="p-3 max-w-4xl w-full mx-auto">
+                <CuadroOxigeno /> <br />
                 <p className="text-2xl font-bold text-green-800">Historial de tu planta: {formatear(especie)}</p>
                 {lista.length === 0 ?(
-                    <div className="max-w-md mx-auto mt-10 text-center">
-                        <Wind size={120} className="mx-auto text-emerald-900 opacity-60" />
-                        <p className="dark:text-teal-900 font-semibold">Historial de aportes vacio !!</p>
-                        <p className="dark:text-gray-500">Ve a la actividad "Aporte Ambiental" para agregar</p>
+                    <div>
+                        <div className="max-w-md mx-auto mt-10 text-center">
+                            <Wind size={120} className="mx-auto text-emerald-900 opacity-60" />
+                            <p className="dark:text-teal-900 font-semibold">Historial de aportes vacio !!</p>
+                            <p className="dark:text-gray-500">Ve a la actividad "Aporte Ambiental" para agregar</p>
+                        </div>
                     </div>
                 ): (
                     <div className="bg-transparent grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">

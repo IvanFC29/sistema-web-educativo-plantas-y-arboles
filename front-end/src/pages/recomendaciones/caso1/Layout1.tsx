@@ -116,10 +116,13 @@ export function Layout1(){
                     setError(null);
                     setMostrarDescripcion(true); 
                 } catch (err: any) {
-                    console.error("Error:", err);
-                    setDescripcion("");
-                    setError("No se pudo obtener la descripción");
-                    setMostrarDescripcion(false); 
+                    if (err.response && err.response.status === 404) {
+                        setError(`No se encontró información para "${especie}". Puedes escribir una descripción realizando una busqueda en Google.`);
+                      } else {
+                        setError("Ocurrió un error al buscar la descripción.");
+                      }
+                      setDescripcion("");
+                      setMostrarDescripcion(false);
                 } finally{
                     clearInterval(intervalo);
                     setTimeout(()=>{
@@ -139,6 +142,12 @@ export function Layout1(){
         let res = ["semilla", "plantin", "planta_joven"][et];
         return res;
     }
+
+    const buscarEnGoogle = () => {
+        const query = encodeURIComponent(especie.trim());
+        const url = `https://www.google.com/search?q=${query}`;
+        window.open(url, "_blank");
+    };
 
     return(
         <div className="grid grid-cols-1 md:flex m-1">
@@ -265,19 +274,59 @@ export function Layout1(){
                         </div>  
                     </div>
                     <br />
-                    <label className="flex flex-row" >
-                        <div className="flex flex-row">
-                            <button onClick={buscarDescripcion} className="bg-sky-200 rounded-full p-1 hover:bg-sky-300 cursor-pointer" ><Search /> </button>
-                            <p>Buscar una descripción de la planta</p>
+                    <div className="space-y-3"> 
+                         {/* Botón y texto */}
+                        <div className="flex items-center space-x-2">
+                            <button 
+                            onClick={buscarDescripcion} 
+                            className="bg-sky-200 rounded-full p-2 hover:bg-sky-300 cursor-pointer transition-colors"
+                            title="Buscar una descripción de la planta"
+                            >
+                                <Search className="w-5 h-5 text-gray-700" />
+                            </button>
+                            <span className="text-sm font-medium text-gray-700">Buscar una descripción de la planta</span>
                         </div>
-                        <br />
+
+                        {/* Estado: cargando */}
                         {buscando && (
-                            <div className="flex items-center justify-center mt-4">
-                                <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-green-500"/> 
-                                <span className="ml-2 text-sm text-gray-600">Buscando descripción...</span>
+                            <div className="flex items-center space-x-2">
+                            <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-green-500"/> 
+                            <span className="text-sm text-gray-600">Buscando descripción...</span>
                             </div>
                         )}
-                    </label>
+
+                        {/* Error - busqueda manual */}
+                        {error && !mostrarDescripcion && (
+                            <div className="mt-4">
+                                <div className="mt-3 flex items-center gap-2">
+                                    <p className="text-sm font-semibold">{error}</p>
+                                    <button
+                                        onClick={buscarEnGoogle}
+                                        className="cursor-pointer flex items-center gap-2 rounded-lg bg-white border px-3 py-1.5 shadow hover:bg-gray-200"
+                                    >
+                                        {/* Icono de Google como SVG */}
+                                        <svg
+                                        className="w-4 h-4"
+                                        viewBox="0 0 533.5 544.3"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                        <path fill="#4285F4" d="M533.5 278.4c0-17.4-1.6-34-4.8-50.1H272v95.1h147c-6.3 34-25.2 62.8-53.9 82v68.1h86.7c50.8-46.8 80.7-115.8 80.7-195.1z"/>
+                                        <path fill="#34A853" d="M272 544.3c72.6 0 133.6-23.9 178.1-64.8l-86.7-68.1c-24.1 16.2-55.1 25.6-91.4 25.6-70 0-129.4-47.1-150.7-110.4H30.5v69.7c44.2 87.4 134.6 148 241.5 148z"/>
+                                        <path fill="#FBBC05" d="M121.3 326.6c-10.1-30-10.1-62.2 0-92.2v-69.7H30.5c-41.4 82.7-41.4 180.9 0 263.6l90.8-69.7z"/>
+                                        <path fill="#EA4335" d="M272 107.7c38.7-.6 75.8 13.5 104.1 39.6l77.9-77.9C405.6 24.7 345.3 0 272 0 165.1 0 74.7 60.6 30.5 148.1l90.8 69.7C142.6 154.8 202 107.7 272 107.7z"/>
+                                        </svg>
+                                        <span className="text-sm font-medium">Buscar</span>
+                                    </button>
+                                </div>       
+                                <textarea
+                                    onChange={(e)=>{ setDescripcion(e.target.value); setValue("descripcion",e.target.value)}}
+                                    rows={4}
+                                    className="w-full border rounded p-2 mt-2"
+                                    placeholder="Descripción de la planta..."
+                                ></textarea>
+                            </div>
+                        )}
+                    </div>
                     <br />
                     {errors.descripcion && <span className="text-orange-600">No buscaste una descripción de tu planta</span>}
                     {mostrarDescripcion && descripcion &&(

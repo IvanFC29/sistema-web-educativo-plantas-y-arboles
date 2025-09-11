@@ -47,11 +47,13 @@ export function Tarjeta( {plantaGuardada, recargar}: plantaProps){
                 <p className="text-sm text-gray-500">Tipo de planta: ({formatear(plantaGuardada.tipo)})</p>
                 <p className="text-sm text-gray-500">Etapa actual: ({formatear(plantaGuardada.etapa)})</p>
                 <hr />
-                <div className='grid grid-cols-2'>
-                    <button onClick={() => mostrarModal(plantaGuardada.descripcion)} className='text-green-700 cursor-pointer text-sm font-medium'>Descripcion</button>
-                    <a href={enlace} className='text-teal-600 cursor-pointer text-sm font-medium'>Historial de Aportes Ambientales</a>
+                <div className='flex items-center space-x-2'>
+                    <button onClick={()=>setCambiarFoto(true)} className='cursor-pointer' title='Cambiar foto'><ImageIcon className="w-8 h-8 text-teal-700 hover:text-teal-900"/></button>
+                    <button onClick={() => mostrarModal(plantaGuardada.descripcion)} className='text-green-700 cursor-pointer text-sm font-medium hover:underline'>Descripción</button>
+                    {plantaGuardada.tipo === 'arbol' &&(
+                        <a href={enlace} className='text-teal-600 cursor-pointer text-sm font-medium hover:underline'>Historial de Captura de Carbono</a>
+                    )}
                 </div>
-                <button onClick={()=>setCambiarFoto(true)} className='cursor-pointer' title='Cambiar foto'><ImageIcon className="w-8 h-8 text-teal-700 hover:text-teal-900"/></button>
             </div>
             {modalAbierto && (
                 <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 z-50">

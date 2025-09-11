@@ -5,15 +5,15 @@ export function Indicador(){
 
     const rutas: {[key:string]:string}={
         '/inicio': 'Bienvenido !! 👏',
-        '/aporte-ambiental': 'Aporte Ambiental',
+        '/aporte-ambiental': 'Impacto Ambiental del Árbol',
         '/conociendo-tu-planta': 'Conociendo tus Plantas',
-        '/mis-plantas': 'Mis Plantas',
+        '/mis-plantas': 'Mis Plantas 🌿',
     };
 
     let nombreSeccion = '';
 
     if (locacion.pathname.startsWith('/aportes-plantas')) {
-        nombreSeccion = 'Historial de aportes Ambientales';
+        nombreSeccion = 'Historial de Captura de Carbono';
     }else{
         nombreSeccion = rutas[locacion.pathname];
     }

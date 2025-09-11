@@ -9,6 +9,7 @@ from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from ..models import Planta, AporteAmbiental
+from django.db.models import Sum
 
 @api_view(['POST'])
 def login(request):
@@ -52,5 +53,7 @@ def totalPlantas(request):
 @permission_classes([IsAuthenticated])
 def totalAportes(request):
     user = request.user
-    total = AporteAmbiental.objects.filter(planta__usuario=user).count()
-    return Response({"total":total}, status=status.HTTP_200_OK)
+    total = AporteAmbiental.objects.filter(planta__usuario=user).aggregate(
+        totalOxigeno = Sum('oxigenoTotal')
+    )
+    return Response({"total":total["totalOxigeno"] or 0}, status=status.HTTP_200_OK)

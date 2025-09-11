@@ -61,22 +61,22 @@ export function Home(){
 
                     {/* Estadísticas */}
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-                    <div className="text-center bg-blue-100 rounded-xl p-2">
-                        <p className="text-sm text-gray-600">Consejos desbloqueados</p>
-                        <p className="text-2xl font-bold text-blue-700">{totalConsejosDesbloqueados}</p>
-                    </div>
-                    <div className="text-center bg-yellow-100 rounded-xl p-2">
-                        <p className="text-sm text-gray-600">Temas desbloqueados</p>
-                        <p className="text-2xl font-bold text-yellow-700">{totalTemasDesbloqueados}</p>
-                    </div>
-                    <div className="text-center bg-green-100 rounded-xl p-2">
-                        <p className="text-sm text-gray-600">Plantas en el jardín</p>
-                        <p className="text-2xl font-bold text-green-700">{totalPlantas}</p>
-                    </div>
-                    <div className="text-center bg-purple-100 rounded-xl p-2">
-                        <p className="text-sm text-gray-600">Historial de plantas</p>
-                        <p className="text-2xl font-bold text-purple-700">{totalAportes}</p>
-                    </div>
+                        <div className="text-center bg-blue-100 rounded-xl p-2">
+                            <p className="text-sm text-gray-600">Consejos desbloqueados</p>
+                            <p className="text-2xl font-bold text-blue-700">{totalConsejosDesbloqueados}</p>
+                        </div>
+                        <div className="text-center bg-yellow-100 rounded-xl p-2">
+                            <p className="text-sm text-gray-600">Temas desbloqueados</p>
+                            <p className="text-2xl font-bold text-yellow-700">{totalTemasDesbloqueados}</p>
+                        </div>
+                        <div className="text-center bg-green-100 rounded-xl p-2">
+                            <p className="text-sm text-gray-600">Plantas en el jardín</p>
+                            <p className="text-2xl font-bold text-green-700">{totalPlantas} especies</p>
+                        </div>
+                        <div className="text-center bg-purple-100 rounded-xl p-2">
+                            <p className="text-sm text-gray-600">Total de Oxigeno Liberado</p>
+                            <p className="text-2xl font-bold text-purple-700">{totalAportes} Kg</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -95,7 +95,7 @@ export function Home(){
                 </div>
                 <div className="m-10">
                     <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-white dark:border-gray-700 hover:bg-gray-100">
-                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-teal-900">Aporte Ambiental</h5>
+                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-teal-900">Impacto Ambiental</h5>
                         <p className="mb-3 font-normal text-gray-700 dark:text-gray-500">¿Conoces cuanto de oxigeno aportan al medio ambiente los árboles de tu hogar?.</p>
                         <Link to='/aporte-ambiental' className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-green-500 rounded-lg hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                             Vamos!

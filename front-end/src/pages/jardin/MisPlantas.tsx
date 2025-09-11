@@ -3,6 +3,7 @@ interface Planta {
     especie: string;
     tipo: string;
     descripcion: string;
+    etapa: string;
     foto: string;
 }
 

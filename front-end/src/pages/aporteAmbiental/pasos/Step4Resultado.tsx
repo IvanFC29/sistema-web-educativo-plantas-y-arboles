@@ -58,7 +58,8 @@ export function Step4Resultado({datos}: Acciones){
 
     const curiosidades =[
       'En Bolivia el 2022 aumentamos a 23 MT en produccion de C02 segun datosMacro.com',
-      'Un auto al anio genera 340 Kg de CO2'
+      'Un auto al año genera 340 Kg de CO2',
+      'Los automóviles eléctricos no producen emisiones en el tubo de escape, su proceso de fabricación sí las produce (especialmente la batería). '
     ];
      useEffect(()=> {
             seleccionarCuriosidad();
@@ -103,7 +104,6 @@ export function Step4Resultado({datos}: Acciones){
                 <p className="text-2xl font-bold dark:text-teal-900 text-center mb-2"> 📈 Interpretacion de datos</p>
                 <p className="text-cyan-700 text-sm font-medium"> 💨 Tu/s {datos.especiePlanta}/s estan absorbiendo un aproximado de {datos.CO2Total.toFixed(2)} Kg. de dioxido de carbono (CO2) del aire</p>
                 <p className="text-cyan-700 text-sm font-medium mt-5"> 🎯{curiosidad}</p>
-                <p className="text-green-700 text-sm font-medium mt-5"> <a href="https://8billiontrees.com/carbon-offsets-credits/how-much-co2-does-a-car-emit-per-mile/">Fuente</a></p>
               </div>
               <div className="bg-yellow-50 rounded-lg shadow m-6 p-4">
                 <p className="text-2xl font-bold dark:text-teal-900 text-center mb-2"> 📝 Resumen de datos</p>
