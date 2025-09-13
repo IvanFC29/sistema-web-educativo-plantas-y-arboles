@@ -2,12 +2,15 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { login } from "../../assets/utils/sistema.api";
 import { useState } from "react";
+import { XIcon } from "lucide-react";
+import ForgotPassword from "./OlvidePassword";
 
 export default function(){
     const navegador = useNavigate();
     const {register, handleSubmit, formState:{errors}} = useForm();
     const [huboError,  setHuboError] = useState(false);
     const [mostrarPassword, setMostrarPassword] = useState(false);
+    const [mostrarModal, setMostrarModal] = useState(false);
 
     const ingresar = handleSubmit(async data => {
         const userData = {
@@ -92,7 +95,7 @@ export default function(){
                     <input type={mostrarPassword ? "text":"password"} id="password" 
                         {...register('password', {required:true})} 
                         className="bg-white border border-green-300 text-black text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:border-green-500 dark:text-black"  placeholder="••••••••"/>
-                        {errors.password && <span className="text-orange-600 text-sm">Este campo esta vacio</span>}
+                        {errors.password && <span className="text-orange-600 text-sm">Este campo esta vacio <br /></span> }
                         <button type="button" className="cursor-pointer text-sm text-teal-700" onClick={() => setMostrarPassword(!mostrarPassword)}>
                             {mostrarPassword ? <span>Ocultar Contraseña</span>: <span>Mostrar Contraseña</span>} 
                         </button>
@@ -101,7 +104,24 @@ export default function(){
                 <div className="text-sm font-medium text-gray-500 dark:text-gray-700">
                     Todavia no tienes una cuenta? <a href="/crear-cuenta" className="text-green-700 hover:underline dark:text-green-500">Crea una</a>
                 </div>
+                <div className="text-sm font-medium text-gray-500 dark:text-gray-700">
+                    <button onClick={()=>{setMostrarModal(true)}} className="text-green-700 hover:underline dark:text-green-500 cursor-pointer">Olvide mi contraseña</button>
+                </div>
             </form>
+            {mostrarModal && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-300 bg-opacity-50">
+                <div className="relative bg-white rounded-2xl shadow-lg w-full max-w-md p-6">
+                <button
+                    onClick={() => setMostrarModal(false)}
+                    className="absolute top-3 right-3 text-gray-400 hover:text-gray-700 transition-colors"
+                    title="Cerrar"
+                >
+                    <XIcon className="w-5 h-5 cursor-pointer" />
+                </button>
+                <ForgotPassword onClose={()=>setMostrarModal(false)} />
+                </div>
+            </div>
+            )}
         </div>
     )
 }

@@ -78,6 +78,12 @@ export const findDescripcion = (palabra: string) =>
     axios.get(`http://127.0.0.1:8000/sistemaWeb/api/buscar_descripcion/`, {
       params: { palabra }
 });
+
+/** API REST DE OLVIDAR PASSWORD */
+export const forgotPassword = (correo: string) =>
+    axios.post(`http://127.0.0.1:8000/sistemaWeb/api/generar_token/`, {
+        correo
+});
   
 /** API REST DE USUARIO */
 export const createUser = async (

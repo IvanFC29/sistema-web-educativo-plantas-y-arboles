@@ -11,6 +11,7 @@ import { VistaR } from "./pages/recomendaciones/VistaR";
 import { VistaMensajes } from "./pages/juego/VistaMensajes";
 import { VistaAprendizaje } from "./pages/juego/VistaAprendizaje";
 import { CreateUsr } from "./pages/usuario/CreateUsr";
+import ResetPassword from "./pages/usuario/ResetPassword";
 
 function App(){
   return(
@@ -28,6 +29,7 @@ function App(){
         <Route path="/consejos-encontrados/:id" element={<VistaMensajes /> }/>
         <Route path="/mis-aprendizajes/:id" element={<VistaAprendizaje /> }/>
         <Route path="/crear-cuenta" element={<CreateUsr/>} />
+        <Route path="/reset-password/:uid/:token" element={<ResetPassword />}/>
       </Routes>
       <Toaster />
     </BrowserRouter>
