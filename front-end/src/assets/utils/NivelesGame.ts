@@ -65,6 +65,7 @@ const nivel5: string[][] = [
 
 const mapaOriginal = [nivel1, nivel2, nivel3, nivel4, nivel5];
 const mapaCopia = mapaOriginal.sort(()=>Math.random()-0.5);
+var contador = 0;
 
 const armarLaberinto = (mapa: string[][]): string[][] => {
     const mapaRespuesta = mapa.map(fila => [...fila]);
@@ -89,18 +90,37 @@ const armarLaberinto = (mapa: string[][]): string[][] => {
 
     let pos = 0;
 
-    const itemDelLaberinto = Math.random() < 0.5 ? 'M' : 'N';
+    const tendraE = Math.random() < 0.5;
+    console.log("la respuesta es: "+tendraE);
+    if (tendraE) contador +=1;
+    console.log("el contador es "+contador);
 
-    if ( pos < espaciosDisponibles.length) {
-        const [i, j] = espaciosDisponibles[pos++];
-        mapaRespuesta[i][j] = itemDelLaberinto;
+    if(tendraE && contador === 1){
+        if (pos < espaciosDisponibles.length) {
+            const [i, j] = espaciosDisponibles[pos++];
+            mapaRespuesta[i][j] = 'E';
+        }
+        console.log('Este laberinto tiene E');
+        
+        if (pos < espaciosDisponibles.length) {
+            const [i, j] = espaciosDisponibles[pos++];
+            mapaRespuesta[i][j] = 'B';
+        }
+    
+    }else{
+        const itemDelLaberinto = Math.random() < 0.5 ? 'M' : 'N';
+
+        if (pos < espaciosDisponibles.length) {
+            const [i, j] = espaciosDisponibles[pos++];
+            mapaRespuesta[i][j] = itemDelLaberinto;
+        }
+    
+        if (pos < espaciosDisponibles.length) {
+            const [i, j] = espaciosDisponibles[pos++];
+            mapaRespuesta[i][j] = 'B';
+        }
+    
     }
-
-    if (pos < espaciosDisponibles.length) {
-        const [i, j] = espaciosDisponibles[pos++];
-        mapaRespuesta[i][j] = 'B';
-    }
-
     return mapaRespuesta;
 };
 

@@ -5,6 +5,7 @@ import piedra from '/img_juego/piedra.png';
 import manzana from '/img_juego/manzana.png';
 import nuez from '/img_juego/nuez.png';
 import flor from '/img_juego/planta.png';
+import abeja from '/img_juego/abeja.png';
 
 type CeldaAcciones = {
     tipo:string,
@@ -20,7 +21,8 @@ export function Celda({tipo, visible, animado, onDescubrir}: CeldaAcciones){
         'A': ardilla, 
         'N': nuez,  
         'C': cesped,  
-        'B': basura   
+        'B': basura,
+        'E': abeja,   
     }
     return (
         <div onClick={onDescubrir} className="flex items-center justify-center border border-gray-300">

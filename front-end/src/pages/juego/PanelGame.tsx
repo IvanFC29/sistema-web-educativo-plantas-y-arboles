@@ -2,10 +2,11 @@ import { Celda } from "./Celda";
 import { mapas, cantidadNiveles } from "../../assets/utils/NivelesGame";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import { SquareArrowDown, SquareArrowLeft, SquareArrowRight, SquareArrowUp } from "lucide-react";
+import { SquareArrowDown, SquareArrowLeft, SquareArrowRight, SquareArrowUp, XIcon } from "lucide-react";
 import { saveAprendizajeDesbloqueado, saveMensajeDesbloqueado, updateContadorAprendizaje, updateContadorMensajes, getProgresoJuego, updateFechaJuego } from "../../assets/utils/sistema.api";
 import { listaMensajes } from "../../assets/utils/ConsejosGame";
 import { listaTemas } from "../../assets/utils/AprendizajeGame";
+import { ConsejoAbeja } from "./ConsejoAbeja";
 import corazon from '/img_juego/vida.png';
 import manzana from '/img_juego/manzana.png';
 import nuez from '/img_juego/nuez.png';
@@ -49,10 +50,14 @@ export function PanelGame({onJuegoCompletado}: props) {
     const [listaManzanas, setListaManzanas] = useState<string[]>([]);
     const [nueces, setNueces] = useState(0);
     const [listaNueces, setListaNueces] = useState<string[]>([]);
+
     const [mostrarMensaje, setMostrarMensaje] = useState(false);
     const [gano, setGano] = useState(false);
     const [cantidadMsj, setCantidadMsj] = useState(0);
     const [cantidadApzj, setCantidadApzj] = useState(0);
+    const [encontroItemEspecial, setEncontroItemEspecial] = useState(false);
+    const [mostrarConsejoAbeja, setMostrarConsejoAbeja] = useState(false);
+    const [mostrarModalAbeja, setMostrarModalAbeja] = useState(false);
     const [etiquetaGame, setEtiquetaGame] = useState('Primer Laberinto');
     const [visibilidad, setVisibilidad] = useState(mapa ? mapa.map(fila => fila.map(() => false)) : []);
     const [animaciones, setAnimaciones] = useState(mapa ? mapa.map(fila => fila.map(() => false)) : []);
@@ -145,12 +150,21 @@ export function PanelGame({onJuegoCompletado}: props) {
             audioBasura.play();
             setNuecesPendientes(nuecesPendientes+1);
         }
+
+        if(mapa[nuevaX][nuevaY] === 'E'){
+            audioBasura.play();
+            setEncontroItemEspecial(true);
+            setMostrarConsejoAbeja(true);
+            toast.success('Pillaste un consejo');
+        }
     };
 
     useEffect(() => {
         var totalPorNivel = manzanasPendientes + nuecesPendientes;
 
-        if (totalPorNivel === 1) {
+        if (totalPorNivel === 1 || encontroItemEspecial) {
+            console.log('estado del item '+encontroItemEspecial);
+            
             const nuevoNivel = nivel + 1;
             const etiquetas: {[key:number]:string} = {
                 1: 'Segundo Laberinto',
@@ -164,11 +178,18 @@ export function PanelGame({onJuegoCompletado}: props) {
                 setMapa(mapas(nuevoNivel));   
                 setEtiquetaGame(etiquetas[nuevoNivel]);
                 setManzanasPendientes(0);
-                setNuecesPendientes(0);     
+                setNuecesPendientes(0);   
+                setEncontroItemEspecial(false); 
             }else{   
-                setGano(true);
-                setMostrarMensaje(true);
-                completarJuego();
+                if(nuevoNivel === 4 && manzanas == 2 && nueces == 2){
+                    setGano(false);
+                    setMostrarMensaje(true);
+                    completarJuego();
+                }else{
+                    setGano(true);
+                    setMostrarMensaje(true);
+                    completarJuego();
+                }
             }
         }
 
@@ -191,7 +212,7 @@ export function PanelGame({onJuegoCompletado}: props) {
             setMostrarMensaje(true);
             completarJuego();
         }
-    }, [manzanasPendientes, nuecesPendientes]);    
+    }, [manzanasPendientes, nuecesPendientes, encontroItemEspecial]);    
 
     useEffect(()=> {
         if(mostrarMensaje && gano){
@@ -306,10 +327,33 @@ export function PanelGame({onJuegoCompletado}: props) {
       
     return (
         <div>
-            <span className="mb-4 bg-green-100 border-green-500 border-2 px-5 py-2 rounded-xl text-emerald-900 font-bold shadow">
-                🗺️ {etiquetaGame}
-            </span>
-
+            <div className="flex justify-between mt-10">
+                <span className="mb-4 bg-green-100 border-green-500 border-2 px-5 py-2 rounded-xl text-emerald-900 font-bold shadow">
+                    🗺️ {etiquetaGame}
+                </span>
+                {mostrarConsejoAbeja &&(
+                    <button
+                        onClick={() => setMostrarModalAbeja(true)}
+                        title="Consejo de abeja"
+                        className="p-2 rounded-full hover:border-amber-200 shadow-md transition transform hover:scale-110 cursor-pointer"
+                    >
+                        <img
+                        src="/img_juego/abeja.png"
+                        alt="Abeja"
+                        className="w-10 h-10"
+                        />
+                    </button>
+                  
+                )}
+            </div>  
+            {mostrarModalAbeja && (
+                <div className="fixed z-0 inset-0 overflow-y-auto bg-opacity-50 flex items-center justify-center">
+                    <div className="max-w-sm mx-auto bg-white rounded-2xl shadow-lg p-6 border border-green-200 overflow-hidden relative">
+                        <button onClick={()=>setMostrarModalAbeja(false)} className='p-2 cursor-pointer left-0' title='Cerrar'> <XIcon className='text-gray-500 hover:text-gray-800'/></button>
+                        <ConsejoAbeja/>
+                    </div>
+                </div>
+            )}
             <div className="flex flex-col items-center justify-center pb-20 pt-10">
                 {mapa && (
                     <div className="grid" style={{
