@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { SquareArrowDown, SquareArrowLeft, SquareArrowRight, SquareArrowUp, XIcon } from "lucide-react";
 import { saveAprendizajeDesbloqueado, saveMensajeDesbloqueado, updateContadorAprendizaje, updateContadorMensajes, getProgresoJuego, updateFechaJuego } from "../../assets/utils/sistema.api";
-import { listaMensajes } from "../../assets/utils/ConsejosGame";
-import { listaTemas } from "../../assets/utils/AprendizajeGame";
+import { listaMensajes, cantidadMensjaes } from "../../assets/utils/ConsejosGame";
+import { listaTemas, cantidadTemas } from "../../assets/utils/AprendizajeGame";
 import { ConsejoAbeja } from "./ConsejoAbeja";
 import corazon from '/img_juego/vida.png';
 import manzana from '/img_juego/manzana.png';
@@ -50,6 +50,10 @@ export function PanelGame({onJuegoCompletado}: props) {
     const [listaManzanas, setListaManzanas] = useState<string[]>([]);
     const [nueces, setNueces] = useState(0);
     const [listaNueces, setListaNueces] = useState<string[]>([]);
+
+    const [totalConsejosDesbloqueados, setTotalConsejosDesbloqueados] = useState(0);
+    const [totalTemasDesbloqueados, setTotalTemasDesbloqueados] = useState(0);
+    const [aviso, setAviso] = useState('');
 
     const [mostrarMensaje, setMostrarMensaje] = useState(false);
     const [gano, setGano] = useState(false);
@@ -96,6 +100,15 @@ export function PanelGame({onJuegoCompletado}: props) {
         setListaNueces(listaN);
 
     }, [vidas,manzanas,nueces,mapa]);
+
+     useEffect(()=> {
+            const cargarProgreso = async ()=>{
+                const res = await getProgresoJuego();
+                setTotalConsejosDesbloqueados(res.data[0].cantidadMsjDesbloqueados)
+                setTotalTemasDesbloqueados(res.data[0].cantidadApzjDesbloqueados)
+            };
+            cargarProgreso();
+        }, [totalConsejosDesbloqueados,totalTemasDesbloqueados]);
 
     useEffect(() => {
         const reconocerTecla = (event: KeyboardEvent) => {
@@ -194,25 +207,39 @@ export function PanelGame({onJuegoCompletado}: props) {
         }
 
         if (manzanas === 3) {
-            toast.success('Un consejo ha sido Desbloqueado');
-            audioItemEncontrado.play();
-            guardarProgresoMensajes();
-            setManzanas(0);
-            setGano(true);
-            setMostrarMensaje(true);
-            completarJuego();
+            if(totalConsejosDesbloqueados < cantidadMensjaes()){
+                toast.success('Un consejo ha sido Desbloqueado');
+                audioItemEncontrado.play();
+                guardarProgresoMensajes();
+                setManzanas(0);
+                setGano(true);
+                setMostrarMensaje(true);
+                completarJuego();
+            }else{
+                setAviso('Por ahora ya tienes desbloqueados todos los consejos');                
+                setMostrarMensaje(true);
+                setGano(true);
+                completarJuego();
+            }
         }
 
         if (nueces === 3) {
-            toast.success('Tema de Aprendizaje Desbloqueado');
-            audioItemEncontrado.play();
-            guardarProgresoAprendizaje();
-            setNueces(0);
-            setGano(true);
-            setMostrarMensaje(true);
-            completarJuego();
+            if(totalTemasDesbloqueados < cantidadTemas()){
+                toast.success('Tema de Aprendizaje Desbloqueado');
+                audioItemEncontrado.play();
+                guardarProgresoAprendizaje();
+                setNueces(0);
+                setGano(true);
+                setMostrarMensaje(true);
+                completarJuego();
+            }else{
+                setAviso('Por ahora ya tienes desbloqueados todos los temas de aprendizaje');
+                setMostrarMensaje(true);
+                setGano(true);
+                completarJuego();
+            }
         }
-    }, [manzanasPendientes, nuecesPendientes, encontroItemEspecial]);    
+    }, [manzanasPendientes, nuecesPendientes, encontroItemEspecial, aviso]);    
 
     useEffect(()=> {
         if(mostrarMensaje && gano){
@@ -440,8 +467,11 @@ export function PanelGame({onJuegoCompletado}: props) {
                             {gano ? "🎉 ¡JUEGO COMPLETADO!" : "😓 ¡JUEGO PERDIDO!"}
                         </h2>
                         <p className="text-xl font-semibold">
-                            {gano ? "Has completado tu desafío del día." : "No lograste desbloquear el recurso diario."}
+                            {gano ? "Has recorrido los cinco laberintos." : "No lograste desbloquear el recurso diario."}
                         </p>
+                        {aviso !== '' &&(
+                            <p className="mt-2 text-sm text-gray-700">{aviso}</p>
+                        )}
                         <p className="mt-2 text-sm text-gray-700">
                             Este es un juego diario. Podrás intentarlo nuevamente mañana 🌱
                         </p>
